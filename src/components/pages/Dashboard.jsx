@@ -23,12 +23,18 @@ import {
     CardHeader,
     CardTitle,
   } from "@/components/ui/card"
-  import { Input } from "@/components/ui/input"
-  import { Label } from "@/components/ui/label"
-  import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
+import Modal from "../Modal";
+import { useState } from 'react';
 
 
 export default function Dashboard() {
+    const [isOpen, setIsOpen] = useState(false);
+    const openModal = () => setIsOpen(true);
+    const closeModal = () => setIsOpen(false);
+
 
     const invoices = [
         {
@@ -76,7 +82,8 @@ export default function Dashboard() {
             <h1 className="text-4xl font-bold">Dashboard</h1>
             <div className="flex justify-between gap-4">
                 <Button variant="secondary" className="flex-1">Create Client</Button>
-                <Button className="flex-1">Create invoice</Button>
+                <Button onClick={openModal} className="flex-1">Create invoice</Button>
+                <Modal open={isOpen} setOpen={setIsOpen}/>
             </div>
             <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="Overview">Overview</TabsTrigger>
