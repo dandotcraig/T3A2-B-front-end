@@ -28,10 +28,10 @@ import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 // import Modal from "../Modal";
 import { useState } from 'react';
-import { DialogBackdrop } from '@headlessui/react'
+import { X } from "lucide-react"
 
 export default function Dashboard() {
-    const [showModal, setShowModal] = useState(false);
+    const [showModalClient, setShowModalClient] = useState(false);
 
 
     const invoices = [
@@ -79,13 +79,18 @@ export default function Dashboard() {
         <Tabs defaultValue="Overview" className="w-full md:w-3/4 lg:w-3/4 p-4 flex flex-col gap-8">
             <h1 className="text-4xl font-bold">Dashboard</h1>
             <div className="flex justify-between gap-4">
-                <Button onClick={() => setShowModal(true)} variant="secondary" className="flex-1">Create Client</Button>
+                <Button onClick={() => setShowModalClient(true)} variant="secondary" className="flex-1">Create Client</Button>
                 <Button className="flex-1">Create invoice</Button>
-                {showModal ? (
-                    <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModal(false)}>
-                        <Card className="w-full md:w-3/4 lg:w-3/4 p-4 flex flex-col gap-8">
+                {showModalClient ? (
+                    <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalClient(false)}>
+                        <Card className="w-full md:w-2/4 lg:w-2/4 p-4 flex flex-col gap-8">
                             <CardHeader>
-                                <CardTitle>Create client</CardTitle>
+                                <div className="flex justify-between">
+                                    <CardTitle>Create client</CardTitle>
+                                    <Button variant="outline" size="icon">
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </div>
                                 <CardDescription>Add client details below</CardDescription>
                             </CardHeader>
                                 <CardContent>
@@ -115,11 +120,8 @@ export default function Dashboard() {
                                 </form>
                                 </CardContent>
                             <CardFooter className="flex flex-col justify-between gap-4">
-                                {/* <Button variant="outline">Cancel</Button> */}
-                                <Button variant="secondary" className="w-full items-center" onClick={() => setShowModal(false)}>Close</Button>
-                                <Button className="w-full items-center" onClick={() => setShowModal(false)}>Save</Button>
-
-                                
+                                <Button variant="secondary" className="w-full items-center" onClick={() => setShowModalClient(false)}>Close</Button>
+                                <Button className="w-full items-center" onClick={() => setShowModalClient(false)}>Save</Button>
                             </CardFooter>
                             </Card>
                     </div>    
@@ -222,7 +224,7 @@ export default function Dashboard() {
                     </CardContent>
                 <CardFooter className="flex flex-col justify-between gap-4">
                     
-                    <Link to="/" className="w-full"><Button className="w-full items-center bg-red-500">Delete your account</Button></Link>
+                    <Link to="/" className="w-full"><Button variant="destructive" className="w-full items-center">Delete your account</Button></Link>
                     <Link to="/" className="w-full"><Button className="w-full items-center">Save</Button></Link>
                 </CardFooter>
                 </Card>
