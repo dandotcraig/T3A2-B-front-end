@@ -26,14 +26,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
-import Modal from "../Modal";
+// import Modal from "../Modal";
 import { useState } from 'react';
-
+import { DialogBackdrop } from '@headlessui/react'
 
 export default function Dashboard() {
-    const [isOpen, setIsOpen] = useState(false);
-    const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
+    const [showModal, setShowModal] = useState(false);
 
 
     const invoices = [
@@ -81,9 +79,51 @@ export default function Dashboard() {
         <Tabs defaultValue="Overview" className="w-full md:w-3/4 lg:w-3/4 p-4 flex flex-col gap-8">
             <h1 className="text-4xl font-bold">Dashboard</h1>
             <div className="flex justify-between gap-4">
-                <Button variant="secondary" className="flex-1">Create Client</Button>
-                <Button onClick={openModal} className="flex-1">Create invoice</Button>
-                <Modal open={isOpen} setOpen={setIsOpen}/>
+                <Button onClick={() => setShowModal(true)} variant="secondary" className="flex-1">Create Client</Button>
+                <Button className="flex-1">Create invoice</Button>
+                {showModal ? (
+                    <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModal(false)}>
+                        <Card className="w-full md:w-3/4 lg:w-3/4 p-4 flex flex-col gap-8">
+                            <CardHeader>
+                                <CardTitle>Create client</CardTitle>
+                                <CardDescription>Add client details below</CardDescription>
+                            </CardHeader>
+                                <CardContent>
+                                <form>
+                                    <div className="grid w-full items-center gap-4">
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label htmlFor="Business name">Business name</Label>
+                                            <Input id="name" placeholder=" Add business name" />
+                                        </div>
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label htmlFor="Business ABN">Business ABN</Label>
+                                            <Input id="name" placeholder=" Add business ABN" />
+                                        </div>
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label htmlFor="Business address">Business address</Label>
+                                            <Input id="name" placeholder=" Add business address" />
+                                        </div>
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label htmlFor="Business email">Business email</Label>
+                                            <Input id="name" placeholder=" Add business email" />
+                                        </div>
+                                        <div className="flex flex-col space-y-1.5">
+                                            <Label htmlFor="Business phone number">Business phone number</Label>
+                                            <Input id="name" placeholder=" Add business phone number" />
+                                        </div>
+                                    </div>
+                                </form>
+                                </CardContent>
+                            <CardFooter className="flex flex-col justify-between gap-4">
+                                {/* <Button variant="outline">Cancel</Button> */}
+                                <Button variant="secondary" className="w-full items-center" onClick={() => setShowModal(false)}>Close</Button>
+                                <Button className="w-full items-center" onClick={() => setShowModal(false)}>Save</Button>
+
+                                
+                            </CardFooter>
+                            </Card>
+                    </div>    
+                ) : null}
             </div>
             <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="Overview">Overview</TabsTrigger>
