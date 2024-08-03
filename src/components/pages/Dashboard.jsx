@@ -22,13 +22,17 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
+    CardContentsm
   } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 // import Modal from "../Modal";
 import { useState } from 'react';
-import { X } from "lucide-react"
+import { X } from "lucide-react";
+import { FilePenLine } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
+
 
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
@@ -218,22 +222,27 @@ export default function Dashboard() {
                                         </div>
                                     </form>
                                     <Card className="my-4">
-                                        <Table>
+                                        <Table className="table-auto">
                                             <TableHeader>
                                                 <TableRow>
-                                                <TableHead className="w-[100px]">Description</TableHead>
-                                                <TableHead>Quantity</TableHead>
-                                                <TableHead>Unit price</TableHead>
-                                                <TableHead>Delete</TableHead>
+                                                <TableHead className="">Description</TableHead>
+                                                <TableHead className="text-center" >Quantity</TableHead>
+                                                <TableHead className="text-center">Unit price</TableHead>
+                                                <TableHead >Delete</TableHead>
                                                 <TableHead className="text-right">Amount</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
                                                 <TableRow >
                                                     <TableCell className="font-medium">Description 1</TableCell>
-                                                    <TableCell>5</TableCell>
-                                                    <TableCell>$50</TableCell>
-                                                    <TableCell>Icons</TableCell>
+                                                    <TableCell className="text-center">5</TableCell>
+                                                    <TableCell className="text-center">$50</TableCell>
+                                                    <TableCell>
+                                                        <div className="flex flex-row gap-2">   
+                                                            <FilePenLine className="h-4 w-4" />
+                                                            <Trash2 className="h-4 w-4" />
+                                                        </div>
+                                                    </TableCell>
                                                     <TableCell className="text-right">$249</TableCell>
                                                 </TableRow>
                                             </TableBody>
@@ -285,11 +294,42 @@ export default function Dashboard() {
                     </div>    
                 ) : null}
             </div>
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-3 ">
                 <TabsTrigger value="Overview">Overview</TabsTrigger>
                 <TabsTrigger value="Clients">Clients</TabsTrigger>
                 <TabsTrigger value="Settings">Settings</TabsTrigger>
             </TabsList>
+            <div className="flex flex-row justify-center justify-between gap-4 w-full">
+                <Card className="flex-1  w-full md:w-2/4 lg:w-2/4 px-2 py-4 flex-col">
+                    <CardContentsm>
+                        <p className="text-xs text-slate-600">Total revenue</p>
+                        <h3 className="font-bold text-2xl">$45,231.89</h3>
+                        <p className="text-xs text-slate-600">+20.1% from last month</p>
+                    </CardContentsm>
+                </Card>
+                <Card className="flex-1  w-full md:w-2/4 lg:w-2/4 px-2 py-4 flex-col">  
+                    <CardContentsm>
+                        <p className="text-xs text-slate-600">GST</p>
+                        <h3 className="font-bold text-2xl">+$2350</h3>
+                        <p className="text-xs text-slate-600">10% of each invoice</p>
+                    </CardContentsm>
+                </Card>
+                <Card className="flex-1  w-full md:w-2/4 lg:w-2/4 px-2 py-4 flex-col">
+                    <CardContentsm>
+                        <p className="text-xs text-slate-600">Income tax</p>
+                        <h3 className="font-bold text-2xl">+$12,234</h3>
+                        <p className="text-xs text-slate-600">A rough estimate</p>
+                    </CardContentsm>
+                </Card>
+                <Card className="flex-1  w-full md:w-2/4 lg:w-2/4 px-2 py-4 flex-col">
+                    <CardContentsm>
+                        <p className="text-xs text-slate-600">Number of invoices to date</p>
+                        <h3 className="font-bold text-2xl">+20</h3>
+                        <p className="text-xs text-slate-600">Total number of invoices</p>
+                    </CardContentsm>
+                </Card>
+            </div>
+            
             <TabsContent value="Overview">
                 <Table>
                     <TableCaption>A list of your recent invoices.</TableCaption>
