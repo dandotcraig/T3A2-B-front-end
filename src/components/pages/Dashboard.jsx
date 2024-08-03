@@ -69,150 +69,152 @@ export default function Dashboard() {
                 ) : null}
                 {showModalInvoice ? (
                     <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalInvoice(false)}>
-                        <Card className="w-full md:w-4/5 lg:w-4/5 p-4 flex flex-col gap-1" onClick={(stopClose) => stopClose.stopPropagation()}>
-                            <CardHeader className="flex sm:flex-row flex-col gap-8">
-                                <div className="flex-1 justify-between">
-                                    <div className="flex justify-between flex-col gap-2">
-                                        <CardTitle>Invoice details</CardTitle>
-                                        <CardDescription>Add client details below</CardDescription>
-                                    </div>
-                                </div>
-                                <div className="flex-1 justify-between">
-                                    <div className="flex justify-between sm:flex-row flex-col">
-                                        <CardTitle>Invoice</CardTitle>
-                                        <Button variant="outline" size="icon" onClick={() => setShowModalInvoice(false)}>
-                                            <X className="h-4 w-4" />
-                                        </Button>
-                                    </div>
-                                    
-                                </div>
-                            </CardHeader>
-                            <CardContent className="flex sm:flex-row flex-col gap-8 w-full h-full">
-                                <form className="flex-1">
-                                    <div className="grid w-full items-center gap-4">
-                                        <div className="flex flex-col space-y-1.5">
-                                            <Label htmlFor="Date due">Date due</Label>
-                                            <Input id="name" placeholder="Date due" />
-                                        </div>
-                                        <div className="flex flex-col space-y-1.5">
-                                            <Label htmlFor="Select client">Select client</Label>
-                                            <Input id="name" placeholder="Select client" />
-                                        </div>
-                                        <div className="flex flex-col gap-2 space-y-1.5">
-                                            <Label htmlFor="Line item">Line item</Label>
-                                            <Input id="Description" placeholder="Description" />
-                                            <Input id="Quantity" placeholder="Quantity" />
-                                            <Input id="Unit price" placeholder="Unit price" />
+                        <ScrollArea className="h-full w-full rounded-md border">
+                            <Card className="w-full w-4/5 p-4 flex flex-col gap-1" onClick={(stopClose) => stopClose.stopPropagation()}>
+                                <CardHeader className="flex sm:flex-row flex-col gap-8">
+                                    <div className="flex-1 justify-between">
+                                        <div className="flex justify-between flex-col gap-2">
+                                            <CardTitle>Invoice details</CardTitle>
+                                            <CardDescription>Add client details below</CardDescription>
                                         </div>
                                     </div>
-                                </form>
-                                <div className="flex-1">
-                                    <form className=" flex justify-between flex-row gap-8">
-                                        <div className="flex-1 grid w-full items-center gap-4">
-                                            <div className="flex justify-between flex-row">
-                                                <p className="font-bold">Invoice date</p>
-                                                <p>13/06/2024</p>
-                                            </div>
-                                            <div>   
-                                                <p className="font-bold">Invoice number</p>        
-                                            </div>
-                                            <div>
-                                                <p className="font-bold">To</p>
-                                                <p>Liam Johnson</p>
-                                                <p>ABN: 010242492349234</p>
-                                                <p>1234 Main St.</p>
-                                                <p>Anytown, CA</p>
-                                                <p>12345</p>
-                                            </div>
+                                    <div className="flex-1 justify-between">
+                                        <div className="flex justify-between sm:flex-row flex-col">
+                                            <CardTitle>Invoice</CardTitle>
+                                            <Button variant="outline" size="icon" onClick={() => setShowModalInvoice(false)}>
+                                                <X className="h-4 w-4" />
+                                            </Button>
                                         </div>
-                                        <div className="flex-1 grid w-full items-center gap-4">
-                                            <div className="flex justify-between flex-row">
-                                                <p className="font-bold">Due date</p>
-                                                <p>13/06/2024</p>
+                                        
+                                    </div>
+                                </CardHeader>
+                                <CardContent className="flex sm:flex-row flex-col gap-8 w-full h-full">
+                                    <form className="flex-1">
+                                        <div className="grid w-full items-center gap-4">
+                                            <div className="flex flex-col space-y-1.5">
+                                                <Label htmlFor="Date due">Date due</Label>
+                                                <Input id="name" placeholder="Date due" />
                                             </div>
-                                            <div>   
-                                                <p>1</p>        
+                                            <div className="flex flex-col space-y-1.5">
+                                                <Label htmlFor="Select client">Select client</Label>
+                                                <Input id="name" placeholder="Select client" />
                                             </div>
-                                            <div>
-                                                <p className="font-bold">From</p>
-                                                <p>Liam Johnson</p>
-                                                <p>ABN: 010242492349234</p>
-                                                <p>1234 Main St.</p>
-                                                <p>Anytown, CA</p>
-                                                <p>12345</p>
+                                            <div className="flex flex-col gap-2 space-y-1.5">
+                                                <Label htmlFor="Line item">Line item</Label>
+                                                <Input id="Description" placeholder="Description" />
+                                                <Input id="Quantity" placeholder="Quantity" />
+                                                <Input id="Unit price" placeholder="Unit price" />
                                             </div>
                                         </div>
                                     </form>
-                                    <Card className="my-4">
-                                        <Table className="table-auto">
-                                            <TableHeader>
-                                                <TableRow>
-                                                <TableHead className="">Description</TableHead>
-                                                <TableHead className="text-center" >Quantity</TableHead>
-                                                <TableHead className="text-center">Unit price</TableHead>
-                                                <TableHead >Delete</TableHead>
-                                                <TableHead className="text-right">Amount</TableHead>
-                                                </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                <TableRow >
-                                                    <TableCell className="font-medium">Description 1</TableCell>
-                                                    <TableCell className="text-center">5</TableCell>
-                                                    <TableCell className="text-center">$50</TableCell>
-                                                    <TableCell>
-                                                        <div className="flex flex-row gap-2">   
-                                                            <FilePenLine className="h-4 w-4" />
-                                                            <Trash2 className="h-4 w-4" />
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell className="text-right">$249</TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </Card>     
-                                    <div className="flex justify-between flex-row gap-8">
-                                        <div className="flex-1"></div>  
-                                        <Card className="flex-1 justify-items-end">
-                                            <Table >
+                                    <div className="flex-1">
+                                        <form className=" flex justify-between flex-row gap-8">
+                                            <div className="flex-1 grid w-full items-center gap-4">
+                                                <div className="flex justify-between flex-row">
+                                                    <p className="font-bold">Invoice date</p>
+                                                    <p>13/06/2024</p>
+                                                </div>
+                                                <div>   
+                                                    <p className="font-bold">Invoice number</p>        
+                                                </div>
+                                                <div>
+                                                    <p className="font-bold">To</p>
+                                                    <p>Liam Johnson</p>
+                                                    <p>ABN: 010242492349234</p>
+                                                    <p>1234 Main St.</p>
+                                                    <p>Anytown, CA</p>
+                                                    <p>12345</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex-1 grid w-full items-center gap-4">
+                                                <div className="flex justify-between flex-row">
+                                                    <p className="font-bold">Due date</p>
+                                                    <p>13/06/2024</p>
+                                                </div>
+                                                <div>   
+                                                    <p>1</p>        
+                                                </div>
+                                                <div>
+                                                    <p className="font-bold">From</p>
+                                                    <p>Liam Johnson</p>
+                                                    <p>ABN: 010242492349234</p>
+                                                    <p>1234 Main St.</p>
+                                                    <p>Anytown, CA</p>
+                                                    <p>12345</p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <Card className="my-4">
+                                            <Table className="table-auto">
+                                                <TableHeader>
+                                                    <TableRow>
+                                                    <TableHead className="">Description</TableHead>
+                                                    <TableHead className="text-center" >Quantity</TableHead>
+                                                    <TableHead className="text-center">Unit price</TableHead>
+                                                    <TableHead >Delete</TableHead>
+                                                    <TableHead className="text-right">Amount</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
                                                 <TableBody>
-                                                    <TableRow>
-                                                        <TableCell className="font-medium">Subtotal</TableCell>
-                                                        <TableCell className="text-right">$100</TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <TableCell className="font-medium">GST</TableCell>
-                                                        <TableCell className="text-right">$10</TableCell>
-                                                    </TableRow>
-                                                    <TableRow>
-                                                        <TableCell className="font-medium">Total</TableCell>
-                                                        <TableCell className="text-right">$10</TableCell>
+                                                    <TableRow >
+                                                        <TableCell className="font-medium">Description 1</TableCell>
+                                                        <TableCell className="text-center">5</TableCell>
+                                                        <TableCell className="text-center">$50</TableCell>
+                                                        <TableCell>
+                                                            <div className="flex flex-row gap-2">   
+                                                                <FilePenLine className="h-4 w-4" />
+                                                                <Trash2 className="h-4 w-4" />
+                                                            </div>
+                                                        </TableCell>
+                                                        <TableCell className="text-right">$249</TableCell>
                                                     </TableRow>
                                                 </TableBody>
                                             </Table>
-                                        </Card>    
-                                          
-                                    </div> 
+                                        </Card>     
+                                        <div className="flex justify-between flex-row gap-8">
+                                            <div className="flex-1"></div>  
+                                            <Card className="flex-1 justify-items-end">
+                                                <Table >
+                                                    <TableBody>
+                                                        <TableRow>
+                                                            <TableCell className="font-medium">Subtotal</TableCell>
+                                                            <TableCell className="text-right">$100</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell className="font-medium">GST</TableCell>
+                                                            <TableCell className="text-right">$10</TableCell>
+                                                        </TableRow>
+                                                        <TableRow>
+                                                            <TableCell className="font-medium">Total</TableCell>
+                                                            <TableCell className="text-right">$10</TableCell>
+                                                        </TableRow>
+                                                    </TableBody>
+                                                </Table>
+                                            </Card>    
                                             
-                                </div>
-                            </CardContent>
-                            <CardFooter className="flex flex-row justify-between gap-8">
-                                <div className="flex-1">
-                                    <div className="flex flex-col gap-4">
-                                        <Button variant="secondary" className="w-full items-center" onClick={() => setShowModalInvoice(false)}>Close</Button>
-                                        <Button className="w-full items-center" onClick={() => setShowModalInvoice(false)}>Save</Button>
+                                        </div> 
+                                                
                                     </div>
-                                    
-                                </div>
-                                <div className="flex-1">
-                                    <div className="flex flex-col gap-4">
-                                        <Button variant="secondary" className="w-full items-center" onClick={() => setShowModalInvoice(false)}>Close</Button>
-                                        <Button className="w-full items-center" onClick={() => setShowModalInvoice(false)}>Save</Button>
+                                </CardContent>
+                                <CardFooter className="flex flex-row justify-between gap-8">
+                                    <div className="flex-1">
+                                        <div className="flex flex-col gap-4">
+                                            <Button variant="secondary" className="w-full items-center" onClick={() => setShowModalInvoice(false)}>Close</Button>
+                                            <Button className="w-full items-center" onClick={() => setShowModalInvoice(false)}>Save</Button>
+                                        </div>
+                                        
                                     </div>
-                                    
-                                </div>
+                                    <div className="flex-1">
+                                        <div className="flex flex-col gap-4">
+                                            <Button variant="secondary" className="w-full items-center" onClick={() => setShowModalInvoice(false)}>Close</Button>
+                                            <Button className="w-full items-center" onClick={() => setShowModalInvoice(false)}>Save</Button>
+                                        </div>
+                                        
+                                    </div>
 
-                            </CardFooter>
+                                </CardFooter>
                             </Card>
+                        </ScrollArea>
                     </div>    
                 ) : null}
             </div>
