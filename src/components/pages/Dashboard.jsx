@@ -36,6 +36,7 @@ import { Trash2 } from 'lucide-react';
 
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
+    const [showModalInvoice, setShowModalInvoice] = useState(false);
 
 
     const invoices = [
@@ -127,7 +128,6 @@ export default function Dashboard() {
                                 <Button variant="secondary" className="w-full items-center" onClick={() => setShowModalClient(false)}>Close</Button>
                                 <Button className="w-full items-center" onClick={() => setShowModalClient(false)}>Save</Button>
                             </CardFooter>
-<<<<<<< HEAD
                         </Card>
                     </div>    
                 ) : null}
@@ -208,27 +208,22 @@ export default function Dashboard() {
                                         </div>
                                     </form>
                                     <Card className="my-4">
-                                        <Table className="table-auto">
+                                        <Table>
                                             <TableHeader>
                                                 <TableRow>
-                                                <TableHead className="">Description</TableHead>
-                                                <TableHead className="text-center" >Quantity</TableHead>
-                                                <TableHead className="text-center">Unit price</TableHead>
-                                                <TableHead >Delete</TableHead>
+                                                <TableHead className="w-[100px]">Description</TableHead>
+                                                <TableHead>Quantity</TableHead>
+                                                <TableHead>Unit price</TableHead>
+                                                <TableHead>Delete</TableHead>
                                                 <TableHead className="text-right">Amount</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
                                                 <TableRow >
                                                     <TableCell className="font-medium">Description 1</TableCell>
-                                                    <TableCell className="text-center">5</TableCell>
-                                                    <TableCell className="text-center">$50</TableCell>
-                                                    <TableCell>
-                                                        <div className="flex flex-row gap-2">   
-                                                            <FilePenLine className="h-4 w-4" />
-                                                            <Trash2 className="h-4 w-4" />
-                                                        </div>
-                                                    </TableCell>
+                                                    <TableCell>5</TableCell>
+                                                    <TableCell>$50</TableCell>
+                                                    <TableCell>Icons</TableCell>
                                                     <TableCell className="text-right">$249</TableCell>
                                                 </TableRow>
                                             </TableBody>
