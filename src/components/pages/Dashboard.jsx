@@ -36,7 +36,6 @@ import { Trash2 } from 'lucide-react';
 
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
-    const [showModalInvoice, setShowModalInvoice] = useState(false);
 
 
     const invoices = [
@@ -76,21 +75,7 @@ export default function Dashboard() {
           totalAmount: "$200.00",
           paymentMethod: "Bank Transfer",
         },
-      ]
 
-      const invoices2 = [
-        {
-          invoice: "INV001",
-          paymentStatus: "Paid",
-          totalAmount: "$250.00",
-          paymentMethod: "Credit Card",
-        },
-        {
-          invoice: "INV002",
-          paymentStatus: "Pending",
-          totalAmount: "$150.00",
-          paymentMethod: "PayPal",
-        },
       ]
 
 
@@ -99,7 +84,7 @@ export default function Dashboard() {
             <h1 className="text-4xl font-bold">Dashboard</h1>
             <div className="flex justify-between gap-4">
                 <Button onClick={() => setShowModalClient(true)} variant="secondary" className="flex-1">Create Client</Button>
-                <Button onClick={() => setShowModalInvoice(true)} className="flex-1">Create invoice</Button>
+                <Button className="flex-1">Create invoice</Button>
                 {showModalClient ? (
                     <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalClient(false)}>
                         <Card className="w-full md:w-2/4 lg:w-2/4 p-4 flex flex-col gap-8">
@@ -142,6 +127,7 @@ export default function Dashboard() {
                                 <Button variant="secondary" className="w-full items-center" onClick={() => setShowModalClient(false)}>Close</Button>
                                 <Button className="w-full items-center" onClick={() => setShowModalClient(false)}>Save</Button>
                             </CardFooter>
+<<<<<<< HEAD
                         </Card>
                     </div>    
                 ) : null}
@@ -290,6 +276,8 @@ export default function Dashboard() {
                                 </div>
 
                             </CardFooter>
+=======
+>>>>>>> parent of 2a2e1dd (invoice mostly done)
                             </Card>
                     </div>    
                 ) : null}
