@@ -1,43 +1,18 @@
 import { Button } from "../ui/button";
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-  } from "@/components/ui/tabs"
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from "@/components/ui/table"
-  import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-    CardContentsm
-  } from "@/components/ui/card"
+import { Tabs, TabsContent,TabsList, TabsTrigger, } from "@/components/ui/tabs"
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, CardContentsm } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
-// import Modal from "../Modal";
 import { useState } from 'react';
 import { X } from "lucide-react";
 import { FilePenLine } from 'lucide-react';
 import { Trash2 } from 'lucide-react';
 
-
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
     const [showModalInvoice, setShowModalInvoice] = useState(false);
-
 
     const invoices = [
         {
@@ -77,22 +52,6 @@ export default function Dashboard() {
           paymentMethod: "Bank Transfer",
         },
       ]
-
-      const invoices2 = [
-        {
-          invoice: "INV001",
-          paymentStatus: "Paid",
-          totalAmount: "$250.00",
-          paymentMethod: "Credit Card",
-        },
-        {
-          invoice: "INV002",
-          paymentStatus: "Pending",
-          totalAmount: "$150.00",
-          paymentMethod: "PayPal",
-        },
-      ]
-
 
     return(
         <Tabs defaultValue="Overview" className="w-full md:w-3/4 lg:w-3/4 p-4 flex flex-col gap-8">

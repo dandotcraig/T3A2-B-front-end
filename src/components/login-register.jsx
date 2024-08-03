@@ -1,21 +1,8 @@
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Link } from "react-router-dom";
 
 export default function LoginRegister() {
@@ -47,9 +34,7 @@ export default function LoginRegister() {
                   </form>
                 </CardContent>
               <CardFooter className="flex justify-between">
-                {/* <Button variant="outline">Cancel</Button> */}
                 <Link to="/dashboard" className="w-full"><Button className="w-full items-center">Login</Button></Link>
-                
               </CardFooter>
             </Card>
           </TabsContent>
@@ -74,7 +59,6 @@ export default function LoginRegister() {
                 </form>
               </CardContent>
               <CardFooter className="flex justify-between">
-                {/* <Button variant="outline">Cancel</Button> */}
                 <Button className="w-full items-center">Login</Button>
               </CardFooter>
             </Card>
