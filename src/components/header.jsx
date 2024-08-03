@@ -1,4 +1,3 @@
-import { ModeToggle } from "../components/mode-toggle"
 import logo from "../assets/logo.svg"
 
 
@@ -13,7 +12,7 @@ export default function Header() {
                     </a>
                 </div>
                 <div className="flex flex-1 justify-end">
-                    <ModeToggle/>
+                    {/* switch goes here */}
                 </div>
             </nav>
         </header>
