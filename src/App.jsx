@@ -5,7 +5,6 @@ import IndexPage from "./components/pages/IndexPage"
 import Dashboard from "./components/pages/Dashboard"
 
 function App() {
-
   return (
     
     <Routes>
@@ -14,7 +13,7 @@ function App() {
         <Route path={'/dashboard'} element={<Dashboard/>} />
       </Route>
     </Routes>
-
+    
   )
 }
 
