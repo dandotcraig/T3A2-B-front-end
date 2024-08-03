@@ -61,11 +61,11 @@ export default function Dashboard() {
                 <Button onClick={() => setShowModalInvoice(true)} className="flex-1">Create invoice</Button>
                 {showModalClient ? (
                     <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalClient(false)}>
-                        <Card className="w-full md:w-2/4 lg:w-2/4 p-4 flex flex-col gap-8">
+                        <Card className="w-full md:w-2/4 lg:w-2/4 p-4 flex flex-col gap-8" onClick={(stopClose) => stopClose.stopPropagation()}>
                             <CardHeader>
-                                <div className="flex justify-between">
-                                    <CardTitle>Create client</CardTitle>
-                                    <Button variant="outline" size="icon">
+                                <div className="flex justify-between sm:flex-row flex-col">
+                                    <CardTitle>Invoice</CardTitle>
+                                    <Button variant="outline" size="icon" onClick={() => setShowModalClient(false)}>
                                         <X className="h-4 w-4" />
                                     </Button>
                                 </div>
@@ -106,7 +106,7 @@ export default function Dashboard() {
                 ) : null}
                 {showModalInvoice ? (
                     <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalInvoice(false)}>
-                        <Card className="w-full md:w-4/5 lg:w-4/5 p-4 flex flex-col gap-1">
+                        <Card className="w-full md:w-4/5 lg:w-4/5 p-4 flex flex-col gap-1" onClick={(stopClose) => stopClose.stopPropagation()}>
                             <CardHeader className="flex sm:flex-row flex-col gap-8">
                                 <div className="flex-1 justify-between">
                                     <div className="flex justify-between flex-col gap-2">
@@ -117,7 +117,7 @@ export default function Dashboard() {
                                 <div className="flex-1 justify-between">
                                     <div className="flex justify-between sm:flex-row flex-col">
                                         <CardTitle>Invoice</CardTitle>
-                                        <Button variant="outline" size="icon">
+                                        <Button variant="outline" size="icon" onClick={() => setShowModalInvoice(false)}>
                                             <X className="h-4 w-4" />
                                         </Button>
                                     </div>
