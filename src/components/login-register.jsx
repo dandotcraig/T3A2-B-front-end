@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 export default function LoginRegister() {
     return(
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex mt-24 justify-center h-screen">
         <Tabs defaultValue="account" className="w-full max-w-[400px]">
           <TabsList className="grid grid-cols-2">
             <TabsTrigger value="account">Login</TabsTrigger>

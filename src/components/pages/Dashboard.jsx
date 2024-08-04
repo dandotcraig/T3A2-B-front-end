@@ -17,14 +17,14 @@ export default function Dashboard() {
 
     
     return(
-        <Tabs defaultValue="Overview" className="w-full p-4 flex flex-col gap-8">
+        <Tabs defaultValue="Overview" className="w-full p-4 flex flex-col gap-8 max-w-[1279px]">
             <h1 className="text-4xl font-bold">Dashboard</h1>
             <div className="flex justify-between gap-4">
                 <Button onClick={() => setShowModalClient(true)} variant="secondary" className="flex-1">Create Client</Button>
                 <Button onClick={() => setShowModalInvoice(true)} className="flex-1">Create invoice</Button>
                 {showModalClient ? (
-                    <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalClient(false)}>
-                        <Card className="h-[calc(100vh-4rem)] w-full p-4 flex flex-col gap-8 mx-8 sm:mx-0" onClick={(stopClose) => stopClose.stopPropagation()}>
+                    <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 " onClick={() => setShowModalClient(false)}>
+                        <Card className="h-[calc(100vh-4rem)] w-full p-4 flex flex-col gap-8 mx-8 sm:mx-0 max-w-[1279px]" onClick={(stopClose) => stopClose.stopPropagation()}>
                             <CardHeader>
                                 <div className="flex justify-between flex-row">
                                     <CardTitle>Invoice</CardTitle>
@@ -69,7 +69,7 @@ export default function Dashboard() {
                 ) : null}
                 {showModalInvoice ? (
                     <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalInvoice(false)}>
-                        <ScrollArea className="h-[calc(100vh-4rem)] flex justify-center rounded-lg w-full mx-8 sm:mx-0" >
+                        <ScrollArea className="h-[calc(100vh-4rem)] flex justify-center rounded-lg w-full mx-8 sm:mx-0 max-w-[1279px]" >
                             <div>
                                 <Card className="w-full h-auto p-2 flex sm:flex-col md:flex-col lg:flex-row 2lx:flex-row" onClick={(stopClose) => stopClose.stopPropagation()}>
                                     {/* left */}

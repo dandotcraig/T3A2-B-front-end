@@ -14,7 +14,7 @@ module.exports = {
       padding: "2rem",
     },
     screens: {
-      '2xl': {'max': '1535px'},
+      '2xl': {'max': '2000px'},
       // => @media (max-width: 1535px) { ... }
 
       'xl': {'max': '1279px'},
