@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 export default function LoginRegister() {
     return(
         <div className="flex items-center justify-center h-screen">
-        <Tabs defaultValue="account" className="w-[400px]">
-          <TabsList className="grid w-full grid-cols-2">
+        <Tabs defaultValue="account" className="w-full max-w-[400px]">
+          <TabsList className="grid grid-cols-2">
             <TabsTrigger value="account">Login</TabsTrigger>
             <TabsTrigger value="password">Register</TabsTrigger>
           </TabsList>
@@ -44,7 +44,7 @@ export default function LoginRegister() {
                 <CardTitle>Create Account</CardTitle>
                 <CardDescription>Enter your email below to create your account</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="">
                 <form>
                   <div className="grid w-full items-center gap-4">
                     <div className="flex flex-col space-y-1.5">

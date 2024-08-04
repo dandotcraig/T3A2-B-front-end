@@ -17,16 +17,16 @@ export default function Dashboard() {
 
     
     return(
-        <Tabs defaultValue="Overview" className="w-full md:w-3/4 lg:w-3/4 p-4 flex flex-col gap-8">
+        <Tabs defaultValue="Overview" className="w-full p-4 flex flex-col gap-8">
             <h1 className="text-4xl font-bold">Dashboard</h1>
             <div className="flex justify-between gap-4">
                 <Button onClick={() => setShowModalClient(true)} variant="secondary" className="flex-1">Create Client</Button>
                 <Button onClick={() => setShowModalInvoice(true)} className="flex-1">Create invoice</Button>
                 {showModalClient ? (
                     <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalClient(false)}>
-                        <Card className="w-full md:w-2/4 lg:w-2/4 p-4 flex flex-col gap-8" onClick={(stopClose) => stopClose.stopPropagation()}>
+                        <Card className="h-[calc(100vh-4rem)] w-full p-4 flex flex-col gap-8 mx-8 sm:mx-0" onClick={(stopClose) => stopClose.stopPropagation()}>
                             <CardHeader>
-                                <div className="flex justify-between sm:flex-row flex-row">
+                                <div className="flex justify-between flex-row">
                                     <CardTitle>Invoice</CardTitle>
                                     <Button variant="outline" size="icon" onClick={() => setShowModalClient(false)}>
                                         <X className="h-4 w-4" />
@@ -69,18 +69,18 @@ export default function Dashboard() {
                 ) : null}
                 {showModalInvoice ? (
                     <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={() => setShowModalInvoice(false)}>
-                        <ScrollArea className="h-full w-full mt-4 mx-4">
+                        <ScrollArea className="h-[calc(100vh-4rem)] rounded-lg w-full mx-8 sm:mx-0" >
                             <div>
-                                <Card className="w-full h-auto p-2 flex flex-col md:flex-row lg:flex-row" onClick={(stopClose) => stopClose.stopPropagation()}>
+                                <Card className="w-full h-auto p-2 flex flex-col" onClick={(stopClose) => stopClose.stopPropagation()}>
                                     {/* left */}
-                                        <div className="flex flex-col md:w-1/2 justify-between">
+                                        <div className="flex flex-col justify-between">
                                             <div>
                                                 <CardHeader className="flex flex-col flex-grow gap-8">
                                                     <div className="flex justify-between ">
                                                         <div className="flex flex-col w-full gap-2">
-                                                            <div className="flex justify-between sm:flex-row flex-col w-full">
+                                                            <div className="flex justify-between flex-row w-full">
                                                                 <CardTitle className="flex-grow">Invoice details</CardTitle>
-                                                                <Button className="hidden sm:flex md:hidden lg:hidden xl:hidden 2xl:hidden" variant="outline" size="icon" onClick={() => setShowModalInvoice(false)}>
+                                                                <Button className="sm:flex md:flex lg:hidden 2lg:hidden" variant="outline" size="icon" onClick={() => setShowModalInvoice(false)}>
                                                                     <X className="h-4 w-4" />
                                                                 </Button>
                                                             </div>
@@ -121,22 +121,22 @@ export default function Dashboard() {
                                     
                                     {/* right */}
                                     <div className="flex flex-col basis-full">
-                                        <CardHeader className="flex sm:flex-row flex-col gap-8 basis-full">
+                                        <CardHeader className="flex flex-col gap-8 basis-full">
                                             <div className="basis-full justify-between">
-                                                <div className="flex justify-between sm:flex-row flex-col">
+                                                <div className="flex justify-between flex-col">
                                                     <CardTitle>Invoice</CardTitle>
-                                                    <Button className="hidden sm:hidden md:flex" variant="outline" size="icon" onClick={() => setShowModalInvoice(false)}>
+                                                    <Button className="hidden" variant="outline" size="icon" onClick={() => setShowModalInvoice(false)}>
                                                         <X className="h-4 w-4" />
                                                     </Button>
                                                 </div>
                                                 
                                             </div>
                                         </CardHeader>
-                                        <CardContent className="flex sm:flex-row flex-col gap-8 basis-full">
+                                        <CardContent className="flex  flex-col gap-8 basis-full">
                                             <div className="basis-full">
                                                 <div className=" flex justify-between flex-row gap-8">
                                                     <div className="flex-1 grid items-center gap-4">
-                                                        <div className="flex flex-col md:flex-row gap-4">
+                                                        <div className="flex flex-col gap-4">
                                                             <div className="flex justify-between flex-row">
                                                                 <p className="font-bold">Invoice date</p>
                                                                 <p>13/06/2024</p>
@@ -146,7 +146,7 @@ export default function Dashboard() {
                                                                 <p>13/06/2024</p>
                                                             </div>
                                                         </div>
-                                                        <div className="flex flex-col md:flex-row gap-4">
+                                                        <div className="flex flex-col gap-4">
                                                             <div>   
                                                                 <p className="font-bold">Invoice number</p>        
                                                             </div>
@@ -154,7 +154,7 @@ export default function Dashboard() {
                                                                 <p>1</p>        
                                                             </div>
                                                         </div>
-                                                        <div className="flex flex-col md:flex-row gap-4">
+                                                        <div className="flex flex-col gap-4">
                                                             <div className="">
                                                                 <p className="font-bold">To</p>
                                                                 <p>Liam Johnson</p>
@@ -179,8 +179,8 @@ export default function Dashboard() {
                                                         <TableHeader>
                                                             <TableRow>
                                                             <TableHead className="">Description</TableHead>
-                                                            <TableHead className="text-center" >Quantity</TableHead>
-                                                            <TableHead className="text-center">Unit price</TableHead>
+                                                            <TableHead className="sm:hidden md:table-cell lg:table-cell 2lg:table-cell text-center" >Quantity</TableHead>
+                                                            <TableHead className="sm:hidden md:table-cell lg:table-cell 2lg:table-cell text-center">Unit price</TableHead>
                                                             <TableHead >Delete</TableHead>
                                                             <TableHead className="text-right">Amount</TableHead>
                                                             </TableRow>
@@ -188,8 +188,8 @@ export default function Dashboard() {
                                                         <TableBody>
                                                             <TableRow >
                                                                 <TableCell className="font-medium">Description 1</TableCell>
-                                                                <TableCell className="text-center">5</TableCell>
-                                                                <TableCell className="text-center">$50</TableCell>
+                                                                <TableCell className="sm:hidden md:table-cell lg:table-cell 2lg:table-cell text-center">5</TableCell>
+                                                                <TableCell className="sm:hidden md:table-cell lg:table-cell 2lg:table-cell text-center">$50</TableCell>
                                                                 <TableCell>
                                                                     <div className="flex flex-row gap-2">   
                                                                         <FilePenLine className="h-4 w-4" />
@@ -202,7 +202,7 @@ export default function Dashboard() {
                                                     </Table>
                                                 </Card>     
                                                 <div className="flex justify-between flex-row gap-8">
-                                                    <div className="flex-1"></div>  
+                                                    <div className="flex-1 sm:hidden md:flex lg:flex 2lg:flex"></div>  
                                                     <Card className="flex-1 justify-items-end">
                                                         <Table >
                                                             <TableBody>
@@ -244,29 +244,29 @@ export default function Dashboard() {
                 <TabsTrigger value="Clients">Clients</TabsTrigger>
                 <TabsTrigger value="Settings">Settings</TabsTrigger>
             </TabsList>
-            <div className="flex flex-col sm:flex-row justify-center justify-between gap-4 w-full">
-                <Card className="flex-1  w-full md:w-2/4 lg:w-2/4 px-2 py-4 flex-col">
+            <div className="flex sm:flex-col md:flex-row lg:flex-row xlg:flex-row justify-center justify-between gap-4 w-full">
+                <Card className="flex-1  w-full px-2 py-4 flex-col">
                     <CardContentsm>
                         <p className="text-xs text-slate-600">Total revenue</p>
                         <h3 className="font-bold text-2xl">$45,231.89</h3>
                         <p className="text-xs text-slate-600">+20.1% from last month</p>
                     </CardContentsm>
                 </Card>
-                <Card className="flex-1  w-full md:w-2/4 lg:w-2/4 px-2 py-4 flex-col">  
+                <Card className="flex-1  w-full px-2 py-4 flex-col">  
                     <CardContentsm>
                         <p className="text-xs text-slate-600">GST</p>
                         <h3 className="font-bold text-2xl">+$2350</h3>
                         <p className="text-xs text-slate-600">10% of each invoice</p>
                     </CardContentsm>
                 </Card>
-                <Card className="flex-1  w-full md:w-2/4 lg:w-2/4 px-2 py-4 flex-col">
+                <Card className="flex-1  w-full px-2 py-4 flex-col">
                     <CardContentsm>
                         <p className="text-xs text-slate-600">Income tax</p>
                         <h3 className="font-bold text-2xl">+$12,234</h3>
                         <p className="text-xs text-slate-600">A rough estimate</p>
                     </CardContentsm>
                 </Card>
-                <Card className="flex-1  w-full md:w-2/4 lg:w-2/4 px-2 py-4 flex-col">
+                <Card className="flex-1  w-full px-2 py-4 flex-col">
                     <CardContentsm>
                         <p className="text-xs text-slate-600">Number of invoices to date</p>
                         <h3 className="font-bold text-2xl">+20</h3>
