@@ -48,7 +48,7 @@ export default function Header() {
                     )}
                     {!username && (
                         <>
-                            <p>You're not logged in...</p>
+                            <Button disabled>Logout</Button>
                         </>
                     )}
                 </nav>
