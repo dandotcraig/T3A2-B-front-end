@@ -42,6 +42,7 @@ export default function Header() {
                     <ModeToggle />
                     {username && (
                         <>
+                            <p>Hello {username}</p>
                             <Link to="/"><Button onClick={logout} variant="outline">Logout</Button></Link>
                         </>
                     )}
