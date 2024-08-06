@@ -1,6 +1,5 @@
 import { Button } from "../ui/button";
 import { Tabs, TabsContent,TabsList, TabsTrigger, } from "@/components/ui/tabs"
-
 import { useState } from 'react';
 import Settings from "./Settings";
 import Invoices from "./Invoices";
@@ -8,7 +7,8 @@ import Clients from "./Clients";
 import CreateClientModal from "../modals/CreateClientModal";
 import CreateInvoiceModal from "../modals/CreateInvoiceModal";
 import HighlightCards from "../modules/highlight-cards";
-;
+
+
 
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);

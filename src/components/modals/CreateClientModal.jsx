@@ -1,15 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, CardContentsm } from "@/components/ui/card";
-import { X } from "lucide-react";
+import { X, Loader2 } from "lucide-react";
+import { Button } from "../ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
-export default function CreateClientModal({ showModalClient, setShowModalClient }) {
-    return showModalClient ? (
-        <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 " onClick={() => setShowModalClient(false)}>
-            <Card className="h-[calc(100vh-4rem)] w-full p-4 flex flex-col gap-8 mx-8 sm:mx-0 max-w-[1279px]" onClick={(stopClose) => stopClose.stopPropagation()}>
+export default function CreateClientModal({ onClose }) {
+    const [businessName, setBusinessName] = useState('');
+    const [businessAbn, setBusinessAbn] = useState('');
+    const [businessAddress, setBusinessAddress] = useState('');
+    const [businessEmail, setBusinessEmail] = useState('');
+    const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleSaveClient = () => {
+
+        const data = {
+            businessName,
+            businessAbn,
+            businessAddress,
+            businessEmail,
+            businessPhoneNumber,
+        };
+        setLoading(true);
+        fetch('http://localhost:4000/create/client', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(data)
+        })
+        .then((response) => {
+            setLoading(false);
+            if (response.status === 201) {
+                alert('Success creating a client')
+                onClose();
+            } else if (response.status === 400) {
+                alert('Check the fields')
+            } else {
+                alert('Something went wrong')
+            }
+        })
+        .catch((error) => {
+            setLoading(false);
+            alert('An error happened while creating a client')
+            console.log(error);
+        })
+    };
+    
+    return (
+        <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 " onClick={onClose}>
+            <Card className="h-[calc(100vh-4rem)] w-full p-4 flex flex-col gap-8 mx-8 sm:mx-0 max-w-[1279px]" onClick={(event) => event.stopPropagation()}>
                 <CardHeader>
                     <div className="flex justify-between flex-row">
                         <CardTitle>Invoice</CardTitle>
-                        <Button variant="outline" size="icon" onClick={() => setShowModalClient(false)}>
+                        <Button className="flex" variant="outline" size="icon" onClick={onClose}>
                             <X className="h-4 w-4" />
                         </Button>
                     </div>
@@ -20,34 +66,57 @@ export default function CreateClientModal({ showModalClient, setShowModalClient 
                         <div className="grid w-full items-center gap-4">
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Business name">Business name</Label>
-                                <Input id="name" placeholder=" Add business name" />
+                                <Input 
+                                    id="businessName" 
+                                    type='text'
+                                    value={businessName}
+                                    onChange={(event) => setBusinessName(event.target.value)}
+                                    placeholder="Add business name" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Business ABN">Business ABN</Label>
-                                <Input id="name" placeholder=" Add business ABN" />
+                                <Input 
+                                    id="businessAbn" 
+                                    type='text'
+                                    value={businessAbn}
+                                    onChange={(event) => setBusinessAbn(event.target.value)}
+                                    placeholder=" Add business ABN" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Business address">Business address</Label>
-                                <Input id="name" placeholder=" Add business address" />
+                                <Input 
+                                    id="businessAddress" 
+                                    type='text'
+                                    value={businessAddress}
+                                    onChange={(event) => setBusinessAddress(event.target.value)}
+                                    placeholder=" Add business address" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Business email">Business email</Label>
-                                <Input id="name" placeholder=" Add business email" />
+                                <Input 
+                                    id="businessEmail"
+                                    type='text'
+                                    value={businessEmail}
+                                    onChange={(event) => setBusinessEmail(event.target.value)}
+                                    placeholder=" Add business email" />
                             </div>
                             <div className="flex flex-col space-y-1.5">
                                 <Label htmlFor="Business phone number">Business phone number</Label>
-                                <Input id="name" placeholder=" Add business phone number" />
+                                <Input 
+                                    id="businessPhoneNumber" 
+                                    type='number'
+                                    value={businessPhoneNumber}
+                                    onChange={(event) => setBusinessPhoneNumber(event.target.value)}
+                                    placeholder=" Add business phone number" />
                             </div>
                         </div>
                     </form>
                     </CardContent>
                 <CardFooter className="flex flex-col justify-between gap-4">
-                    <Button variant="secondary" className="w-full items-center" onClick={() => setShowModalClient(false)}>Close</Button>
-                    <Button className="w-full items-center" onClick={() => setShowModalClient(false)}>Save</Button>
+                    <Button variant="secondary" className="w-full items-center" onClick={onClose}>Close</Button>
+                    <Button className="w-full items-center" onClick={handleSaveClient} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Save'}</Button>
                 </CardFooter>
             </Card>
         </div>    
-    ) : null
-
-
+    )
 };
