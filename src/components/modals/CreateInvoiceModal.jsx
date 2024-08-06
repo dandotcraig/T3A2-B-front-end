@@ -16,6 +16,7 @@ export default function CreateInvoiceModal({ onClose }) {
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedClient, setSelectedClient] = useState('');
+
     useEffect(() => {
         setLoading(true);
         fetch('http://localhost:4000/clients', {
@@ -37,6 +38,7 @@ export default function CreateInvoiceModal({ onClose }) {
         setSelectedClient(value);
     }
 
+    const selectClientData = clients.find(client => client._id === selectedClient)
 
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={onClose} >
@@ -84,21 +86,26 @@ export default function CreateInvoiceModal({ onClose }) {
                                                     </SelectContent>
                                                 </Select>
                                             </div>
-                                            <div className="flex flex-col gap-2 space-y-1.5">
+                                            <div className="flex mt-16 flex-col gap-2 space-y-1.5">
                                                 <Label htmlFor="Line item">Line item</Label>
                                                 <Input id="Description" placeholder="Description" />
                                                 <Input id="Quantity" placeholder="Quantity" />
                                                 <Input id="Unit price" placeholder="Unit price" />
+                                                
+                                            </div>
+                                            <div className='mt-4'>
+                                                <Button className="w-full items-center">Create line item</Button>
                                             </div>
                                         </div>
+                                        
                                     </form>
                                 </CardContent>
                             </div>
                             <CardFooter className="flex flex-row gap-8">
                                 <div className="flex-1">
                                     <div className="flex flex-col gap-4">
-                                        <Button variant="secondary" className="items-center" onClick={onClose}>Close</Button>
-                                        <Button className="items-center">Save</Button>
+                                        {/* <Button variant="secondary" className="items-center" onClick={onClose}>Close</Button> */}
+                                        
                                     </div>
                                 </div>
                             </CardFooter>
@@ -140,12 +147,27 @@ export default function CreateInvoiceModal({ onClose }) {
                                             </div>
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
                                                 <div className="w-full">
+                                                
                                                     <p className="font-bold">To</p>
-                                                    <p>Liam Johnson</p>
-                                                    <p>ABN: 010242492349234</p>
-                                                    <p>1234 Main St.</p>
-                                                    <p>Anytown, CA</p>
-                                                    <p>12345</p>
+                                                    {selectedClient ? (
+                                                        <>
+                                                            <p>{selectClientData.businessName}</p>
+                                                            <p>{selectClientData.businessAbn}</p>
+                                                            <p>{selectClientData.businessAddress}</p>
+                                                            <p>{selectClientData.businessPhoneNumber}</p>
+                                                        </>
+                                                    ) : (
+                                                        <div className="w-full">
+                                                            <p className="font-bold">From</p>
+                                                            <p>Liam Johnson</p>
+                                                            <p>ABN: 010242492349234</p>
+                                                            <p>1234 Main St.</p>
+                                                            <p>Anytown, CA</p>
+                                                            <p>12345</p>
+                                                        </div>
+                                                    )}
+                                                        
+                                                    
                                                 </div>
                                                 <div className="w-full">
                                                     <p className="font-bold">From</p>
