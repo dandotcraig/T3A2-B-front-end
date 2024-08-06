@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, CardContentsm } from "@/components/ui/card";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
@@ -18,6 +18,12 @@ export default function CreateInvoiceModal({ onClose }) {
     const [selectedClient, setSelectedClient] = useState('');
     const [inputTextDateDue, setInputTextDateDue] = useState('');
 
+    const [description, setDescription] = useState('')
+    const [Quantity, setQuantity] = useState('');
+    const [unitPrice, setUnitPrice] = useState('');
+    const [total, setTotal] = useState('');
+
+    // clients
     useEffect(() => {
         setLoading(true);
         fetch('http://localhost:4000/clients', {
@@ -35,18 +41,67 @@ export default function CreateInvoiceModal({ onClose }) {
             });
     }, []);
 
+    const selectClientData = clients.find(client => client._id === selectedClient)
+
     const handleClientChange = (value) => {
         setSelectedClient(value);
-    }
 
+    }
+    
+    // dates
     const handleDateChange = (event) => {
         setInputTextDateDue(event.target.value);
     }
 
-    const selectClientData = clients.find(client => client._id === selectedClient)
-
     const today = new Date();
     
+    // line items
+
+    const quantityHandler = (event) => {
+        const quantity = event.target.value
+        setQuantity(quantity);
+        setTotal(quantity * unitPrice)
+    }
+
+    const unitPriceHandler = (event) => {
+        const unitprice = event.target.value
+        setUnitPrice(unitprice);
+        setTotal(quantity * unitprice);
+    }
+
+    const handleCreateLineItem = () => {
+        const data = {
+            description,
+            Quantity,
+            unitPrice,
+            Total,
+        };
+        setLoading(true);
+        fetch('http://localhost:4000/create/lineitem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(data)
+        })
+        .then((response) => {
+            setLoading(false);
+            if (response.status === 201) {
+                alert('Success creating a line item')
+                onClose();
+            } else if (response.status === 400) {
+                alert('Check the fields')
+            } else {
+                alert('Something went wrong')
+            }
+        })
+        .catch((error) => {
+            setLoading(false);
+            alert('An error happened while creating a line item')
+            console.log(error);
+        })
+    };
 
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={onClose} >
@@ -101,12 +156,21 @@ export default function CreateInvoiceModal({ onClose }) {
                                             <div className="flex mt-16 flex-col gap-2 space-y-1.5">
                                                 <Label htmlFor="Line item">Line item</Label>
                                                 <Input id="Description" placeholder="Description" />
-                                                <Input id="Quantity" placeholder="Quantity" />
-                                                <Input id="Unit price" placeholder="Unit price" />
+                                                <Input 
+                                                    id="Quantity" 
+                                                    placeholder="Quantity"
+                                                    value={Quantity}
+                                                    onChange={quantityHandler} />
+                                                <Input 
+                                                    id="Unit price" 
+                                                    placeholder="Unit price"
+                                                    value={unitPrice}
+                                                    onChange={unitPriceHandler} />
                                                 
                                             </div>
                                             <div className='mt-4'>
-                                                <Button className="w-full items-center">Create line item</Button>
+                                                <Button className="w-full items-center" onClick={handleCreateLineItem} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Create line item'}</Button>
+                                                
                                             </div>
                                         </div>
                                         
@@ -221,7 +285,7 @@ export default function CreateInvoiceModal({ onClose }) {
                                                             <Trash2 className="h-4 w-4" />
                                                         </div>
                                                     </TableCell>
-                                                    <TableCell className="text-right">$249</TableCell>
+                                                    <TableCell className="text-right">{total}</TableCell>
                                                 </TableRow>
                                             </TableBody>
                                         </Table>
