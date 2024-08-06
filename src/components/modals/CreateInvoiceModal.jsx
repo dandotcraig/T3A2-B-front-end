@@ -16,6 +16,7 @@ export default function CreateInvoiceModal({ onClose }) {
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedClient, setSelectedClient] = useState('');
+    const [inputTextDateDue, setInputTextDateDue] = useState('');
 
     useEffect(() => {
         setLoading(true);
@@ -38,7 +39,14 @@ export default function CreateInvoiceModal({ onClose }) {
         setSelectedClient(value);
     }
 
+    const handleDateChange = (event) => {
+        setInputTextDateDue(event.target.value);
+    }
+
     const selectClientData = clients.find(client => client._id === selectedClient)
+
+    const today = new Date();
+    
 
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={onClose} >
@@ -66,7 +74,11 @@ export default function CreateInvoiceModal({ onClose }) {
                                         <div className="grid items-center gap-4">
                                             <div className="flex flex-col space-y-1.5">
                                                 <Label htmlFor="Date due">Date due</Label>
-                                                <Input id="name" placeholder="Date due" />
+                                                <Input 
+                                                    id="name" 
+                                                    placeholder="Date due" 
+                                                    value={inputTextDateDue}
+                                                    onChange={handleDateChange}/>
                                             </div>
                                             <div className="flex flex-col space-y-1.5">
                                                 <Label htmlFor="Select client">Select client</Label>
@@ -130,11 +142,18 @@ export default function CreateInvoiceModal({ onClose }) {
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
                                                 <div className="flex justify-between flex-row w-full">
                                                     <p className="font-bold">Invoice date</p>
-                                                    <p>13/06/2024</p>
+                                                    <p>{today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear()}</p>
                                                 </div>
                                                 <div className="flex justify-between flex-row w-full">
                                                     <p className="font-bold">Due date</p>
-                                                    <p>13/06/2024</p>
+                                                    {/* <p>{inputTextDateDue}</p> */}
+                                                    {inputTextDateDue ? (
+                                                        <>
+                                                        <p>{inputTextDateDue}</p>
+                                                        </>
+                                                    ) :(
+                                                        <p>Type in a date</p>
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
