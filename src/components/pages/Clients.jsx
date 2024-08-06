@@ -21,17 +21,6 @@ export default function Clients() {
                 console.log(error);
                 setLoading(false);
             });
-        // setLoading(true);
-        // Axios
-        //     .get('http://localhost:4000/invoices')
-        //     .then((response) => {
-        //         setInvoices(response.data.data);
-        //         setLoading(false);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //         setLoading(false);
-        //     })
     }, []);
 
     return(
