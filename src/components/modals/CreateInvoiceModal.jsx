@@ -26,7 +26,7 @@ export default function CreateInvoiceModal({ onClose }) {
     const [total, setTotal] = useState('');
     const [invoice, setInvoice] = useState('')
 
-    // clients
+    // invoice
     useEffect(() => {
         setLoading(true);
         fetch('http://localhost:4000/create/invoice', {
@@ -51,7 +51,7 @@ export default function CreateInvoiceModal({ onClose }) {
             }
         })
         .then(data => {
-            console.log(data._id);
+            // console.log('here is the inv' + ' ' + data._id);
             setInvoice(data._id);
         })
         .catch((error) => {
@@ -60,6 +60,8 @@ export default function CreateInvoiceModal({ onClose }) {
             console.log(error);
         })
     }, []);
+
+    // console.log('here is the inv2' + '_______ ' + invoice);
 
     // clients
     useEffect(() => {
@@ -132,6 +134,7 @@ export default function CreateInvoiceModal({ onClose }) {
     console.log({invoice});
     console.log({client});
 
+
     // create line item
     const handleCreateLineItem = () => {
         const data = {
@@ -196,7 +199,43 @@ export default function CreateInvoiceModal({ onClose }) {
 
     console.log({lineItems});
 
+    const editInoivceWithClientLineItems = () => {
 
+        if (!lineItems || !selectedClient) {
+            alert('Make sure you fill the required fields')
+            return;
+        }
+
+        setLoading(true);
+
+        const data = {
+            client: selectedClient,
+            lineItems: lineItems.map(item => item.id),
+        };
+
+        fetch(`http://localhost:4000/invoices/${invoice}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => {
+            setLoading(false);
+            if (response.status === 200) {
+                console.log('invoice saved');
+                onClose();
+            } else {
+                alert('failed to save')
+            }
+
+        })
+        .catch((error) => {
+            console.log(error);
+            setLoading(false);
+        });
+    }
 
 
     return (
@@ -421,7 +460,7 @@ export default function CreateInvoiceModal({ onClose }) {
                                 <div className="flex-1">
                                     <div className="flex flex-col gap-4">
                                         <Button variant="secondary" className="w-full items-center" onClick={onClose}>Close</Button>
-                                        <Button className="w-full items-center">Save</Button>
+                                        <Button className="w-full items-center" onClick={editInoivceWithClientLineItems} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Save invoice'}</Button>
                                     </div>
                                 </div>
                         </CardFooter>
