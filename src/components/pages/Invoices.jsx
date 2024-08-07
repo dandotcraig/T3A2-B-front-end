@@ -27,7 +27,53 @@ export default function Invoices() {
 
     console.log({invoices});
 
-    
+    // const deleteInvoiceById = (id) => {
+    //     setLoading(true);
+    //     fetch(`http://localhost:4000/invoices/$(id)`, {
+    //         method: 'DELETE',
+    //         credentials: 'include',
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setInvoices(invoices.filter(invoice => invoice._id === id));
+    //             setLoading(false);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setLoading(false);
+    //         });
+    // };
+
+    const deleteInvoiceById = (id) => {
+        setLoading(true);
+        // const invoiceDeleteId = invoice.find(user => invoice._id === id)
+
+        // if (!invoiceDeleteId) {
+        //     console.log("Invoice not found");
+        //     setLoading(falseo);
+        //     return;
+        // }
+        fetch(`http://localhost:4000/invoices/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        })
+            .then((response) => {
+                setLoading(false);
+                if (response.status === 200 || response.status === 204) {
+                    console.log('invoice deleted');
+                    setInvoices(invoices.filter(invoice => invoice._id !== id));
+                    // return response.json();
+                } else if (response.status === 400) {
+                    alert('Failed deleting invoice')
+                } else {
+                    alert('Something went wrong')
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    };
 
     return(
         <>
@@ -53,7 +99,7 @@ export default function Invoices() {
                                 <TableCell>
                                     <div className="flex flex-row gap-2">   
                                         <FilePenLine className="h-4 w-4" />
-                                        <Trash2 className="h-4 w-4" />
+                                        <Trash2 className="h-4 w-4" onClick={() => deleteInvoiceById(invoice._id)} />
                                     </div>
                                 </TableCell>
                                 <TableCell className="text-right">test</TableCell>
