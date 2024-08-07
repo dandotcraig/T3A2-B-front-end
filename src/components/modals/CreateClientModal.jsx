@@ -13,8 +13,7 @@ export default function CreateClientModal({ onClose }) {
     const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleSaveClient = () => {
-
+    const handleCreateClient = () => {
         const data = {
             businessName,
             businessAbn,
@@ -114,7 +113,7 @@ export default function CreateClientModal({ onClose }) {
                     </CardContent>
                 <CardFooter className="flex flex-col justify-between gap-4">
                     <Button variant="secondary" className="w-full items-center" onClick={onClose}>Close</Button>
-                    <Button className="w-full items-center" onClick={handleSaveClient} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Save'}</Button>
+                    <Button className="w-full items-center" onClick={handleCreateClient} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Save'}</Button>
                 </CardFooter>
             </Card>
         </div>    

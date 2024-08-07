@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, CardContentsm } from "@/components/ui/card";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
@@ -14,18 +14,69 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 export default function CreateInvoiceModal({ onClose }) {
     // client dropdown menu/selector
     const [clients, setClients] = useState([]);
+    const [lineItems, setlineItems] = useState([])
     const [loading, setLoading] = useState(false);
     const [selectedClient, setSelectedClient] = useState('');
+    const [inputTextDateDue, setInputTextDateDue] = useState('');
+    const [refresh, setrefresh] = useState(false)
 
+    const [description, setDescription] = useState('')
+    const [quantity, setQuantity] = useState('');
+    const [unitPrice, setUnitPrice] = useState('');
+    const [total, setTotal] = useState('');
+    const [invoice, setInvoice] = useState('')
+
+    // clients
+    useEffect(() => {
+        setLoading(true);
+        fetch('http://localhost:4000/create/invoice', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+        .then((response) => {
+            setLoading(false);
+            if (response.status === 201) {
+                // alert('Success creating invoice')
+                console.log('great success');
+                return response.json();
+                // onClose();
+            } else if (response.status === 400) {
+                alert('Failed creating invoice')
+            } else {
+                alert('Something went wrong')
+            }
+        })
+        .then(data => {
+            console.log(data._id);
+            setInvoice(data._id);
+        })
+        .catch((error) => {
+            setLoading(false);
+            alert('An error happened while creating a line item')
+            console.log(error);
+        })
+    }, []);
+
+    // clients
     useEffect(() => {
         setLoading(true);
         fetch('http://localhost:4000/clients', {
             method: 'GET',
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
         })
-            .then(response => response.json())
+            .then(response => 
+                response.json())
             .then(data => {
                 setClients(data.data);
+                // console.log("client" + data.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -34,11 +85,119 @@ export default function CreateInvoiceModal({ onClose }) {
             });
     }, []);
 
-    const handleClientChange = (value) => {
-        setSelectedClient(value);
-    }
+    
 
     const selectClientData = clients.find(client => client._id === selectedClient)
+    
+
+    let client = selectedClient;
+
+    console.log('this is clinet' + ' ' + client);
+
+    const handleClientChange = (value) => {
+        setSelectedClient(value);
+
+    }
+    
+    // dates
+    const handleDateChange = (event) => {
+        setInputTextDateDue(event.target.value);
+    }
+
+    // dates
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+    }
+
+    const today = new Date();
+    
+    // line items
+
+    const quantityHandler = (event) => {
+        const quantity = event.target.value
+        setQuantity(quantity);
+        setTotal(quantity * unitPrice)
+    }
+
+    const unitPriceHandler = (event) => {
+        const unitprice = event.target.value
+        setUnitPrice(unitprice);
+        setTotal(quantity * unitprice);
+    }
+
+    console.log({description});
+    console.log({quantity});
+    console.log({unitPrice});
+    console.log({total});
+    console.log({invoice});
+    console.log({client});
+
+    // create line item
+    const handleCreateLineItem = () => {
+        const data = {
+            description,
+            quantity,
+            unitPrice,
+            total,
+            invoice,
+        };
+        setLoading(true);
+        fetch('http://localhost:4000/create/lineitem', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(data)
+        })
+        .then((response) => {
+            setLoading(false);
+            if (response.status === 201) {
+                // alert('Success creating a line item')
+                // onClose();
+                setrefresh(true);
+            } else if (response.status === 400) {
+                alert('Check the fields')
+            } else {
+                alert('Something went wrong')
+            }
+        })
+        .catch((error) => {
+            setLoading(false);
+            alert('An error happened while creating a line item')
+            console.log(error);
+        })
+    };
+
+    // get all line item
+    // clients
+    useEffect(() => {
+        setLoading(true);
+        fetch('http://localhost:4000/lineitems', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+            .then(response => 
+                response.json())
+            .then(data => {
+                setlineItems(data.data);
+                // console.log("client" + data.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    }, [refresh]);
+
+    console.log({lineItems});
+
+
+
 
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={onClose} >
@@ -66,7 +225,11 @@ export default function CreateInvoiceModal({ onClose }) {
                                         <div className="grid items-center gap-4">
                                             <div className="flex flex-col space-y-1.5">
                                                 <Label htmlFor="Date due">Date due</Label>
-                                                <Input id="name" placeholder="Date due" />
+                                                <Input 
+                                                    id="name" 
+                                                    placeholder="Date due" 
+                                                    value={inputTextDateDue}
+                                                    onChange={handleDateChange}/>
                                             </div>
                                             <div className="flex flex-col space-y-1.5">
                                                 <Label htmlFor="Select client">Select client</Label>
@@ -88,13 +251,28 @@ export default function CreateInvoiceModal({ onClose }) {
                                             </div>
                                             <div className="flex mt-16 flex-col gap-2 space-y-1.5">
                                                 <Label htmlFor="Line item">Line item</Label>
-                                                <Input id="Description" placeholder="Description" />
-                                                <Input id="Quantity" placeholder="Quantity" />
-                                                <Input id="Unit price" placeholder="Unit price" />
+                                                <Input 
+                                                    id="Description" 
+                                                    placeholder="Description"
+                                                    value={description}
+                                                    onChange={handleDescriptionChange} />
+                                                <Input 
+                                                    type="number"
+                                                    id="quantity" 
+                                                    placeholder="quantity"
+                                                    value={quantity}
+                                                    onChange={quantityHandler} />
+                                                <Input 
+                                                    type="number"
+                                                    id="Unit price" 
+                                                    placeholder="Unit price"
+                                                    value={unitPrice}
+                                                    onChange={unitPriceHandler} />
                                                 
                                             </div>
                                             <div className='mt-4'>
-                                                <Button className="w-full items-center">Create line item</Button>
+                                                <Button className="w-full items-center" onClick={handleCreateLineItem} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Create line item'}</Button>
+                                                
                                             </div>
                                         </div>
                                         
@@ -130,11 +308,18 @@ export default function CreateInvoiceModal({ onClose }) {
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
                                                 <div className="flex justify-between flex-row w-full">
                                                     <p className="font-bold">Invoice date</p>
-                                                    <p>13/06/2024</p>
+                                                    <p>{today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear()}</p>
                                                 </div>
                                                 <div className="flex justify-between flex-row w-full">
                                                     <p className="font-bold">Due date</p>
-                                                    <p>13/06/2024</p>
+                                                    {/* <p>{inputTextDateDue}</p> */}
+                                                    {inputTextDateDue ? (
+                                                        <>
+                                                        <p>{inputTextDateDue}</p>
+                                                        </>
+                                                    ) :(
+                                                        <p>Type in a date</p>
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
@@ -192,18 +377,20 @@ export default function CreateInvoiceModal({ onClose }) {
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                <TableRow >
-                                                    <TableCell className="font-medium">Description 1</TableCell>
-                                                    <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">5</TableCell>
-                                                    <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">$50</TableCell>
-                                                    <TableCell>
-                                                        <div className="flex flex-row gap-2">   
-                                                            <FilePenLine className="h-4 w-4" />
-                                                            <Trash2 className="h-4 w-4" />
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell className="text-right">$249</TableCell>
-                                                </TableRow>
+                                                {lineItems.map((lineItem, index) => (
+                                                    <TableRow key={lineItem._id} >
+                                                        <TableCell className="font-medium">{lineItem.description}</TableCell>
+                                                        <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.quantity}</TableCell>
+                                                        <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.unitPrice}</TableCell>
+                                                        <TableCell>
+                                                            <div className="flex flex-row gap-2">   
+                                                                <FilePenLine className="h-4 w-4" />
+                                                                <Trash2 className="h-4 w-4" />
+                                                            </div>
+                                                        </TableCell>
+                                                        <TableCell className="text-right">{lineItem.total}</TableCell>
+                                                    </TableRow>
+                                                ))}
                                             </TableBody>
                                         </Table>
                                     </Card>     
