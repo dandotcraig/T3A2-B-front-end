@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 export default function CreateInvoiceModal({ onClose }) {
     // client dropdown menu/selector
     const [clients, setClients] = useState([]);
+    const [lineItems, setlineItems] = useState([])
     const [loading, setLoading] = useState(false);
     const [selectedClient, setSelectedClient] = useState('');
     const [inputTextDateDue, setInputTextDateDue] = useState('');
@@ -65,10 +66,16 @@ export default function CreateInvoiceModal({ onClose }) {
         fetch('http://localhost:4000/clients', {
             method: 'GET',
             credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
         })
-            .then(response => response.json())
+            .then(response => 
+                response.json())
             .then(data => {
                 setClients(data.data);
+                // console.log("client" + data.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -77,7 +84,14 @@ export default function CreateInvoiceModal({ onClose }) {
             });
     }, []);
 
+    
+
     const selectClientData = clients.find(client => client._id === selectedClient)
+    
+
+    let client = selectedClient;
+
+    console.log('this is clinet' + ' ' + client);
 
     const handleClientChange = (value) => {
         setSelectedClient(value);
@@ -115,14 +129,16 @@ export default function CreateInvoiceModal({ onClose }) {
     console.log({unitPrice});
     console.log({total});
     console.log({invoice});
+    console.log({client});
 
+    // create line item
     const handleCreateLineItem = () => {
         const data = {
             description,
             quantity,
             unitPrice,
             total,
-            invoice
+            invoice,
         };
         setLoading(true);
         fetch('http://localhost:4000/create/lineitem', {
@@ -136,8 +152,8 @@ export default function CreateInvoiceModal({ onClose }) {
         .then((response) => {
             setLoading(false);
             if (response.status === 201) {
-                alert('Success creating a line item')
-                onClose();
+                // alert('Success creating a line item')
+                // onClose();
             } else if (response.status === 400) {
                 alert('Check the fields')
             } else {
@@ -150,6 +166,36 @@ export default function CreateInvoiceModal({ onClose }) {
             console.log(error);
         })
     };
+
+    // get all line item
+    // clients
+    useEffect(() => {
+        setLoading(true);
+        fetch('http://localhost:4000/lineitems', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+            .then(response => 
+                response.json())
+            .then(data => {
+                setlineItems(data.data);
+                // console.log("client" + data.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    }, []);
+
+    console.log({lineItems});
+
+
+
 
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={onClose} >
@@ -329,20 +375,20 @@ export default function CreateInvoiceModal({ onClose }) {
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                <TableRow >
-                                                    <TableCell 
-                                                        className="font-medium"
-                                                        >{description}</TableCell>
-                                                    <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{quantity}</TableCell>
-                                                    <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{unitPrice}</TableCell>
-                                                    <TableCell>
-                                                        <div className="flex flex-row gap-2">   
-                                                            <FilePenLine className="h-4 w-4" />
-                                                            <Trash2 className="h-4 w-4" />
-                                                        </div>
-                                                    </TableCell>
-                                                    <TableCell className="text-right">{total}</TableCell>
-                                                </TableRow>
+                                                {lineItems.map((lineItem, index) => (
+                                                    <TableRow key={lineItem._id} >
+                                                        <TableCell className="font-medium">{lineItem.description}</TableCell>
+                                                        <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.quantity}</TableCell>
+                                                        <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.unitPrice}</TableCell>
+                                                        <TableCell>
+                                                            <div className="flex flex-row gap-2">   
+                                                                <FilePenLine className="h-4 w-4" />
+                                                                <Trash2 className="h-4 w-4" />
+                                                            </div>
+                                                        </TableCell>
+                                                        <TableCell className="text-right">{lineItem.total}</TableCell>
+                                                    </TableRow>
+                                                ))}
                                             </TableBody>
                                         </Table>
                                     </Card>     
