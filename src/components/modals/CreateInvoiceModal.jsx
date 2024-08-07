@@ -18,6 +18,7 @@ export default function CreateInvoiceModal({ onClose }) {
     const [loading, setLoading] = useState(false);
     const [selectedClient, setSelectedClient] = useState('');
     const [inputTextDateDue, setInputTextDateDue] = useState('');
+    const [refresh, setrefresh] = useState(false)
 
     const [description, setDescription] = useState('')
     const [quantity, setQuantity] = useState('');
@@ -154,6 +155,7 @@ export default function CreateInvoiceModal({ onClose }) {
             if (response.status === 201) {
                 // alert('Success creating a line item')
                 // onClose();
+                setrefresh(true);
             } else if (response.status === 400) {
                 alert('Check the fields')
             } else {
@@ -190,7 +192,7 @@ export default function CreateInvoiceModal({ onClose }) {
                 console.log(error);
                 setLoading(false);
             });
-    }, []);
+    }, [refresh]);
 
     console.log({lineItems});
 
