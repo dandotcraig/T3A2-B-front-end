@@ -19,9 +19,45 @@ export default function CreateInvoiceModal({ onClose }) {
     const [inputTextDateDue, setInputTextDateDue] = useState('');
 
     const [description, setDescription] = useState('')
-    const [Quantity, setQuantity] = useState('');
+    const [quantity, setQuantity] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
     const [total, setTotal] = useState('');
+    const [invoice, setInvoice] = useState('')
+
+    // clients
+    useEffect(() => {
+        setLoading(true);
+        fetch('http://localhost:4000/create/invoice', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+        .then((response) => {
+            setLoading(false);
+            if (response.status === 201) {
+                // alert('Success creating invoice')
+                console.log('great success');
+                return response.json();
+                // onClose();
+            } else if (response.status === 400) {
+                alert('Failed creating invoice')
+            } else {
+                alert('Something went wrong')
+            }
+        })
+        .then(data => {
+            console.log(data._id);
+            setInvoice(data._id);
+        })
+        .catch((error) => {
+            setLoading(false);
+            alert('An error happened while creating a line item')
+            console.log(error);
+        })
+    }, []);
 
     // clients
     useEffect(() => {
@@ -53,6 +89,11 @@ export default function CreateInvoiceModal({ onClose }) {
         setInputTextDateDue(event.target.value);
     }
 
+    // dates
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+    }
+
     const today = new Date();
     
     // line items
@@ -69,12 +110,19 @@ export default function CreateInvoiceModal({ onClose }) {
         setTotal(quantity * unitprice);
     }
 
+    console.log({description});
+    console.log({quantity});
+    console.log({unitPrice});
+    console.log({total});
+    console.log({invoice});
+
     const handleCreateLineItem = () => {
         const data = {
             description,
-            Quantity,
+            quantity,
             unitPrice,
-            Total,
+            total,
+            invoice
         };
         setLoading(true);
         fetch('http://localhost:4000/create/lineitem', {
@@ -155,13 +203,19 @@ export default function CreateInvoiceModal({ onClose }) {
                                             </div>
                                             <div className="flex mt-16 flex-col gap-2 space-y-1.5">
                                                 <Label htmlFor="Line item">Line item</Label>
-                                                <Input id="Description" placeholder="Description" />
                                                 <Input 
-                                                    id="Quantity" 
-                                                    placeholder="Quantity"
-                                                    value={Quantity}
+                                                    id="Description" 
+                                                    placeholder="Description"
+                                                    value={description}
+                                                    onChange={handleDescriptionChange} />
+                                                <Input 
+                                                    type="number"
+                                                    id="quantity" 
+                                                    placeholder="quantity"
+                                                    value={quantity}
                                                     onChange={quantityHandler} />
                                                 <Input 
+                                                    type="number"
                                                     id="Unit price" 
                                                     placeholder="Unit price"
                                                     value={unitPrice}
@@ -276,9 +330,11 @@ export default function CreateInvoiceModal({ onClose }) {
                                             </TableHeader>
                                             <TableBody>
                                                 <TableRow >
-                                                    <TableCell className="font-medium">Description 1</TableCell>
-                                                    <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">5</TableCell>
-                                                    <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">$50</TableCell>
+                                                    <TableCell 
+                                                        className="font-medium"
+                                                        >{description}</TableCell>
+                                                    <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{quantity}</TableCell>
+                                                    <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{unitPrice}</TableCell>
                                                     <TableCell>
                                                         <div className="flex flex-row gap-2">   
                                                             <FilePenLine className="h-4 w-4" />
