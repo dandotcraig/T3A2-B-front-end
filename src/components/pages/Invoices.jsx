@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableFooter, TableRow } from "../ui/table";
 // import { Link } from "react-router-dom";
 import Spinner from '../modules/Spinner'
-import { FilePenLine, Trash2 } from "lucide-react";
+import { FilePenLine, IdCard, Trash2 } from "lucide-react";
 
 export default function Invoices() {
     const [invoices, setInvoices] = useState([]);
@@ -23,18 +23,11 @@ export default function Invoices() {
                 console.log(error);
                 setLoading(false);
             });
-        // setLoading(true);
-        // Axios
-        //     .get('http://localhost:4000/invoices')
-        //     .then((response) => {
-        //         setInvoices(response.data.data);
-        //         setLoading(false);
-        //     })
-        //     .catch((error) => {
-        //         console.log(error);
-        //         setLoading(false);
-        //     })
     }, []);
+
+    console.log({invoices});
+
+    
 
     return(
         <>
