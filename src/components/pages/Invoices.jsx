@@ -27,32 +27,10 @@ export default function Invoices() {
 
     console.log({invoices});
 
-    // const deleteInvoiceById = (id) => {
-    //     setLoading(true);
-    //     fetch(`http://localhost:4000/invoices/$(id)`, {
-    //         method: 'DELETE',
-    //         credentials: 'include',
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setInvoices(invoices.filter(invoice => invoice._id === id));
-    //             setLoading(false);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setLoading(false);
-    //         });
-    // };
+
 
     const deleteInvoiceById = (id) => {
         setLoading(true);
-        // const invoiceDeleteId = invoice.find(user => invoice._id === id)
-
-        // if (!invoiceDeleteId) {
-        //     console.log("Invoice not found");
-        //     setLoading(falseo);
-        //     return;
-        // }
         fetch(`http://localhost:4000/invoices/${id}`, {
             method: 'DELETE',
             credentials: 'include',

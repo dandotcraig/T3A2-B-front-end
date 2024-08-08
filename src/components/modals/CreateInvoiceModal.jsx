@@ -187,6 +187,32 @@ export default function CreateInvoiceModal({ onClose }) {
 
     console.log({lineItems});
 
+    const deleteLineItemById = (id) => {
+        setLoading(true);
+        fetch(`http://localhost:4000/lineitems/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        })
+            .then((response) => {
+                setLoading(false);
+                if (response.status === 200 || response.status === 204) {
+                    console.log('line item deleted');
+                    setlineItems(lineItems.filter(lineItem => lineItem._id !== id));
+                    // return response.json();
+                } else if (response.status === 400) {
+                    alert('Failed deleting line item')
+                } else {
+                    alert('Something went wrong')
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    };
+
+
+    // PHASE FOUR: EDIT INVOICE WITH LINE ITEMS AND SAVE
     const editInoivceWithClientLineItems = () => {
         if (!lineItems || !selectedClient) {
             alert('Make sure you fill the required fields')
@@ -197,8 +223,9 @@ export default function CreateInvoiceModal({ onClose }) {
 
         const data = {
             client: selectedClient,
-            lineItems: lineItems.map(item => item.id),
+            lineItems: lineItems.map(item => item._id),
         };
+        console.log(data);
 
         fetch(`http://localhost:4000/invoices/${invoice}`, {
             method: 'PUT',
@@ -439,7 +466,7 @@ export default function CreateInvoiceModal({ onClose }) {
                                                         <TableCell>
                                                             <div className="flex flex-row gap-2">   
                                                                 <FilePenLine className="h-4 w-4" />
-                                                                <Trash2 className="h-4 w-4" />
+                                                                <Trash2 className="h-4 w-4" onClick={() => deleteLineItemById(lineItem._id)} />
                                                             </div>
                                                         </TableCell>
                                                         <TableCell className="text-right">{lineItem.total}</TableCell>
