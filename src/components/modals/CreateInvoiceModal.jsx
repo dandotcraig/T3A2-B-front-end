@@ -174,33 +174,32 @@ export default function CreateInvoiceModal({ onClose }) {
 
     // get all line item
     // clients
-    useEffect(() => {
-        setLoading(true);
-        fetch('http://localhost:4000/lineitems', {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify()
-        })
-            .then(response => 
-                response.json())
-            .then(data => {
-                setlineItems(data.data);
-                // console.log("client" + data.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-                setLoading(false);
-            });
-    }, [refresh]);
+    // useEffect(() => {
+    //     setLoading(true);
+    //     fetch('http://localhost:4000/lineitems', {
+    //         method: 'GET',
+    //         credentials: 'include',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify()
+    //     })
+    //         .then(response => 
+    //             response.json())
+    //         .then(data => {
+    //             setlineItems(data.data);
+    //             // console.log("client" + data.data);
+    //             setLoading(false);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setLoading(false);
+    //         });
+    // }, [refresh]);
 
     console.log({lineItems});
 
     const editInoivceWithClientLineItems = () => {
-
         if (!lineItems || !selectedClient) {
             alert('Make sure you fill the required fields')
             return;
@@ -221,20 +220,26 @@ export default function CreateInvoiceModal({ onClose }) {
             },
             body: JSON.stringify(data)
         })
+        // 
         .then((response) => {
-            setLoading(false);
+            // setLoading(false);
             if (response.status === 200) {
                 console.log('invoice saved');
+                console.log('here are the line items' + lineItems)
+                // setlineItems([])
                 onClose();
             } else {
                 alert('failed to save')
             }
-
         })
         .catch((error) => {
             console.log(error);
+        })
+        .finally(() => {
+            setlineItems([])
             setLoading(false);
-        });
+            onClose();
+        })
     }
 
 
