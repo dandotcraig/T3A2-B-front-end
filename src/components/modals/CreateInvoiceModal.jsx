@@ -9,17 +9,14 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { FilePenLine, Trash2 } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-
-
 export default function CreateInvoiceModal({ onClose }) {
     // client dropdown menu/selector
     const [clients, setClients] = useState([]);
-    const [lineItems, setlineItems] = useState([])
+    const [lineItems, setlineItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedClient, setSelectedClient] = useState('');
     const [inputTextDateDue, setInputTextDateDue] = useState('');
     const [refresh, setrefresh] = useState(false)
-
     const [description, setDescription] = useState('')
     const [quantity, setQuantity] = useState('');
     const [unitPrice, setUnitPrice] = useState('');
@@ -51,7 +48,6 @@ export default function CreateInvoiceModal({ onClose }) {
             }
         })
         .then(data => {
-            // console.log('here is the inv' + ' ' + data._id);
             setInvoice(data._id);
         })
         .catch((error) => {
@@ -60,8 +56,6 @@ export default function CreateInvoiceModal({ onClose }) {
             console.log(error);
         })
     }, []);
-
-    // console.log('here is the inv2' + '_______ ' + invoice);
 
     // clients
     useEffect(() => {
@@ -78,7 +72,6 @@ export default function CreateInvoiceModal({ onClose }) {
                 response.json())
             .then(data => {
                 setClients(data.data);
-                // console.log("client" + data.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -87,53 +80,41 @@ export default function CreateInvoiceModal({ onClose }) {
             });
     }, []);
 
-    
-
     const selectClientData = clients.find(client => client._id === selectedClient)
     
-
     let client = selectedClient;
 
-    console.log('this is clinet' + ' ' + client);
-
+    // client changed handler
     const handleClientChange = (value) => {
         setSelectedClient(value);
-
     }
     
-    // dates
+    // dates handler
     const handleDateChange = (event) => {
         setInputTextDateDue(event.target.value);
     }
 
-    // dates
+    // todays date handler
+    const today = new Date();
+
+    // description handler
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     }
-
-    const today = new Date();
-    
-    // line items
-
+ 
+    // quantity handler
     const quantityHandler = (event) => {
         const quantity = event.target.value
         setQuantity(quantity);
         setTotal(quantity * unitPrice)
     }
 
+    // unitprice handler
     const unitPriceHandler = (event) => {
         const unitprice = event.target.value
         setUnitPrice(unitprice);
         setTotal(quantity * unitprice);
     }
-
-    console.log({description});
-    console.log({quantity});
-    console.log({unitPrice});
-    console.log({total});
-    console.log({invoice});
-    console.log({client});
-
 
     // create line item
     const handleCreateLineItem = () => {
@@ -153,17 +134,23 @@ export default function CreateInvoiceModal({ onClose }) {
             credentials: 'include',
             body: JSON.stringify(data)
         })
-        .then((response) => {
-            setLoading(false);
+        .then(response => {
             if (response.status === 201) {
-                // alert('Success creating a line item')
+                // alert('Success creating invoice')
+                console.log('great success' + data);
+                return response.json();
                 // onClose();
-                setrefresh(true);
             } else if (response.status === 400) {
-                alert('Check the fields')
+                alert('Failed creating invoice')
             } else {
                 alert('Something went wrong')
             }
+        })
+        .then(addLineItem => {
+            setLoading(false);
+            if (addLineItem._id) {
+                setlineItems(appendLineItem => [...appendLineItem, addLineItem])
+            } 
         })
         .catch((error) => {
             setLoading(false);
@@ -172,8 +159,7 @@ export default function CreateInvoiceModal({ onClose }) {
         })
     };
 
-    // get all line item
-    // clients
+    // get all line item - this will be used when editing.
     // useEffect(() => {
     //     setLoading(true);
     //     fetch('http://localhost:4000/lineitems', {
@@ -220,7 +206,6 @@ export default function CreateInvoiceModal({ onClose }) {
             },
             body: JSON.stringify(data)
         })
-        // 
         .then((response) => {
             // setLoading(false);
             if (response.status === 200) {
