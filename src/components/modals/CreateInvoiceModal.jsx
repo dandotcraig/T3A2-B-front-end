@@ -49,6 +49,7 @@ export default function CreateInvoiceModal({ onClose }) {
         })
         .then(data => {
             setInvoice(data._id);
+            console.log(data);
         })
         .catch((error) => {
             setLoading(false);
@@ -83,6 +84,11 @@ export default function CreateInvoiceModal({ onClose }) {
     const selectClientData = clients.find(client => client._id === selectedClient)
     
     let client = selectedClient;
+
+    const handleOnClose = () => {
+        deleteInvoiceById(invoice);
+        onClose();
+    }
 
     // client changed handler
     const handleClientChange = (value) => {
@@ -211,6 +217,30 @@ export default function CreateInvoiceModal({ onClose }) {
             });
     };
 
+    const deleteInvoiceById = (id) => {
+        setLoading(true);
+        fetch(`http://localhost:4000/invoices/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        })
+            .then((response) => {
+                setLoading(false);
+                if (response.status === 200 || response.status === 204) {
+                    console.log('invoice deleted');
+                    setInvoices(invoices.filter(invoice => invoice._id !== id));
+                    // return response.json();
+                } else if (response.status === 400) {
+                    alert('Failed deleting invoice')
+                } else {
+                    alert('Something went wrong')
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    };
+
 
     // PHASE FOUR: EDIT INVOICE WITH LINE ITEMS AND SAVE
     const editInoivceWithClientLineItems = () => {
@@ -281,7 +311,7 @@ export default function CreateInvoiceModal({ onClose }) {
     // }, [refresh]);
 
     return (
-        <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={onClose} >
+        <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={handleOnClose} >
             <ScrollArea className="h-[calc(100vh-4rem)] flex justify-center rounded-lg w-full mx-8 sm:mx-0 max-w-[1279px]" >
                 <div>
                     <Card className="w-full h-auto p-2 flex sm:flex-col md:flex-col lg:flex-row 2lx:flex-row" onClick={(event) => event.stopPropagation()}>
@@ -293,7 +323,7 @@ export default function CreateInvoiceModal({ onClose }) {
                                         <div className="flex flex-col w-full gap-2">
                                             <div className="flex justify-between flex-row w-full">
                                                 <CardTitle className="flex-grow">Invoice details</CardTitle>
-                                                <Button className="sm:flex md:flex lg:hidden xl:hidden 2xl:hidden" variant="outline" size="icon" onClick={onClose}>
+                                                <Button className="sm:flex md:flex lg:hidden xl:hidden 2xl:hidden" variant="outline" size="icon" onClick={handleOnClose}>
                                                     <X className="h-4 w-4" />
                                                 </Button>
                                             </div>
@@ -375,7 +405,7 @@ export default function CreateInvoiceModal({ onClose }) {
                                 <div className="w-full justify-between">
                                     <div className="flex justify-between flex-row">
                                         <CardTitle>Invoice</CardTitle>
-                                        <Button className="sm:hidden md:hidden lg:flex xl:flex" variant="outline" size="icon" onClick={onClose}>
+                                        <Button className="sm:hidden md:hidden lg:flex xl:flex" variant="outline" size="icon" onClick={handleOnClose}>
                                             <X className="h-4 w-4" />
                                         </Button>
                                     </div>
@@ -501,7 +531,7 @@ export default function CreateInvoiceModal({ onClose }) {
                             <CardFooter className="flex flex-row justify-between gap-8">
                                 <div className="flex-1">
                                     <div className="flex flex-col gap-4">
-                                        <Button variant="secondary" className="w-full items-center" onClick={onClose}>Close</Button>
+                                        <Button variant="secondary" className="w-full items-center" onClick={handleOnClose}>Close</Button>
                                         <Button className="w-full items-center" onClick={editInoivceWithClientLineItems} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Save invoice'}</Button>
                                     </div>
                                 </div>
