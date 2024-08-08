@@ -23,6 +23,32 @@ export default function Clients() {
             });
     }, []);
 
+    const deleteClientById = (id) => {
+        setLoading(true);
+        fetch(`http://localhost:4000/Clients/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        })
+            .then((response) => {
+
+                setLoading(false);
+                if (response.status === 200 || response.status === 204) {
+                    console.log('Client deleted');
+                    setClients(clients.filter(client => client._id !== id));
+                    // return response.json();
+                } else if (response.status === 400) {
+                    alert('Failed deleting Client')
+                } else {
+                    alert('Something went wrong')
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    };
+
+
     return(
         <>
             {loading ? (
@@ -44,7 +70,7 @@ export default function Clients() {
                                 <TableCell>
                                     <div className="flex flex-row gap-2">   
                                         <FilePenLine className="h-4 w-4" />
-                                        <Trash2 className="h-4 w-4" />
+                                        <Trash2 className="h-4 w-4" onClick={() => deleteClientById(client._id)} />
                                     </div>
                                 </TableCell>
                             </TableRow>

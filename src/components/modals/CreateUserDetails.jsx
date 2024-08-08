@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-export default function CreateClientModal({ onClose }) {
+export default function CreateUserModal({ onClose }) {
     const [businessName, setBusinessName] = useState('');
     const [businessAbn, setBusinessAbn] = useState('');
     const [businessAddress, setBusinessAddress] = useState('');
@@ -13,7 +13,7 @@ export default function CreateClientModal({ onClose }) {
     const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleCreateClient = () => {
+    const handleCreateUser = () => {
         const data = {
             businessName,
             businessAbn,
@@ -22,7 +22,7 @@ export default function CreateClientModal({ onClose }) {
             businessPhoneNumber,
         };
         setLoading(true);
-        fetch('http://localhost:4000/create/user', {
+        fetch('http://localhost:4000/user/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ export default function CreateClientModal({ onClose }) {
         .then((response) => {
             setLoading(false);
             if (response.status === 201) {
-                alert('Success creating a client')
+                alert('Success creating a User')
                 onClose();
             } else if (response.status === 400) {
                 alert('Check the fields')
@@ -43,7 +43,7 @@ export default function CreateClientModal({ onClose }) {
         })
         .catch((error) => {
             setLoading(false);
-            alert('An error happened while creating a client')
+            alert('An error happened while creating a User')
             console.log(error);
         })
     };
@@ -53,12 +53,12 @@ export default function CreateClientModal({ onClose }) {
             <Card className="h-[calc(100vh-4rem)] w-full p-4 flex flex-col gap-8 mx-8 sm:mx-0 max-w-[1279px]" onClick={(event) => event.stopPropagation()}>
                 <CardHeader>
                     <div className="flex justify-between flex-row">
-                        <CardTitle>Invoice</CardTitle>
+                        <CardTitle>Register your info</CardTitle>
                         <Button className="flex" variant="outline" size="icon" onClick={onClose}>
                             <X className="h-4 w-4" />
                         </Button>
                     </div>
-                    <CardDescription>Add client details below</CardDescription>
+                    <CardDescription>Add your details below</CardDescription>
                 </CardHeader>
                     <CardContent>
                     <form>
@@ -112,8 +112,8 @@ export default function CreateClientModal({ onClose }) {
                     </form>
                     </CardContent>
                 <CardFooter className="flex flex-col justify-between gap-4">
-                    <Button variant="secondary" className="w-full items-center" onClick={onClose}>Close</Button>
-                    <Button className="w-full items-center" onClick={handleCreateClient} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Save'}</Button>
+                    {/* <Button variant="secondary" className="w-full items-center" onClick={onClose}>Close</Button> */}
+                    <Button className="w-full items-center" onClick={handleCreateUser} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Save'}</Button>
                 </CardFooter>
             </Card>
         </div>    
