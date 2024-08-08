@@ -23,7 +23,7 @@ export default function CreateInvoiceModal({ onClose }) {
     const [total, setTotal] = useState('');
     const [invoice, setInvoice] = useState('')
 
-    // invoice
+    // PHASE ONE: CREATE INVOICE ID. invoice - create invoice instance and with ID for the line items and clients to be put to it
     useEffect(() => {
         setLoading(true);
         fetch('http://localhost:4000/create/invoice', {
@@ -116,7 +116,7 @@ export default function CreateInvoiceModal({ onClose }) {
         setTotal(quantity * unitprice);
     }
 
-    // create line item
+    // PHASE TWO: CREATE LINE ITEM AND SEND TO DB
     const handleCreateLineItem = () => {
         const data = {
             description,
@@ -135,9 +135,12 @@ export default function CreateInvoiceModal({ onClose }) {
             body: JSON.stringify(data)
         })
         .then(response => {
+            setLoading(false);
+            setrefresh(true);
             if (response.status === 201) {
                 // alert('Success creating invoice')
                 console.log('great success' + data);
+                
                 return response.json();
                 // onClose();
             } else if (response.status === 400) {
@@ -146,12 +149,6 @@ export default function CreateInvoiceModal({ onClose }) {
                 alert('Something went wrong')
             }
         })
-        .then(addLineItem => {
-            setLoading(false);
-            if (addLineItem._id) {
-                setlineItems(appendLineItem => [...appendLineItem, addLineItem])
-            } 
-        })
         .catch((error) => {
             setLoading(false);
             alert('An error happened while creating a line item')
@@ -159,29 +156,34 @@ export default function CreateInvoiceModal({ onClose }) {
         })
     };
 
-    // get all line item - this will be used when editing.
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch('http://localhost:4000/lineitems', {
-    //         method: 'GET',
-    //         credentials: 'include',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify()
-    //     })
-    //         .then(response => 
-    //             response.json())
-    //         .then(data => {
-    //             setlineItems(data.data);
-    //             // console.log("client" + data.data);
-    //             setLoading(false);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setLoading(false);
-    //         });
-    // }, [refresh]);
+    // PHASE THREE: REFRESH AND GET LINE ITEMS ASSOCIATED WITH invoiceID
+    useEffect(() => {
+        // only refresh if its true
+        if (!refresh) return;
+        setLoading(true);
+        fetch(`http://localhost:4000/lineitems/invoice/${invoice}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+            .then(response => 
+                response.json())
+            .then(data => {
+                setlineItems(data.data);
+                // console.log("client" + data.data);
+                setLoading(false);
+                setrefresh(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+                setrefresh(false);
+            });
+    // access the refresh and invoice id states
+    }, [refresh, invoice]);
 
     console.log({lineItems});
 
@@ -227,6 +229,29 @@ export default function CreateInvoiceModal({ onClose }) {
         })
     }
 
+    // get all line item - this will be used when editing.
+    // useEffect(() => {
+    //     setLoading(true);
+    //     fetch('http://localhost:4000/lineitems', {
+    //         method: 'GET',
+    //         credentials: 'include',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify()
+    //     })
+    //         .then(response => 
+    //             response.json())
+    //         .then(data => {
+    //             setlineItems(data.data);
+    //             // console.log("client" + data.data);
+    //             setLoading(false);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setLoading(false);
+    //         });
+    // }, [refresh]);
 
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={onClose} >
