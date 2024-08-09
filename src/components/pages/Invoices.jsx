@@ -104,7 +104,7 @@ export default function Invoices({ setTotal }) {
                                         <Trash2 className="h-4 w-4" onClick={() => deleteInvoiceById(invoice._id)} />
                                     </div>
                                 </TableCell>
-                                <TableCell className="text-right">{invoice.lineItemsTotal.toFixed(2)}</TableCell>
+                                <TableCell className="text-right">{invoice.lineItemsTotal}</TableCell>
                             </TableRow> 
                         ))}
                         

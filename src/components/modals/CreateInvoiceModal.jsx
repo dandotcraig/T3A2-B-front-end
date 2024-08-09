@@ -344,6 +344,10 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
         })
     }
 
+    let gst = lineItemsTotal * 0.1;
+
+    let gstTotal = lineItemsTotal * 1.1;
+
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={handleOnClose} >
             <ScrollArea className="h-[calc(100vh-4rem)] flex justify-center rounded-lg w-full mx-8 sm:mx-0 max-w-[1279px]" >
@@ -496,17 +500,18 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                 </div>
                                                 <div className="w-full">
                                                     <p className="font-bold">From</p>
-                                                    {addressCreated ? (
-                                                        <p>
-                                                            Add your address in settings
-                                                        </p>
-                                                    ) : (
+                                                    {addressCreated() ? (
                                                         <>
                                                             <p>{userAddress[0].businessName}</p>
                                                             <p>{userAddress[0].businessAbn}</p>
                                                             <p>{userAddress[0].businessAddress}</p>
                                                             <p>{userAddress[0].businessPhoneNumber}</p>
                                                         </>
+                                                        
+                                                    ) : (
+                                                        <p>
+                                                            Add your address in settings
+                                                        </p>
                                                         
                                                     )}
                                                     
@@ -521,7 +526,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                 <TableHead className="">Description</TableHead>
                                                 <TableHead className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center" >Quantity</TableHead>
                                                 <TableHead className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">Unit price</TableHead>
-                                                <TableHead >Delete</TableHead>
+                                                <TableHead className="text-center">Delete</TableHead>
                                                 <TableHead className="text-right">Amount</TableHead>
                                                 </TableRow>
                                             </TableHeader>
@@ -532,9 +537,9 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                         <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.quantity}</TableCell>
                                                         <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.unitPrice}</TableCell>
                                                         <TableCell>
-                                                            <div className="flex flex-row gap-2">   
-                                                                <FilePenLine className="h-4 w-4" />
-                                                                <Trash2 className="h-4 w-4" onClick={() => deleteLineItemById(lineItem._id)} />
+                                                            <div className="flex justify-center flex-row gap-2">   
+                                                                {/* <FilePenLine className="h-4 w-4" /> */}
+                                                                <Trash2 className=" h-4 w-4" onClick={() => deleteLineItemById(lineItem._id)} />
                                                             </div>
                                                         </TableCell>
                                                         <TableCell className="text-right">{lineItem.total}</TableCell>
@@ -550,15 +555,15 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                 <TableBody>
                                                     <TableRow>
                                                         <TableCell className="font-medium">Subtotal</TableCell>
-                                                        <TableCell className="text-right">$100</TableCell>
+                                                        <TableCell className="text-right">${lineItemsTotal.toFixed(2)}</TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell className="font-medium">GST</TableCell>
-                                                        <TableCell className="text-right">$10</TableCell>
+                                                        <TableCell className="text-right">${gst.toFixed(2)}</TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell className="font-medium">Total</TableCell>
-                                                        <TableCell className="text-right">$10</TableCell>
+                                                        <TableCell className="text-right">${gstTotal.toFixed(2)}</TableCell>
                                                     </TableRow>
                                                 </TableBody>
                                             </Table>
