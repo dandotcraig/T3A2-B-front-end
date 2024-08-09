@@ -12,6 +12,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     const [loading, setLoading] = useState(true);
     const [loadingClients, setLoadingClients] = useState(true);
     const [loadingUser, setLoadingUser] = useState(true);
+    const [loadingLineItems, setLoadingLineItems] = useState(true);
     // const [invoice, setInvoice] = useState('')
     const [clients, setClients] = useState('');
     const [clientDetails, setClientsDetails] = useState('');
@@ -124,33 +125,32 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
             });
     }, []);
 
-    // useEffect(() => {
-    //     // only refresh if its true
-    //     // if (!refresh) return;
-    //     setLoading(true);
-    //     fetch(`http://localhost:4000/lineitems/invoice/${invoiceId}`, {
-    //         method: 'GET',
-    //         credentials: 'include',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify()
-    //     })
-    //         .then(response => 
-    //             response.json())
-    //         .then(data => {
-    //             setlineItems(data.data);
-    //             // console.log("client" + data.data);
-    //             setLoading(false);
-    //             // setrefresh(false);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setLoading(false);
-    //             // setrefresh(false);
-    //         });
-    // // access the refresh and invoice id states
-    // }, []);
+    useEffect(() => {
+        // only refresh if its true
+        // if (!refresh) return;
+        fetch(`http://localhost:4000/lineitems/invoice/${invoiceId}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+            .then(response => 
+                response.json())
+            .then(data => {
+                setlineItems(data.data);
+                // console.log("client" + data.data);
+                setLoadingLineItems(false);
+                // setrefresh(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoadingLineItems(false);
+                // setrefresh(false);
+            });
+    // access the refresh and invoice id states
+    }, []);
 
     console.log(clientDetails);
 
@@ -256,7 +256,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                            {loading ? (
+                                            {loadingLineItems ? (
                                                 <Spinner />
                                             ) : (
                                                 <>
