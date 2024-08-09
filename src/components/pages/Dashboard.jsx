@@ -8,9 +8,11 @@ import CreateClientModal from "../modals/CreateClientModal";
 import CreateInvoiceModal from "../modals/CreateInvoiceModal";
 import HighlightCards from "../modules/highlight-cards";
 
+
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
     const [showModalInvoice, setShowModalInvoice] = useState(false);
+    
     const [refreshClients, setRefreshClients] = useState('');
     const [refreshInvoice, setRefreshInvoice] = useState('');
     
@@ -34,6 +36,7 @@ export default function Dashboard() {
 
             {showModalClient && <CreateClientModal setRefreshClients={setRefreshClients} onClose={() => setShowModalClient(false)}/>}
             {showModalInvoice && <CreateInvoiceModal setRefreshInvoice={setRefreshInvoice} onClose={() => setShowModalInvoice(false)}/>}
+            
 
         </Tabs>
     )

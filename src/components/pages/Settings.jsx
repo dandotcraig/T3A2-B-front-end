@@ -77,7 +77,7 @@ export default function Settings() {
                                 placeholder=" Add business ABN" />
                         </div>
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="Business address">Business address</Label>
+                            <Label htmlFor="Business email">Business email</Label>
                             <Input 
                                 id="businessEmail"
                                 type='text'

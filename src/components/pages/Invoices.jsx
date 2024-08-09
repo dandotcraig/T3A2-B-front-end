@@ -3,10 +3,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableFooter, Table
 // import { Link } from "react-router-dom";
 import Spinner from '../modules/Spinner'
 import { FilePenLine, IdCard, Trash2 } from "lucide-react";
+import EditInvoiceModal from "../modals/EditInvoiceModal";
 
-export default function Invoices({ refreshInvoice }) {
+export default function Invoices() {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [showModalEditInvoice, setShowModalEditInvoice] = useState(false);
+    const [editedInvoiceId, seteditedInvoiceId] = useState(null)
+
+    
 
     useEffect(() => {
         setLoading(true);
@@ -23,7 +28,7 @@ export default function Invoices({ refreshInvoice }) {
                 console.log(error);
                 setLoading(false);
             });
-    }, [refreshInvoice]);
+    }, []);
 
     console.log({invoices});
 
@@ -51,6 +56,11 @@ export default function Invoices({ refreshInvoice }) {
             });
     };
 
+    const openEditFunction = (id) => {
+        seteditedInvoiceId(id);
+        setShowModalEditInvoice(true);
+    }
+
     return(
         <>
             {loading ? (
@@ -74,7 +84,8 @@ export default function Invoices({ refreshInvoice }) {
                                 <TableCell>{invoice.client}</TableCell>
                                 <TableCell>
                                     <div className="flex flex-row gap-2">   
-                                        <FilePenLine className="h-4 w-4" />
+                                        <FilePenLine className="h-4 w-4" onClick={() => openEditFunction(invoice._id)} />
+                                        
                                         <Trash2 className="h-4 w-4" onClick={() => deleteInvoiceById(invoice._id)} />
                                     </div>
                                 </TableCell>
@@ -94,6 +105,7 @@ export default function Invoices({ refreshInvoice }) {
                     </TableFooter>
                 </Table>
             )}
+            {showModalEditInvoice && <EditInvoiceModal invoiceId={editedInvoiceId} onClose={() => setShowModalEditInvoice(false)}/>}
         </>
     )
 };
