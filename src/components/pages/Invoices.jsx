@@ -10,6 +10,7 @@ export default function Invoices() {
     const [loading, setLoading] = useState(false);
     const [showModalEditInvoice, setShowModalEditInvoice] = useState(false);
     const [editedInvoiceId, seteditedInvoiceId] = useState(null)
+    
 
     
 
@@ -70,6 +71,12 @@ export default function Invoices() {
         });
     };
 
+    const calculateTotalInvoices = (invoices) => {
+        return invoices.reduce((sum, invoice) => (invoice.lineItemsTotal || 0), 0)
+    }
+
+    const totalInvoice = calculateTotalInvoices(invoices);
+
     return(
         <>
             {loading ? (
@@ -90,7 +97,7 @@ export default function Invoices() {
                             <TableRow key={invoice._id}>
                                 <TableCell className="font-medium">{formatDate(invoice.createdAt)}</TableCell>
                                 {/* <TableCell>{invoice.client}</TableCell> */}
-                                <TableCell className="text-center">{invoice.businessName}</TableCell>
+                                <TableCell className="text-center">{invoice.clientName}</TableCell>
                                 <TableCell >
                                     <div className="flex justify-center flex-row gap-2">   
                                         <FilePenLine className="h-4 w-4" onClick={() => openEditFunction(invoice._id)} />
@@ -98,7 +105,7 @@ export default function Invoices() {
                                         <Trash2 className="h-4 w-4" onClick={() => deleteInvoiceById(invoice._id)} />
                                     </div>
                                 </TableCell>
-                                <TableCell className="text-right">test</TableCell>
+                                <TableCell className="text-right">{invoice.lineItemsTotal}</TableCell>
                             </TableRow> 
                         ))}
                         
@@ -109,7 +116,7 @@ export default function Invoices() {
                             <TableCell></TableCell>
                             <TableCell></TableCell>
 
-                            <TableCell className="text-right">$2,500.00</TableCell>
+                            <TableCell className="text-right">${totalInvoice}</TableCell>
                         </TableRow>
                     </TableFooter>
                 </Table>

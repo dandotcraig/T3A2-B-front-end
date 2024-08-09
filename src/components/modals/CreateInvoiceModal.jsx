@@ -155,6 +155,13 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
         setTotal(quantity * unitprice);
     }
 
+    const overallTotal = (lineItems) => {
+        return lineItems.reduce((sum, item) => sum + item.total, 0);
+    }
+
+    const lineItemsTotal = overallTotal(lineItems)
+    console.log('overallTotal ' + lineItemsTotal);
+
     // PHASE TWO: CREATE LINE ITEM AND SEND TO DB
     const handleCreateLineItem = () => {
         const data = {
@@ -278,6 +285,15 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
 
     const navigate = useNavigate();
 
+    console.log('bussy ' + (selectClientData ? selectClientData.businessName : 'No client selected'));
+
+    // let clientName = selectClientData.businessName;
+
+    // console.log({client});
+    // console.log({lineItem});
+    // console.log({clientName});
+    // console.log({lineItemsTotal});
+
     // PHASE FOUR: EDIT INVOICE WITH LINE ITEMS AND SAVE
     const editInoivceWithClientLineItems = () => {
         if (!lineItems || !selectedClient) {
@@ -290,8 +306,10 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
         const data = {
             client: selectedClient,
             lineItems: lineItems.map(item => item._id),
+            clientName: selectClientData.businessName,
+            lineItemsTotal: lineItemsTotal
         };
-        console.log(data);
+        
 
         fetch(`http://localhost:4000/invoices/${invoice}`, {
             method: 'PUT',
@@ -325,30 +343,6 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
             onClose();
         })
     }
-
-    // get all line item - this will be used when editing.
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch('http://localhost:4000/lineitems', {
-    //         method: 'GET',
-    //         credentials: 'include',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify()
-    //     })
-    //         .then(response => 
-    //             response.json())
-    //         .then(data => {
-    //             setlineItems(data.data);
-    //             // console.log("client" + data.data);
-    //             setLoading(false);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setLoading(false);
-    //         });
-    // }, [refresh]);
 
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={handleOnClose} >
