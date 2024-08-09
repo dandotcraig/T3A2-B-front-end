@@ -43,7 +43,7 @@ export default function Header() {
                     
                     {username && (
                         <>
-                            <p className="hidden sm:hidden md:flex lg:flex xl:flex">Hello {username}</p>
+                            <p className="hidden sm:hidden md:flex lg:flex xl:flex 2xl:flex">Hello {username}</p>
                             <ModeToggle />
                             <Link to="/"><Button onClick={logout} variant="outline">Logout</Button></Link>
                         </>

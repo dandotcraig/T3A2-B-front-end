@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableFooter, TableRow } from "../ui/table";
 // import { Link } from "react-router-dom";
 import Spinner from '../modules/Spinner'
-import { FilePenLine, IdCard, Trash2 } from "lucide-react";
+import { FilePenLine, File, IdCard, Trash2 } from "lucide-react";
 import EditInvoiceModal from "../modals/EditInvoiceModal";
+import ViewInvoiceModal from "../modals/ViewInvoiceModal";
 
 export default function Invoices({ setTotal }) {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showModalEditInvoice, setShowModalEditInvoice] = useState(false);
     const [editedInvoiceId, seteditedInvoiceId] = useState(null)
+    const [showModalViewInvoice, setShowModalViewInvoice] = useState(false);
     
     useEffect(() => {
         setLoading(true);
@@ -28,7 +30,7 @@ export default function Invoices({ setTotal }) {
             });
     }, []);
 
-    console.log({invoices});
+    // console.log({invoices});
 
     const calculateTotalInvoices = (invoices) => {
         return invoices.reduce((sum, invoice) => (invoice.lineItemsTotal || 0), 0)
@@ -76,6 +78,10 @@ export default function Invoices({ setTotal }) {
         });
     };
 
+    
+
+    // console.log({showModalViewInvoice});
+
     return(
         <>
             {loading ? (
@@ -99,8 +105,9 @@ export default function Invoices({ setTotal }) {
                                 <TableCell className="text-center">{invoice.clientName}</TableCell>
                                 <TableCell >
                                     <div className="flex justify-center flex-row gap-2">   
-                                        <FilePenLine className="h-4 w-4" onClick={() => openEditFunction(invoice._id)} />
+                                        {/* <FilePenLine className="h-4 w-4" onClick={() => openEditFunction(invoice._id)} /> */}
                                         
+                                        <File className="h-4 w-4" onClick={() => setShowModalViewInvoice(invoice._id)} />
                                         <Trash2 className="h-4 w-4" onClick={() => deleteInvoiceById(invoice._id)} />
                                     </div>
                                 </TableCell>
@@ -120,7 +127,8 @@ export default function Invoices({ setTotal }) {
                     </TableFooter>
                 </Table>
             )}
-            {showModalEditInvoice && <EditInvoiceModal invoiceId={editedInvoiceId} onClose={() => setShowModalEditInvoice(false)}/>}
+            {/* {showModalEditInvoice && <EditInvoiceModal invoiceId={editedInvoiceId} onClose={() => setShowModalEditInvoice(false)}/>} */}
+            {showModalViewInvoice && <ViewInvoiceModal invoiceId={showModalViewInvoice} onClose={() => setShowModalViewInvoice(false)}/>}
         </>
     )
 };

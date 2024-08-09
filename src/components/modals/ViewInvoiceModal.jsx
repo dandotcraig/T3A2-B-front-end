@@ -1,0 +1,318 @@
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { X } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { Button } from "../ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import Spinner from '../modules/Spinner';
+
+
+export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId }) {
+    // client dropdown menu/selector
+    const [loading, setLoading] = useState(false);
+    // const [invoice, setInvoice] = useState('')
+    const [clients, setClients] = useState('');
+    const [clientDetails, setClientsDetails] = useState('');
+    const [lineItems, setlineItems] = useState([]);
+    const [total, setTotal] = useState('');
+    const [invoice, setInvoice] = useState('')
+    const [userAddress, setUserAddress] = useState([])
+  
+    // console.log(invoiceId);
+    useEffect(() => {
+        setLoading(true);
+        fetch(`http://localhost:4000/invoices/${invoiceId}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+        .then((response) => {
+            
+            if (response.status === 200) {
+                // alert('Success creating invoice')
+                return response.json();
+                // onClose();
+            } else if (response.status === 400) {
+                alert('Failed creating invoice')
+            } else {
+                alert('Something went wrong')
+            }
+        })
+        .then(data => {
+            setInvoice(data);
+            setClients(data.invoice.client);
+            setlineItems(data.invoice.lineItems);
+            setTotal(data.invoice.lineItemsTotal)
+            console.log(data);
+            setLoading(false);
+        })
+        .catch((error) => {
+            
+            alert('An error happened while creating a line item')
+            console.log(error);
+        })
+    }, []);
+    // console.log('outside use effect ' + invoice + '1');
+    console.log(clients);
+    console.log(lineItems);
+    console.log(total);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch(`http://localhost:4000/user`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+            .then(response => 
+                response.json())
+            .then(data => {
+                setUserAddress(data.data);
+                console.log('user addy' + data.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    // access the refresh and invoice id states
+    }, []);
+
+    console.log(userAddress);
+
+    // clients
+    useEffect(() => {
+        setLoading(true);
+        fetch(`http://localhost:4000/clients/${clients}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+        .then((response) => {
+            
+            if (response.status === 200) {
+                
+                // alert('Success creating invoice')
+                return response.json();
+                
+                // onClose();
+            } else if (response.status === 400) {
+                alert('Failed creating invoice')
+                
+            } else {
+                alert('Something went wrong')
+            }
+        })
+        // setLoading(false)
+        .then(data => {
+                setClientsDetails(data.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    }, []);
+
+    // useEffect(() => {
+    //     // only refresh if its true
+    //     // if (!refresh) return;
+    //     setLoading(true);
+    //     fetch(`http://localhost:4000/lineitems/invoice/${invoiceId}`, {
+    //         method: 'GET',
+    //         credentials: 'include',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify()
+    //     })
+    //         .then(response => 
+    //             response.json())
+    //         .then(data => {
+    //             setlineItems(data.data);
+    //             // console.log("client" + data.data);
+    //             setLoading(false);
+    //             // setrefresh(false);
+    //         })
+    //         .catch((error) => {
+    //             console.log(error);
+    //             setLoading(false);
+    //             // setrefresh(false);
+    //         });
+    // // access the refresh and invoice id states
+    // }, []);
+
+    console.log(clientDetails);
+
+    const handleOnClose = () => {
+        onClose();
+    }
+
+    const today = new Date();
+
+    let gst = total * 0.1;
+
+    let gstTotal = total * 1.1;
+    
+    return (
+        <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={handleOnClose} >
+            <ScrollArea className="h-[calc(100vh-4rem)] flex justify-center rounded-lg w-full mx-8 sm:mx-0 max-w-[1279px]" >
+                <div>
+                    <Card className="w-full h-auto p-2 flex sm:flex-col md:flex-col lg:flex-row 2lx:flex-row" onClick={(event) => event.stopPropagation()}>
+                    {loading ? (
+                        <Spinner />
+                    ) : (
+                    <>
+                        <div className="flex flex-col sm:w-full md:w-full lg:w-3/5 xl:w-3/4 xl:flex-grow 2xl:w-3/4 2xl:flex-grow">
+                            <CardHeader className="flex flex-col gap-8 w-full">
+                                <div className="w-full justify-between">
+                                    <div className="flex justify-between flex-row">
+                                        <CardTitle>Invoice</CardTitle>
+                                        <Button className="sm:hidden md:hidden lg:flex xl:flex" variant="outline" size="icon" onClick={handleOnClose}>
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                    
+                                </div>
+                            </CardHeader>
+                            <CardContent className="flex  flex-col gap-8 w-full">
+                                <div className="w-full">
+                                    <div className=" flex justify-between flex-row gap-8">
+                                        <div className="flex-1 grid items-center gap-4">
+                                            <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
+                                                <div className="flex justify-between flex-row w-full">
+                                                    <p className="font-bold">Invoice date</p>
+                                                    <p>{today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear()}</p>
+                                                </div>
+                                                <div className="flex justify-between flex-row w-full">
+                                                    <p className="font-bold">Due date</p>
+                                                    
+                                                    <p>Type in a date</p>
+                                                
+                                                </div>
+                                            </div>
+                                            <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
+                                                <div className="w-full">   
+                                                    <p className="font-bold">Invoice number</p>        
+                                                </div>
+                                                <div>   
+                                                    <p>1</p>        
+                                                </div>
+                                            </div>
+                                            <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
+                                                <div className="w-full">
+                                                
+                                                {loading ? (
+                                                    <Spinner />
+                                                ) : (
+                                                    <>
+                                                        <p className="font-bold">To</p>
+                                                        <p>{clientDetails[0].businessName}</p>
+                                                        <p>{clientDetails[0].businessAbn}</p>
+                                                        <p>{clientDetails[0].businessAddress}</p>
+                                                        <p>{clientDetails[0].businessPhoneNumber}</p>
+                                                    </>    
+                                                )
+                                                }
+                                                
+                                                </div>
+                                                <div className="w-full">
+                                                    <p className="font-bold">From</p>
+                                                {loading ? (
+                                                    <Spinner />
+                                                ) : (
+                                                    <>
+                                                        <p>{userAddress[0]?.businessName}</p>
+                                                        <p>{userAddress[0]?.businessAbn}</p>
+                                                        <p>{userAddress[0]?.businessAddress}</p>
+                                                        <p>{userAddress[0]?.businessPhoneNumber}</p>
+                                                    </>    
+                                                )
+                                                }
+                                                        
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    </div>
+                                    <Card className="my-4">
+                                        <Table className="table-auto">
+                                            <TableHeader>
+                                                <TableRow>
+                                                <TableHead className="">Description</TableHead>
+                                                <TableHead className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center" >Quantity</TableHead>
+                                                <TableHead className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">Unit price</TableHead>
+                    
+                                                <TableHead className="text-right">Amount</TableHead>
+                                                </TableRow>
+                                            </TableHeader>
+                                            <TableBody>
+                                            {loading ? (
+                                                <Spinner />
+                                            ) : (
+                                                <>
+                                                {lineItems.map((lineItem, index) => (
+                                                    <TableRow key={lineItem._id} >
+                                                        <TableCell className="font-medium">{lineItem.description}</TableCell>
+                                                        <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.quantity}</TableCell>
+                                                        <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.unitPrice}</TableCell>
+                                                
+                                                        <TableCell className="text-right">{lineItem.total}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </>
+                                            )}
+                                            </TableBody>
+                                                
+                                        </Table>
+                                    </Card>     
+                                    <div className="flex justify-between flex-row gap-8">
+                                        <div className="flex-1 sm:hidden md:flex lg:flex xl:flex"></div>  
+                                        <Card className="flex-1 justify-items-end">
+                                            <Table >
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell className="font-medium">Subtotal</TableCell>
+                                                        {/* <TableCell className="text-right">${total.toFixed(2)}</TableCell> */}
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell className="font-medium">GST</TableCell>
+                                                        {/* <TableCell className="text-right">${gst.toFixed(2)}</TableCell> */}
+                                                    </TableRow>
+                                                    <TableRow>
+                                                        <TableCell className="font-medium">Total</TableCell>
+                                                        {/* <TableCell className="text-right">${gstTotal.toFixed(2)}</TableCell> */}
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </Card>    
+                                    </div>     
+                                </div>
+                            </CardContent>
+                            <CardFooter className="flex flex-row justify-between gap-8">
+                                <div className="flex-1">
+                                    <div className="flex flex-col gap-4">
+                                        <Button variant="secondary" className="w-full items-center" onClick={handleOnClose}>Close</Button>
+                                        
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </div>
+                    </>
+                    )}
+                    </Card>
+                
+                </div>
+            </ScrollArea>
+        </div>    
+    ) 
+
+}

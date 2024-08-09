@@ -5,10 +5,11 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { UserContext } from "@/context/UserContext"
 import { useContext, useState } from "react"
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CreateUserModal from "./modals/CreateUserModal"
 
 export default function LoginRegister() {
+  
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -16,7 +17,8 @@ export default function LoginRegister() {
   const {setUserInfo} = useContext(UserContext);
   const [showModalUser, setShowModalUser] = useState(false);
 
-  
+  const navigate = useNavigate();
+
   async function register(event) {
     event.preventDefault();
     const response = await fetch('http://localhost:4000/register', {
@@ -30,7 +32,6 @@ export default function LoginRegister() {
       response.json().then(data => {
         console.log("Register data:", data.information);
         setUserInfo(data.information)
-        // setRedirect(true)
       })
       
     } else {
@@ -51,7 +52,7 @@ export default function LoginRegister() {
         response.json().then(data => {
           console.log("Login data:", data.information);
           setUserInfo(data.information)
-          // setRedirect(true)
+          navigate('/dashboard');
         })
         
     } else {
@@ -99,9 +100,9 @@ export default function LoginRegister() {
                 </form>
               </CardContent>
             <CardFooter className="flex justify-between">
-              <Link to="/dashboard" className="w-full">
+            
                 <Button onClick={login} className="w-full items-center">Login</Button>
-              </Link>
+              
             </CardFooter>
           </Card>
         </TabsContent>

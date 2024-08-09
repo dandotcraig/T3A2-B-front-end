@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FilePenLine, Trash2 } from "lucide-react";
+import { FilePenLine, File, Trash2 } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate } from 'react-router-dom';
 
@@ -539,6 +539,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                         <TableCell>
                                                             <div className="flex justify-center flex-row gap-2">   
                                                                 {/* <FilePenLine className="h-4 w-4" /> */}
+                                                                <File className="h-4 w-4" />
                                                                 <Trash2 className=" h-4 w-4" onClick={() => deleteLineItemById(lineItem._id)} />
                                                             </div>
                                                         </TableCell>
