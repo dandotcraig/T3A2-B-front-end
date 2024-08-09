@@ -38,16 +38,18 @@ export default function Header() {
                         <img className="h-8 w-auto" src={logo} alt=""/>
                     </a>
                 </div>
-                <nav className="flex gap-4 items-center flex-1 justify-end">
-                    <ModeToggle />
+                <nav className="flex gap-2 items-center flex-1 justify-end">
+                    
                     {username && (
                         <>
                             <p>Hello {username}</p>
+                            <ModeToggle />
                             <Link to="/"><Button onClick={logout} variant="outline">Logout</Button></Link>
                         </>
                     )}
                     {!username && (
                         <>
+                            <ModeToggle />
                             <Button disabled>Logout</Button>
                         </>
                     )}

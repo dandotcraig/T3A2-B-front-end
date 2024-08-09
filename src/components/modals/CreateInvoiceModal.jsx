@@ -275,7 +275,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                 // console.log('invoice saved');
                 // console.log('here are the line items' + lineItems)
                 // // setlineItems([])
-                setRefreshInvoice();
+                setRefreshInvoice(true);
                 console.log('LFG');
                 navigate('/dashboard');
                 onClose();
@@ -289,7 +289,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
         })
         .finally(() => {
             setlineItems([])
-            setLoading(false);
+            setLoading();
             onClose();
         })
     }

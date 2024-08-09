@@ -8,15 +8,12 @@ import CreateClientModal from "../modals/CreateClientModal";
 import CreateInvoiceModal from "../modals/CreateInvoiceModal";
 import HighlightCards from "../modules/highlight-cards";
 
-
-
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
     const [showModalInvoice, setShowModalInvoice] = useState(false);
     const [refreshClients, setRefreshClients] = useState('');
     const [refreshInvoice, setRefreshInvoice] = useState('');
-
-
+    
     return(
         <Tabs defaultValue="invoices" className="w-full p-4 flex flex-col gap-8 max-w-[1279px]">
             <h1 className="text-4xl font-bold">Dashboard</h1>
