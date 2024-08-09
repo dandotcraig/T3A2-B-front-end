@@ -32,18 +32,18 @@ export default function Header() {
 
     return(
         <header className="fixed inset-x-0 top-0 z-50 border shadow-sm">
-            <nav className="flex items-center justify-between p-2 lg:px-8 max-w-[1279px] mx-auto" aria-label="Global">
+            <nav className="flex items-start justify-between p-2 lg:px-8 max-w-[1279px] mx-auto" aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <a href="#" className="items-center z-50">
                         <span className="sr-only">Sup invoice</span>
                         <SvgComponent theme="dark" />
                     </a>
                 </div>
-                <nav className="flex gap-2 items-center flex-1 justify-end">
+                <nav className="flex gap-2 items-center justify-end">
                     
                     {username && (
                         <>
-                            <p>Hello {username}</p>
+                            <p className="hidden sm:hidden md:flex lg:flex xl:flex">Hello {username}</p>
                             <ModeToggle />
                             <Link to="/"><Button onClick={logout} variant="outline">Logout</Button></Link>
                         </>

@@ -30,6 +30,14 @@ export default function Invoices({ setTotal }) {
 
     console.log({invoices});
 
+    const calculateTotalInvoices = (invoices) => {
+        return invoices.reduce((sum, invoice) => (invoice.lineItemsTotal || 0), 0)
+    }
+
+    const totalInvoice = calculateTotalInvoices(invoices);
+
+    setTotal(totalInvoice);
+
     const deleteInvoiceById = (id) => {
         setLoading(true);
         fetch(`http://localhost:4000/invoices/${id}`, {
@@ -68,14 +76,6 @@ export default function Invoices({ setTotal }) {
         });
     };
 
-    const calculateTotalInvoices = (invoices) => {
-        return invoices.reduce((sum, invoice) => (invoice.lineItemsTotal || 0), 0)
-    }
-
-    const totalInvoice = calculateTotalInvoices(invoices);
-
-    setTotal(totalInvoice);
-
     return(
         <>
             {loading ? (
@@ -84,11 +84,11 @@ export default function Invoices({ setTotal }) {
                 <Table>
                     <TableHeader>
                         <TableRow className="w-full">
-                            <TableHead className="w-[100px]">Date</TableHead>
+                            <TableHead className="w-[50px]">Date</TableHead>
                             {/* <TableHead>Description</TableHead> */}
                             <TableHead className="text-center">Client</TableHead>
                             <TableHead className="text-center">Modify</TableHead>
-                            <TableHead className="text-right">Amount</TableHead>
+                            <TableHead className="w-[50px] text-right">Amount</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>

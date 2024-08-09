@@ -1,8 +1,12 @@
 import * as React from "react"
+import { useTheme } from "../theme-provider";
 
-export default function SvgComponent({ theme, ...props }) {
+export default function SvgComponent({ ...props }) {
+
+    const { theme } = useTheme();
+
     const strokeColour = theme === 'light' ? '#76443E' : '76443E';
-    const fillColour = theme === 'dark' ? '#162CEB' : '#C9243A';
+    const fillColour = theme === 'dark' ? '#F8FAFC' : '#020817';
     
     return (
         <svg
