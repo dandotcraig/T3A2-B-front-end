@@ -58,19 +58,19 @@ export default function Clients({ refreshClients }) {
                     <TableHeader>
                         <TableRow>
                             <TableHead>Name</TableHead>
-                            <TableHead>Number</TableHead>
-                            <TableHead>Modify</TableHead>
+                            <TableHead className="text-center">Number</TableHead>
+                            <TableHead className="text-right">Modify</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {clients.map((client, index) => (
                             <TableRow key={client._id}>
                                 <TableCell>{client.businessName}</TableCell>
-                                <TableCell>{client.businessPhoneNumber}</TableCell>
-                                <TableCell>
-                                    <div className="flex flex-row gap-2">   
-                                        <FilePenLine className="h-4 w-4" />
-                                        <Trash2 className="h-4 w-4" onClick={() => deleteClientById(client._id)} />
+                                <TableCell className="text-center" >{client.businessPhoneNumber}</TableCell>
+                                <TableCell >
+                                    <div className="justify-end flex flex-row gap-2">   
+                                        {/* <FilePenLine className="h-4 w-4" /> */}
+                                        <Trash2 className="h-4 w-4 items-end" onClick={() => deleteClientById(client._id)} />
                                     </div>
                                 </TableCell>
                             </TableRow>

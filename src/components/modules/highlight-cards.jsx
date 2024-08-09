@@ -1,6 +1,29 @@
 import { Card, CardContentsm } from "@/components/ui/card"
+import { useEffect, useState } from "react";
+
+
 
 export default function HighlightCards() {
+    const [invoices, setInvoices] = useState([]);
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        setLoading(true);
+        fetch('http://localhost:4000/invoices', {
+            method: 'GET',
+            credentials: 'include',
+        })
+            .then(response => response.json())
+            .then(data => {
+                setInvoices(data.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    }, []);
+    
+    console.log({invoices});
     return(
         <div className="flex sm:flex-col md:flex-row lg:flex-row xlg:flex-row justify-center justify-between gap-4 w-full">
                 <Card className="flex-1  w-full px-2 py-4 flex-col">
@@ -27,7 +50,7 @@ export default function HighlightCards() {
                 <Card className="flex-1  w-full px-2 py-4 flex-col">
                     <CardContentsm>
                         <p className="text-xs text-slate-600">Number of invoices to date</p>
-                        <h3 className="font-bold text-2xl">+20</h3>
+                        <h3 className="font-bold text-2xl">+{invoices.length}</h3>
                         <p className="text-xs text-slate-600">Total number of invoices</p>
                     </CardContentsm>
                 </Card>

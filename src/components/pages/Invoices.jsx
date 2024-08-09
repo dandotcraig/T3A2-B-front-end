@@ -61,6 +61,15 @@ export default function Invoices() {
         setShowModalEditInvoice(true);
     }
 
+    const formatDate = (data) => {
+        const date = new Date(data);
+        return date.toLocaleDateString('en-US', {
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit'
+        });
+    };
+
     return(
         <>
             {loading ? (
@@ -68,22 +77,22 @@ export default function Invoices() {
             ) : (
                 <Table>
                     <TableHeader>
-                        <TableRow>
+                        <TableRow className="w-full">
                             <TableHead className="w-[100px]">Date</TableHead>
-                            <TableHead>Description</TableHead>
-                            <TableHead>Client</TableHead>
-                            <TableHead>Modify</TableHead>
+                            {/* <TableHead>Description</TableHead> */}
+                            <TableHead className="text-center">Client</TableHead>
+                            <TableHead className="text-center">Modify</TableHead>
                             <TableHead className="text-right">Amount</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {invoices.map((invoice, index) => (
                             <TableRow key={invoice._id}>
-                                <TableCell className="font-medium">{invoice.createdAt}</TableCell>
-                                <TableCell></TableCell>
-                                <TableCell>{invoice.client}</TableCell>
-                                <TableCell>
-                                    <div className="flex flex-row gap-2">   
+                                <TableCell className="font-medium">{formatDate(invoice.createdAt)}</TableCell>
+                                {/* <TableCell>{invoice.client}</TableCell> */}
+                                <TableCell className="text-center">{invoice.businessName}</TableCell>
+                                <TableCell >
+                                    <div className="flex justify-center flex-row gap-2">   
                                         <FilePenLine className="h-4 w-4" onClick={() => openEditFunction(invoice._id)} />
                                         
                                         <Trash2 className="h-4 w-4" onClick={() => deleteInvoiceById(invoice._id)} />
@@ -99,7 +108,7 @@ export default function Invoices() {
                             <TableCell>Total</TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
-                            <TableCell></TableCell>
+
                             <TableCell className="text-right">$2,500.00</TableCell>
                         </TableRow>
                     </TableFooter>

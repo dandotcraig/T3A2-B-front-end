@@ -40,7 +40,9 @@ export default function EditInvoiceModal({ onClose, invoiceId }) {
             .then(response => 
                 response.json())
             .then(data => {
-                setUserAddress(data.data);
+                setInvoice(data);
+                setSelectedClient(data.client)
+                setlineItems(data.lineItem || []);
                 setLoading(false);
             })
             .catch((error) => {
@@ -215,8 +217,6 @@ export default function EditInvoiceModal({ onClose, invoiceId }) {
 
     console.log({lineItems});
 
-    
-
     const deleteLineItemById = (id) => {
         setLoading(true);
         fetch(`http://localhost:4000/lineitems/${id}`, {
@@ -231,30 +231,6 @@ export default function EditInvoiceModal({ onClose, invoiceId }) {
                     // return response.json();
                 } else if (response.status === 400) {
                     alert('Failed deleting line item')
-                } else {
-                    alert('Something went wrong')
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                setLoading(false);
-            });
-    };
-
-    const deleteInvoiceById = (id) => {
-        setLoading(true);
-        fetch(`http://localhost:4000/invoices/${id}`, {
-            method: 'DELETE',
-            credentials: 'include',
-        })
-            .then((response) => {
-                setLoading(false);
-                if (response.status === 200 || response.status === 204) {
-                    console.log('invoice deleted');
-                    setInvoices(invoices.filter(invoice => invoice._id !== id));
-                    // return response.json();
-                } else if (response.status === 400) {
-                    alert('Failed deleting invoice')
                 } else {
                     alert('Something went wrong')
                 }
@@ -313,30 +289,6 @@ export default function EditInvoiceModal({ onClose, invoiceId }) {
             onClose();
         })
     }
-
-    // get all line item - this will be used when editing.
-    // useEffect(() => {
-    //     setLoading(true);
-    //     fetch('http://localhost:4000/lineitems', {
-    //         method: 'GET',
-    //         credentials: 'include',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify()
-    //     })
-    //         .then(response => 
-    //             response.json())
-    //         .then(data => {
-    //             setlineItems(data.data);
-    //             // console.log("client" + data.data);
-    //             setLoading(false);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //             setLoading(false);
-    //         });
-    // }, [refresh]);
 
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={handleOnClose} >
