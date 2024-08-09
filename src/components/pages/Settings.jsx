@@ -35,7 +35,6 @@ export default function Settings() {
             setLoading(false);
             if (response.status === 200) {
                 alert('Success updating user details')
-                onClose();
             } else if (response.status === 400) {
                 alert('Check the fields')
             } else {
