@@ -15,6 +15,8 @@ export default function Dashboard() {
     
     const [refreshClients, setRefreshClients] = useState('');
     const [refreshInvoice, setRefreshInvoice] = useState('');
+
+    const [total, setTotal] = useState(0)
     
     return(
         <Tabs defaultValue="invoices" className="w-full p-4 flex flex-col gap-8 max-w-[1279px]">
@@ -28,8 +30,8 @@ export default function Dashboard() {
                 <TabsTrigger value="clients">Clients</TabsTrigger>
                 <TabsTrigger value="settings">Settings</TabsTrigger>
             </TabsList>
-            <HighlightCards/>
-            <TabsContent value="invoices"><Invoices refreshInvoice={refreshInvoice} /></TabsContent> 
+            <HighlightCards total={total} />
+            <TabsContent value="invoices"><Invoices setTotal={setTotal} refreshInvoice={refreshInvoice} /></TabsContent> 
             <TabsContent value="clients"><Clients refreshClients={refreshClients} /></TabsContent>
             <TabsContent value="settings"><Settings/></TabsContent>
 

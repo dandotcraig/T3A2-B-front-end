@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 
 
-export default function HighlightCards() {
+export default function HighlightCards({ total }) {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -22,6 +22,10 @@ export default function HighlightCards() {
                 setLoading(false);
             });
     }, []);
+
+    let gst = total * 0.1;
+
+    let tax = total * 0.325
     
     console.log({invoices});
     return(
@@ -29,21 +33,21 @@ export default function HighlightCards() {
                 <Card className="flex-1  w-full px-2 py-4 flex-col">
                     <CardContentsm>
                         <p className="text-xs text-slate-600">Total revenue</p>
-                        <h3 className="font-bold text-2xl">$45,231.89</h3>
+                        <h3 className="font-bold text-2xl">${total.toFixed(2)}</h3>
                         <p className="text-xs text-slate-600">+20.1% from last month</p>
                     </CardContentsm>
                 </Card>
                 <Card className="flex-1  w-full px-2 py-4 flex-col">  
                     <CardContentsm>
                         <p className="text-xs text-slate-600">GST</p>
-                        <h3 className="font-bold text-2xl">+$2350</h3>
+                        <h3 className="font-bold text-2xl">+${gst.toFixed(2)}</h3>
                         <p className="text-xs text-slate-600">10% of each invoice</p>
                     </CardContentsm>
                 </Card>
                 <Card className="flex-1  w-full px-2 py-4 flex-col">
                     <CardContentsm>
                         <p className="text-xs text-slate-600">Income tax</p>
-                        <h3 className="font-bold text-2xl">+$12,234</h3>
+                        <h3 className="font-bold text-2xl">+${tax.toFixed(2)}</h3>
                         <p className="text-xs text-slate-600">A rough estimate</p>
                     </CardContentsm>
                 </Card>

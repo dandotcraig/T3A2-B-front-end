@@ -5,15 +5,12 @@ import Spinner from '../modules/Spinner'
 import { FilePenLine, IdCard, Trash2 } from "lucide-react";
 import EditInvoiceModal from "../modals/EditInvoiceModal";
 
-export default function Invoices() {
+export default function Invoices({ setTotal }) {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showModalEditInvoice, setShowModalEditInvoice] = useState(false);
     const [editedInvoiceId, seteditedInvoiceId] = useState(null)
     
-
-    
-
     useEffect(() => {
         setLoading(true);
         fetch('http://localhost:4000/invoices', {
@@ -77,6 +74,8 @@ export default function Invoices() {
 
     const totalInvoice = calculateTotalInvoices(invoices);
 
+    setTotal(totalInvoice);
+
     return(
         <>
             {loading ? (
@@ -105,7 +104,7 @@ export default function Invoices() {
                                         <Trash2 className="h-4 w-4" onClick={() => deleteInvoiceById(invoice._id)} />
                                     </div>
                                 </TableCell>
-                                <TableCell className="text-right">{invoice.lineItemsTotal}</TableCell>
+                                <TableCell className="text-right">{invoice.lineItemsTotal.toFixed(2)}</TableCell>
                             </TableRow> 
                         ))}
                         
@@ -116,7 +115,7 @@ export default function Invoices() {
                             <TableCell></TableCell>
                             <TableCell></TableCell>
 
-                            <TableCell className="text-right">${totalInvoice}</TableCell>
+                            <TableCell className="text-right">${totalInvoice.toFixed(2)}</TableCell>
                         </TableRow>
                     </TableFooter>
                 </Table>
