@@ -14,6 +14,7 @@ export default function CreateUserModal({ onClose }) {
     const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
     const [redirect, setRedirect] = useState(false);
+    
 
     const handleCreateUser = () => {
         const data = {

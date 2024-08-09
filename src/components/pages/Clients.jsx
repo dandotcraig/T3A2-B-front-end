@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import Spinner from '../modules/Spinner'
 import { FilePenLine, Trash2 } from "lucide-react";
 
-export default function Clients() {
+export default function Clients({ refreshClients }) {
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function Clients() {
                 console.log(error);
                 setLoading(false);
             });
-    }, []);
+    }, [refreshClients]);
 
     const deleteClientById = (id) => {
         setLoading(true);

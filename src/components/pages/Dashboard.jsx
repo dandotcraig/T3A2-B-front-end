@@ -13,11 +13,8 @@ import HighlightCards from "../modules/highlight-cards";
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
     const [showModalInvoice, setShowModalInvoice] = useState(false);
-    // const [refreshClients, setRefreshClients] = useState(0);
+    const [refreshClients, setRefreshClients] = useState('');
 
-    //     const handleClientCreate = () => {
-    //         setRefreshClients(trigger => trigger + 1)
-    //     }
 
     return(
         <Tabs defaultValue="invoices" className="w-full p-4 flex flex-col gap-8 max-w-[1279px]">
@@ -33,11 +30,11 @@ export default function Dashboard() {
             </TabsList>
             <HighlightCards/>
             <TabsContent value="invoices"><Invoices/></TabsContent> 
-            <TabsContent value="clients"><Clients /></TabsContent>
+            <TabsContent value="clients"><Clients refreshClients={refreshClients} /></TabsContent>
             <TabsContent value="settings"><Settings/></TabsContent>
 
 
-            {showModalClient && <CreateClientModal onClose={() => setShowModalClient(false)}/>}
+            {showModalClient && <CreateClientModal setRefreshClients={setRefreshClients} onClose={() => setShowModalClient(false)}/>}
             {showModalInvoice && <CreateInvoiceModal onClose={() => setShowModalInvoice(false)}/>}
 
         </Tabs>

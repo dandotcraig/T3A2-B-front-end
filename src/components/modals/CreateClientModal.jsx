@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-export default function CreateClientModal({ onClose }) {
+export default function CreateClientModal({ onClose, setRefreshClients }) {
     const [businessName, setBusinessName] = useState('');
     const [businessAbn, setBusinessAbn] = useState('');
     const [businessAddress, setBusinessAddress] = useState('');
@@ -35,6 +35,7 @@ export default function CreateClientModal({ onClose }) {
             setLoading(false);
             if (response.status === 201) {
                 alert('Success creating a client')
+                setRefreshClients();
                 onClose();
             } else if (response.status === 400) {
                 alert('Check the fields')
