@@ -9,7 +9,9 @@ import Spinner from '../modules/Spinner';
 
 export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId }) {
     // client dropdown menu/selector
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [loadingClients, setLoadingClients] = useState(true);
+    const [loadingUser, setLoadingUser] = useState(true);
     // const [invoice, setInvoice] = useState('')
     const [clients, setClients] = useState('');
     const [clientDetails, setClientsDetails] = useState('');
@@ -20,7 +22,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
   
     // console.log(invoiceId);
     useEffect(() => {
-        setLoading(true);
+        
         fetch(`http://localhost:4000/invoices/${invoiceId}`, {
             method: 'GET',
             credentials: 'include',
@@ -61,7 +63,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     console.log(total);
 
     useEffect(() => {
-        setLoading(true);
+
         fetch(`http://localhost:4000/user`, {
             method: 'GET',
             credentials: 'include',
@@ -75,11 +77,11 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
             .then(data => {
                 setUserAddress(data.data);
                 console.log('user addy' + data.data);
-                setLoading(false);
+                setLoadingUser(false);
             })
             .catch((error) => {
                 console.log(error);
-                setLoading(false);
+                setLoadingUser(false);
             });
     // access the refresh and invoice id states
     }, []);
@@ -88,7 +90,6 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
 
     // clients
     useEffect(() => {
-        setLoading(true);
         fetch(`http://localhost:4000/clients/${clients}`, {
             method: 'GET',
             credentials: 'include',
@@ -115,11 +116,11 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
         // setLoading(false)
         .then(data => {
                 setClientsDetails(data.data);
-                setLoading(false);
+                setLoadingClients(false);
             })
             .catch((error) => {
                 console.log(error);
-                setLoading(false);
+                setLoadingClients(false);
             });
     }, []);
 
@@ -211,7 +212,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
                                                 <div className="w-full">
                                                 
-                                                {loading ? (
+                                                {loadingClients ? (
                                                     <Spinner />
                                                 ) : (
                                                     <>
@@ -227,7 +228,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                                 </div>
                                                 <div className="w-full">
                                                     <p className="font-bold">From</p>
-                                                {loading ? (
+                                                {loadingUser ? (
                                                     <Spinner />
                                                 ) : (
                                                     <>
