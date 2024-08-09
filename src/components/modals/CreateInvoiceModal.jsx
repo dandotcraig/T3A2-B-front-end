@@ -87,7 +87,9 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     }, []);
 
     console.log({userAddress});
-
+    const addressCreated = () => {
+        return userAddress && userAddress.length > 0;
+    }
 
     // clients
     useEffect(() => {
@@ -223,6 +225,8 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     }, [refresh, invoice]);
 
     console.log({lineItems});
+
+    
 
     const deleteLineItemById = (id) => {
         setLoading(true);
@@ -489,23 +493,29 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                             <p>{selectClientData.businessPhoneNumber}</p>
                                                         </>
                                                     ) : (
-                                                        <div className="w-full">
-                                                            <p>Liam Johnson</p>
-                                                            <p>ABN: 010242492349234</p>
-                                                            <p>1234 Main St.</p>
-                                                            <p>Anytown, CA</p>
-                                                            <p>12345</p>
-                                                        </div>
+                                                        <p>
+                                                            Select a client
+                                                        </p>
                                                     )}
                                                         
                                                     
                                                 </div>
                                                 <div className="w-full">
                                                     <p className="font-bold">From</p>
-                                                    <p>{userAddress[0].businessName}</p>
-                                                    <p>{userAddress[0].businessAbn}</p>
-                                                    <p>{userAddress[0].businessAddress}</p>
-                                                    <p>{userAddress[0].businessPhoneNumber}</p>
+                                                    {addressCreated ? (
+                                                        <p>
+                                                            Add your address in settings
+                                                        </p>
+                                                    ) : (
+                                                        <>
+                                                            <p>{userAddress[0].businessName}</p>
+                                                            <p>{userAddress[0].businessAbn}</p>
+                                                            <p>{userAddress[0].businessAddress}</p>
+                                                            <p>{userAddress[0].businessPhoneNumber}</p>
+                                                        </>
+                                                        
+                                                    )}
+                                                    
                                                 </div>
                                             </div> 
                                         </div>
