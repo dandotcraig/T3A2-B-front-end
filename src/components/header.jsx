@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom"
-import logo from "../assets/logo.svg"
+// import logo from "../assets/logo.svg"
 import ModeToggle from "@/components/mode-toggle"
 import { useContext, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { UserContext } from "@/context/UserContext"
+import SvgComponent from "./modules/svgLogo"
 
 export default function Header() {
     const {setUserInfo, userInfo} = useContext(UserContext)
@@ -35,7 +36,7 @@ export default function Header() {
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
                         <span className="sr-only">Sup invoice</span>
-                        <img className="h-8 w-auto" src={logo} alt=""/>
+                        <SvgComponent theme="dark" />
                     </a>
                 </div>
                 <nav className="flex gap-2 items-center flex-1 justify-end">

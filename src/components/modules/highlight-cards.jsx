@@ -34,7 +34,7 @@ export default function HighlightCards({ total }) {
                     <CardContentsm>
                         <p className="text-xs text-slate-600">Total revenue</p>
                         <h3 className="font-bold text-2xl">${total.toFixed(2)}</h3>
-                        <p className="text-xs text-slate-600">+20.1% from last month</p>
+                        <p className="text-xs text-slate-600">Total revenue, not including costs</p>
                     </CardContentsm>
                 </Card>
                 <Card className="flex-1  w-full px-2 py-4 flex-col">  
@@ -48,12 +48,12 @@ export default function HighlightCards({ total }) {
                     <CardContentsm>
                         <p className="text-xs text-slate-600">Income tax</p>
                         <h3 className="font-bold text-2xl">+${tax.toFixed(2)}</h3>
-                        <p className="text-xs text-slate-600">A rough estimate</p>
+                        <p className="text-xs text-slate-600">32.5% of overal revenue</p>
                     </CardContentsm>
                 </Card>
                 <Card className="flex-1  w-full px-2 py-4 flex-col">
                     <CardContentsm>
-                        <p className="text-xs text-slate-600">Number of invoices to date</p>
+                        <p className="text-xs text-slate-600">This year:</p>
                         <h3 className="font-bold text-2xl">+{invoices.length}</h3>
                         <p className="text-xs text-slate-600">Total number of invoices</p>
                     </CardContentsm>
