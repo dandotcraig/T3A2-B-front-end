@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, 
 import { X, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
+import { Navigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 
 export default function CreateUserModal({ onClose }) {
@@ -12,6 +13,7 @@ export default function CreateUserModal({ onClose }) {
     const [businessEmail, setBusinessEmail] = useState('');
     const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
+    const [redirect, setRedirect] = useState(false);
 
     const handleCreateUser = () => {
         const data = {
@@ -22,8 +24,8 @@ export default function CreateUserModal({ onClose }) {
             businessPhoneNumber,
         };
         setLoading(true);
-        fetch('http://localhost:4000/user/', {
-            method: 'PUT',
+        fetch('http://localhost:4000/create/user', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -34,7 +36,7 @@ export default function CreateUserModal({ onClose }) {
             setLoading(false);
             if (response.status === 201) {
                 alert('Success creating a User')
-                onClose();
+                setRedirect(true)
             } else if (response.status === 400) {
                 alert('Check the fields')
             } else {
@@ -47,6 +49,10 @@ export default function CreateUserModal({ onClose }) {
             console.log(error);
         })
     };
+
+    if (redirect) {
+        return <Navigate to={'/dashboard'} />
+    }
     
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 " onClick={onClose}>

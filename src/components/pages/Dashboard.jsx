@@ -13,7 +13,11 @@ import HighlightCards from "../modules/highlight-cards";
 export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
     const [showModalInvoice, setShowModalInvoice] = useState(false);
+    // const [refreshClients, setRefreshClients] = useState(0);
 
+    //     const handleClientCreate = () => {
+    //         setRefreshClients(trigger => trigger + 1)
+    //     }
 
     return(
         <Tabs defaultValue="invoices" className="w-full p-4 flex flex-col gap-8 max-w-[1279px]">
@@ -29,7 +33,7 @@ export default function Dashboard() {
             </TabsList>
             <HighlightCards/>
             <TabsContent value="invoices"><Invoices/></TabsContent> 
-            <TabsContent value="clients"><Clients/></TabsContent>
+            <TabsContent value="clients"><Clients /></TabsContent>
             <TabsContent value="settings"><Settings/></TabsContent>
 
 

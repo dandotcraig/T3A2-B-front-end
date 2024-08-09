@@ -24,7 +24,7 @@ export default function Settings() {
         };
         setLoading(true);
         fetch('http://localhost:4000/user/', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -33,7 +33,7 @@ export default function Settings() {
         })
         .then((response) => {
             setLoading(false);
-            if (response.status === 201) {
+            if (response.status === 200) {
                 alert('Success updating user details')
                 onClose();
             } else if (response.status === 400) {

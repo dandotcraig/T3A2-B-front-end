@@ -5,24 +5,33 @@ import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { UserContext } from "@/context/UserContext"
 import { useContext, useState } from "react"
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import CreateUserModal from "./modals/CreateUserModal"
 
 export default function LoginRegister() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [redirect, setRedirect] = useState(false);
+  
   const {setUserInfo} = useContext(UserContext);
+  const [showModalUser, setShowModalUser] = useState(false);
 
+  
   async function register(event) {
     event.preventDefault();
     const response = await fetch('http://localhost:4000/register', {
       method: 'POST',
       body: JSON.stringify({username,password}),
-      headers: {'Content-Type':'application/json'}
+      headers: {'Content-Type':'application/json'},
+      credentials: 'include',
     });
     if (response.status == 200) {
-      alert('Registration successful - now you can login')
+      // alert('Login successful - now you are in!')
+      response.json().then(data => {
+        console.log("Register data:", data.information);
+        setUserInfo(data.information)
+        // setRedirect(true)
+      })
       
     } else {
       alert('Registration failed')
@@ -42,7 +51,7 @@ export default function LoginRegister() {
         response.json().then(data => {
           console.log("Login data:", data.information);
           setUserInfo(data.information)
-          setRedirect(true)
+          // setRedirect(true)
         })
         
     } else {
@@ -50,9 +59,7 @@ export default function LoginRegister() {
     }
   }
 
-  if (redirect) {
-    return <Navigate to={'/dashboard'} />
-  }
+  
 
   return(
       <div className="flex mt-24 justify-center h-screen">
@@ -129,11 +136,12 @@ export default function LoginRegister() {
               </form>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button onClick={register} className="w-full items-center">Register</Button>
+              <Button onClick={() => {register(event); setShowModalUser(true);}} className="w-full items-center">Register</Button>
             </CardFooter>
           </Card>
         </TabsContent>
       </Tabs>
+      {showModalUser && <CreateUserModal onClose={() => setShowModalUser(false)}/>}
     </div>
   );
 }
