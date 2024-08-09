@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableFooter, Table
 import Spinner from '../modules/Spinner'
 import { FilePenLine, IdCard, Trash2 } from "lucide-react";
 
-export default function Invoices() {
+export default function Invoices({ refreshInvoice }) {
     const [invoices, setInvoices] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -23,11 +23,9 @@ export default function Invoices() {
                 console.log(error);
                 setLoading(false);
             });
-    }, []);
+    }, [refreshInvoice]);
 
     console.log({invoices});
-
-
 
     const deleteInvoiceById = (id) => {
         setLoading(true);

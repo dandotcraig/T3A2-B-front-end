@@ -4,6 +4,8 @@ import { X, Loader2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function CreateClientModal({ onClose, setRefreshClients }) {
     const [businessName, setBusinessName] = useState('');
@@ -13,8 +15,9 @@ export default function CreateClientModal({ onClose, setRefreshClients }) {
     const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleSaveClient = () => {
+    const navigate = useNavigate();
 
+    const handleSaveClient = () => {
         const data = {
             businessName,
             businessAbn,
@@ -37,6 +40,7 @@ export default function CreateClientModal({ onClose, setRefreshClients }) {
                 alert('Success creating a client')
                 setRefreshClients();
                 onClose();
+                navigate('/dashboard')
             } else if (response.status === 400) {
                 alert('Check the fields')
             } else {

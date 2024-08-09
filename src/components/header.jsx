@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import logo from "../assets/logo.svg"
 import ModeToggle from "@/components/mode-toggle"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { UserContext } from "@/context/UserContext"
 

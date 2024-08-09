@@ -8,8 +8,10 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FilePenLine, Trash2 } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useNavigate } from 'react-router-dom';
 
-export default function CreateInvoiceModal({ onClose }) {
+
+export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     // client dropdown menu/selector
     const [clients, setClients] = useState([]);
     const [lineItems, setlineItems] = useState([]);
@@ -22,6 +24,7 @@ export default function CreateInvoiceModal({ onClose }) {
     const [unitPrice, setUnitPrice] = useState('');
     const [total, setTotal] = useState('');
     const [invoice, setInvoice] = useState('')
+
 
     // PHASE ONE: CREATE INVOICE ID. invoice - create invoice instance and with ID for the line items and clients to be put to it
     useEffect(() => {
@@ -241,6 +244,7 @@ export default function CreateInvoiceModal({ onClose }) {
             });
     };
 
+    const navigate = useNavigate();
 
     // PHASE FOUR: EDIT INVOICE WITH LINE ITEMS AND SAVE
     const editInoivceWithClientLineItems = () => {
@@ -268,10 +272,14 @@ export default function CreateInvoiceModal({ onClose }) {
         .then((response) => {
             // setLoading(false);
             if (response.status === 200) {
-                console.log('invoice saved');
-                console.log('here are the line items' + lineItems)
-                // setlineItems([])
+                // console.log('invoice saved');
+                // console.log('here are the line items' + lineItems)
+                // // setlineItems([])
+                setRefreshInvoice();
+                console.log('LFG');
+                navigate('/dashboard');
                 onClose();
+                
             } else {
                 alert('failed to save')
             }

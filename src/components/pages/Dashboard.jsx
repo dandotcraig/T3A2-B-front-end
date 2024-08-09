@@ -14,6 +14,7 @@ export default function Dashboard() {
     const [showModalClient, setShowModalClient] = useState(false);
     const [showModalInvoice, setShowModalInvoice] = useState(false);
     const [refreshClients, setRefreshClients] = useState('');
+    const [refreshInvoice, setRefreshInvoice] = useState('');
 
 
     return(
@@ -29,13 +30,13 @@ export default function Dashboard() {
                 <TabsTrigger value="settings">Settings</TabsTrigger>
             </TabsList>
             <HighlightCards/>
-            <TabsContent value="invoices"><Invoices/></TabsContent> 
+            <TabsContent value="invoices"><Invoices refreshInvoice={refreshInvoice} /></TabsContent> 
             <TabsContent value="clients"><Clients refreshClients={refreshClients} /></TabsContent>
             <TabsContent value="settings"><Settings/></TabsContent>
 
 
             {showModalClient && <CreateClientModal setRefreshClients={setRefreshClients} onClose={() => setShowModalClient(false)}/>}
-            {showModalInvoice && <CreateInvoiceModal onClose={() => setShowModalInvoice(false)}/>}
+            {showModalInvoice && <CreateInvoiceModal setRefreshInvoice={setRefreshInvoice} onClose={() => setShowModalInvoice(false)}/>}
 
         </Tabs>
     )
