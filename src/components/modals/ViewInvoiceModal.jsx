@@ -22,11 +22,10 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     const [userAddress, setUserAddress] = useState([])
     const [dateChange, setDateChange] = useState('')
     const [dateCreated, setDateCreated] = useState('')
+    const [invoiceNumber, setInvoiceNumber] = useState('')
   
     // console.log(invoiceId);
-    console.log('this is the id of invoice ' + invoiceId);
     useEffect(() => {
-        
         fetch(`http://localhost:4000/invoices/${invoiceId}`, {
             method: 'GET',
             credentials: 'include',
@@ -54,6 +53,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
             setTotal(data.invoice.lineItemsTotal);
             setDateChange(data.invoice.dueDate);
             setDateCreated(data.invoice.createdAt)
+            setInvoiceNumber(data.invoice.invoiceCount)
             console.log(data);
             setLoading(false);
         })
@@ -218,11 +218,11 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                                 </div>
                                             </div>
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
-                                                <div className="w-full">   
+                                                <div className="w-1/4">   
                                                     <p className="font-bold">Invoice number</p>        
                                                 </div>
                                                 <div>   
-                                                    <p>1</p>        
+                                                    <p>{invoiceNumber}</p>        
                                                 </div>
                                             </div>
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">

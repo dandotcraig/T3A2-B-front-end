@@ -25,6 +25,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     const [total, setTotal] = useState('');
     const [invoice, setInvoice] = useState('')
     const [userAddress, setUserAddress] = useState([])
+    const [invoiceCount, setInvoiceCount] = useState(0)
 
 
     // PHASE ONE: CREATE INVOICE ID. invoice - create invoice instance and with ID for the line items and clients to be put to it
@@ -58,6 +59,39 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
         .catch((error) => {
             setLoading(false);
             alert('An error happened while creating a line item')
+            console.log(error);
+        })
+    }, []);
+
+    // getting invoice count
+    useEffect(() => {
+        fetch(`http://localhost:4000/invoices`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+        .then((response) => {
+            if (response.status === 200) {
+                // alert('Success getting invoices')
+                return response.json();
+            } else if (response.status === 400) {
+                alert('Failed getting invoice')
+            } else {
+                alert('Something went wrong')
+            }
+        })
+        .then(data => {
+            if (data) {
+                setInvoiceCount(data.count)
+                console.log('number of invoices ' + invoiceCount);
+            }
+            setLoading(false);
+        })
+        .catch((error) => {
+            alert('An error happened while get a line item')
             console.log(error);
         })
     }, []);
@@ -308,10 +342,10 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
             lineItems: lineItems.map(item => item._id),
             clientName: selectClientData.businessName,
             lineItemsTotal: lineItemsTotal,
-            dueDate: inputTextDateDue
+            dueDate: inputTextDateDue,
+            invoiceCount: invoiceCount
         };
         
-
         fetch(`http://localhost:4000/invoices/${invoice}`, {
             method: 'PUT',
             credentials: 'include',
@@ -477,7 +511,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                     <p className="font-bold">Invoice number</p>        
                                                 </div>
                                                 <div>   
-                                                    <p>1</p>        
+                                                    <p>{invoiceCount}</p>        
                                                 </div>
                                             </div>
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
