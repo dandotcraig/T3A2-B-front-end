@@ -22,6 +22,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     const [userAddress, setUserAddress] = useState([])
   
     // console.log(invoiceId);
+    console.log('this is the id of invoice ' + invoiceId);
     useEffect(() => {
         
         fetch(`http://localhost:4000/invoices/${invoiceId}`, {
@@ -282,15 +283,15 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                                 <TableBody>
                                                     <TableRow>
                                                         <TableCell className="font-medium">Subtotal</TableCell>
-                                                        {/* <TableCell className="text-right">${total.toFixed(2)}</TableCell> */}
+                                                        <TableCell className="text-right">${total.toFixed(2)}</TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell className="font-medium">GST</TableCell>
-                                                        {/* <TableCell className="text-right">${gst.toFixed(2)}</TableCell> */}
+                                                        <TableCell className="text-right">${gst.toFixed(2)}</TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell className="font-medium">Total</TableCell>
-                                                        {/* <TableCell className="text-right">${gstTotal.toFixed(2)}</TableCell> */}
+                                                        <TableCell className="text-right">${gstTotal.toFixed(2)}</TableCell>
                                                     </TableRow>
                                                 </TableBody>
                                             </Table>
