@@ -35,7 +35,7 @@ export default function SvgComponent({ ...props }) {
         d="M39 10v6h6M30 25a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
         />
         <path
-        stroke={strokeColour}
+        stroke={fillColour}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={2}

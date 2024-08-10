@@ -250,8 +250,8 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                             <TableHeader>
                                                 <TableRow>
                                                 <TableHead className="">Description</TableHead>
-                                                <TableHead className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center" >Quantity</TableHead>
-                                                <TableHead className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">Unit price</TableHead>
+                                                <TableHead className="sm:hidden md:table-cell lg:table-cell xl:table-cell text-center" >Quantity</TableHead>
+                                                <TableHead className="sm:hidden md:table-cell lg:table-cell xl:table-cell text-center">Unit price</TableHead>
                     
                                                 <TableHead className="text-right">Amount</TableHead>
                                                 </TableRow>
@@ -264,8 +264,8 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                                 {lineItems.map((lineItem, index) => (
                                                     <TableRow key={lineItem._id} >
                                                         <TableCell className="font-medium">{lineItem.description}</TableCell>
-                                                        <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.quantity}</TableCell>
-                                                        <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.unitPrice}</TableCell>
+                                                        <TableCell className="sm:hidden md:table-cell lg:table-cell xl:table-cell text-center">{lineItem.quantity}</TableCell>
+                                                        <TableCell className="sm:hidden md:table-cell lg:table-cell xl:table-cell text-center">{lineItem.unitPrice}</TableCell>
                                                 
                                                         <TableCell className="text-right">{lineItem.total}</TableCell>
                                                     </TableRow>
