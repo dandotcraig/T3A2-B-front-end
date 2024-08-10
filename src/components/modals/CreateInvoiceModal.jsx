@@ -307,7 +307,8 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
             client: selectedClient,
             lineItems: lineItems.map(item => item._id),
             clientName: selectClientData.businessName,
-            lineItemsTotal: lineItemsTotal
+            lineItemsTotal: lineItemsTotal,
+            dueDate: inputTextDateDue
         };
         
 

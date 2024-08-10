@@ -20,6 +20,8 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     const [total, setTotal] = useState('');
     const [invoice, setInvoice] = useState('')
     const [userAddress, setUserAddress] = useState([])
+    const [dateChange, setDateChange] = useState('')
+    const [dateCreated, setDateCreated] = useState('')
   
     // console.log(invoiceId);
     console.log('this is the id of invoice ' + invoiceId);
@@ -49,7 +51,9 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
             setInvoice(data);
             setClients(data.invoice.client);
             setlineItems(data.invoice.lineItems);
-            setTotal(data.invoice.lineItemsTotal)
+            setTotal(data.invoice.lineItemsTotal);
+            setDateChange(data.invoice.dueDate);
+            setDateCreated(data.invoice.createdAt)
             console.log(data);
             setLoading(false);
         })
@@ -159,6 +163,16 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
         onClose();
     }
 
+    console.log(dateCreated);
+    const formatDate = (dateCreated) => {
+        const date = new Date(dateCreated);
+        return date.toLocaleDateString('en-GB', {
+            year: '2-digit',
+            month: '2-digit',
+            day: '2-digit'
+        });
+    };
+
     const today = new Date();
 
     let gst = total * 0.1;
@@ -193,12 +207,13 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                             <div className="flex sm:flex-col md:flex-col lg:flex-row gap-4">
                                                 <div className="flex justify-between flex-row w-full">
                                                     <p className="font-bold">Invoice date</p>
-                                                    <p>{today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear()}</p>
+                                                    {/* <p>{today.getDate() + "/" + today.getMonth() + "/" + today.getFullYear()}</p> */}
+                                                    <p>{formatDate(dateCreated)}</p>
                                                 </div>
                                                 <div className="flex justify-between flex-row w-full">
                                                     <p className="font-bold">Due date</p>
                                                     
-                                                    <p>Type in a date</p>
+                                                    <p>{dateChange}</p>
                                                 
                                                 </div>
                                             </div>
