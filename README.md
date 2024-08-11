@@ -846,6 +846,7 @@ Implemented feedback: Updated to have a friendly welcome message
 * Bitsrc Blog. Build a simple modal component with React. Available at: https://blog.bitsrc.io/build-a-simple-modal-component-with-react-16decdc111a6.
 * LogRocket. Creating a reusable pop-up modal in React. Available at: https://blog.logrocket.com/creating-reusable-pop-up-modal-react/.
 * GeeksforGeeks. How to use Modal Component in ReactJS. Available at: https://www.geeksforgeeks.org/how-to-use-modal-component-in-reactjs/.
+* Render. No ‘Access-Control-Allow-Origin’ header. Available at: https://community.render.com/t/no-access-control-allow-origin-header/12947/3
 
 
 

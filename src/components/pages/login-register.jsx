@@ -51,7 +51,7 @@ export default function LoginRegister() {
       })
       
     } else {
-      alert('Registration failed')
+      
       toast({
         title: "Notification",
         description: "Registration failed",
