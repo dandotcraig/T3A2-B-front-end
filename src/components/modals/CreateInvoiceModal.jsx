@@ -10,7 +10,6 @@ import { Trash2 } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate } from 'react-router-dom';
 import { useToast } from "@/components/ui/use-toast"
-import { Toaster } from "../ui/toaster";
 
 
 export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
@@ -28,6 +27,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     const [invoice, setInvoice] = useState('')
     const [userAddress, setUserAddress] = useState([])
     const [invoiceCount, setInvoiceCount] = useState(0)
+
     const { toast } = useToast()
 
 
@@ -87,7 +87,6 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
         })
         .then((response) => {
             if (response.status === 200) {
-                // alert('Success getting invoices')
                 return response.json();
             } else if (response.status === 400) {
                 toast({
@@ -138,7 +137,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     // access the refresh and invoice id states
     }, []);
 
-    console.log({userAddress});
+    // console.log({userAddress});
     const addressCreated = () => {
         return userAddress && userAddress.length > 0;
     }
@@ -216,7 +215,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     }
 
     const lineItemsTotal = overallTotal(lineItems)
-    console.log('overallTotal ' + lineItemsTotal);
+    // console.log('overallTotal ' + lineItemsTotal);
 
     // PHASE TWO: CREATE LINE ITEM AND SEND TO DB
     const handleCreateLineItem = () => {
@@ -240,7 +239,6 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
             setLoading(false);
             setrefresh(true);
             if (response.status === 201) {
-                // alert('Success creating invoice')
                 toast({
                     title: "Notification",
                     description: "Line item added",
@@ -249,14 +247,23 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                 return response.json();
                 // onClose();
             } else if (response.status === 400) {
-                alert('Failed creating invoice')
+                toast({
+                    title: "Notification",
+                    description: "Failed creating invoice",
+                })
             } else {
-                alert('Something went wrong')
+                toast({
+                    title: "Notification",
+                    description: "Something went wrong",
+                })
             }
         })
         .catch((error) => {
             setLoading(false);
-            alert('An error happened while creating a line item')
+            toast({
+                title: "Notification",
+                description: "An error happened while creating a line item",
+            })
             console.log(error);
         })
     };
@@ -293,7 +300,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     // access the refresh and invoice id states
     }, [refresh, invoice]);
 
-    console.log({lineItems});
+    // console.log({lineItems});
 
     
 
@@ -368,7 +375,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
 
     const navigate = useNavigate();
 
-    console.log('bussy ' + (selectClientData ? selectClientData.businessName : 'No client selected'));
+    // console.log('bussy ' + (selectClientData ? selectClientData.businessName : 'No client selected'));
 
     // let clientName = selectClientData.businessName;
 
@@ -380,7 +387,10 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     // PHASE FOUR: EDIT INVOICE WITH LINE ITEMS AND SAVE
     const editInoivceWithClientLineItems = () => {
         if (!lineItems || !selectedClient) {
-            alert('Make sure you fill the required fields')
+            toast({
+                title: "Notification",
+                description: "Make sure you fill the required fields",
+                })
             return;
         }
 

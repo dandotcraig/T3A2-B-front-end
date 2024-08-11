@@ -1,12 +1,14 @@
 import { Button } from "../ui/button";
 import { Tabs, TabsContent,TabsList, TabsTrigger, } from "@/components/ui/tabs"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Settings from "./Settings";
 import Invoices from "./Invoices";
 import Clients from "./Clients";
 import CreateClientModal from "../modals/CreateClientModal";
 import CreateInvoiceModal from "../modals/CreateInvoiceModal";
 import HighlightCards from "../modules/highlight-cards";
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "../ui/toaster";
 
 
 export default function Dashboard() {
@@ -18,6 +20,16 @@ export default function Dashboard() {
 
     const [total, setTotal] = useState(0)
     
+    const { toast } = useToast()
+
+    useEffect(() => {
+        toast({
+            title: "Notification",
+            description: "Welcome back!",
+            })
+    }, [])
+    
+
     return(
         <Tabs defaultValue="invoices" className="w-full p-4 flex flex-col gap-8 max-w-[1279px]">
             <h1 className="text-4xl font-bold">Dashboard</h1>

@@ -57,7 +57,10 @@ export default function Settings() {
         })
         .catch((error) => {
             setLoading(false);
-            alert('An error happened while creating a user')
+            toast({
+                title: "Notification",
+                description: "An error happened while creating a user",
+                })
             console.log(error);
         })
     };

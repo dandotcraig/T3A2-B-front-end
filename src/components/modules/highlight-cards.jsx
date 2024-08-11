@@ -27,7 +27,7 @@ export default function HighlightCards({ total }) {
 
     let tax = total * 0.325
     
-    console.log({invoices});
+    // console.log({invoices});
     return(
         <div className="flex sm:flex-col md:flex-row lg:flex-row xlg:flex-row justify-center justify-between gap-4 w-full">
                 <Card className="flex-1  w-full px-2 py-4 flex-col">

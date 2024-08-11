@@ -7,7 +7,8 @@ import { UserContext } from "@/context/UserContext"
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import CreateUserModal from "../modals/CreateUserModal"
-
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "../ui/toaster";
 
 export default function LoginRegister() {
   
@@ -19,9 +20,18 @@ export default function LoginRegister() {
   const [showModalUser, setShowModalUser] = useState(false);
 
   const navigate = useNavigate();
+  const { toast } = useToast()
 
   async function register(event) {
     event.preventDefault();
+
+    if (password.length <= 6){
+      toast({
+        title: "Notification",
+        description: "Password must have atleast 6 characters",
+        });
+      return;
+    }
     const response = await fetch('http://localhost:4000/register', {
       method: 'POST',
       body: JSON.stringify({username,password}),
@@ -31,12 +41,21 @@ export default function LoginRegister() {
     if (response.status == 200) {
       // alert('Login successful - now you are in!')
       response.json().then(data => {
-        console.log("Register data:", data.information);
+        // console.log("Register data:", data.information);
+        toast({
+          title: "Notification",
+          description: "Success - now complete the form",
+          })
         setUserInfo(data.information)
+        setShowModalUser(true);
       })
       
     } else {
       alert('Registration failed')
+      toast({
+        title: "Notification",
+        description: "Registration failed",
+        })
     }
   }
 
@@ -51,7 +70,11 @@ export default function LoginRegister() {
     if (response.status == 200) {
         // alert('Login successful - now you are in!')
         response.json().then(data => {
-          console.log("Login data:", data.information);
+          // console.log("Login data:", data.information);
+          toast({
+            title: "Notification",
+            description: "Login success",
+            })
           // toast('Logged in')
           // alert('')
           setUserInfo(data.information)
@@ -59,7 +82,10 @@ export default function LoginRegister() {
         })
         
     } else {
-        alert('Login failed')
+        toast({
+          title: "Notification",
+          description: "Login failed",
+          })
     }
   }
 
@@ -67,7 +93,7 @@ export default function LoginRegister() {
 
   return(
       <div className="flex mt-24 justify-center h-screen w-[400px] sm:w-[290px] md:w-[400px] lg:w-[400px] xl:w-[500px] 2xl:w-[500px]">
-       
+       <Toaster />
       <Tabs defaultValue="account" className="w-full">
         <TabsList className="grid grid-cols-2">
           <TabsTrigger value="account">Login</TabsTrigger>
@@ -141,7 +167,7 @@ export default function LoginRegister() {
               </form>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button onClick={() => {register(event); setShowModalUser(true);}} className="w-full items-center">Register</Button>
+              <Button onClick={() => {register(event); }} className="w-full items-center">Register</Button>
             </CardFooter>
           </Card>
         </TabsContent>

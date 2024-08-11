@@ -62,7 +62,6 @@ export default function CreateClientModal({ onClose, setRefreshClients }) {
         })
         .catch((error) => {
             setLoading(false);
-            alert('An error happened while creating a client')
             toast({
                 title: "Notification",
                 description: "An error happened while creating a client",

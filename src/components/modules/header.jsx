@@ -5,9 +5,14 @@ import { useContext, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { UserContext } from "@/context/UserContext"
 import SvgComponent from "./svgLogo"
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "../ui/toaster";
 
 export default function Header() {
     const {setUserInfo, userInfo} = useContext(UserContext)
+
+    const { toast } = useToast()
+
     useEffect(() => {
         fetch('http://localhost:4000/profile', {
             credentials: 'include',
@@ -25,6 +30,10 @@ export default function Header() {
             credentials: 'include',
             method: 'POST'
         });
+        toast({
+            title: "Notification",
+            description: "Logged out, cya next time!",
+            })
         setUserInfo(null);
     }
 
@@ -32,7 +41,8 @@ export default function Header() {
 
     return(
         <header className="fixed inset-x-0 top-0 z-50 border shadow-sm backdrop-blur-md bg-white/10">
-            <nav className="flex items-start justify-between p-4 px-8 sm:px-1 md:px-8 lg:px-8 xl:px-8 2xl:px-8 max-w-[1279px] mx-auto" aria-label="Global">
+            <Toaster/>
+            <nav className="flex items-start justify-between p-4 px-8 sm:px-1 md:px-4 lg:px-4 xl:px-4 2xl:px-4 max-w-[1279px] mx-auto" aria-label="Global">
                 <div className="flex lg:flex-1">
                     <a href="#" className="items-center z-50">
                         <span className="sr-only">Sup invoice</span>

@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { Navigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast"
 
 export default function CreateUserModal({ onClose }) {
     const [businessName, setBusinessName] = useState('');
@@ -14,7 +15,8 @@ export default function CreateUserModal({ onClose }) {
     const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
     const [redirect, setRedirect] = useState(false);
-    
+
+    const { toast } = useToast()
 
     const handleCreateUser = () => {
         const data = {
@@ -36,17 +38,28 @@ export default function CreateUserModal({ onClose }) {
         .then((response) => {
             setLoading(false);
             if (response.status === 201) {
-                alert('Success creating a User')
+                toast({
+                    title: "Notification",
+                    description: "Success creating a User",
+                })
                 setRedirect(true)
             } else if (response.status === 400) {
-                alert('Check the fields')
-            } else {
-                alert('Something went wrong')
+                toast({
+                    title: "Notification",
+                    description: "Check the fields",
+                })
+                toast({
+                    title: "Notification",
+                    description: "Something went wrong",
+                })
             }
         })
         .catch((error) => {
             setLoading(false);
-            alert('An error happened while creating a User')
+            toast({
+                title: "Notification",
+                description: "An error happened while creating a User",
+            })
             console.log(error);
         })
     };

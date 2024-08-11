@@ -46,9 +46,15 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                 return response.json();
                 // onClose();
             } else if (response.status === 400) {
-                alert('Failed creating invoice')
+                toast({
+                    title: "Notification",
+                    description: "Failed getting invoice",
+                    })
             } else {
-                alert('Something went wrong')
+                toast({
+                    title: "Notification",
+                    description: "Something went wrong",
+                    })
             }
         })
         .then(data => {
@@ -63,15 +69,17 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
             setLoading(false);
         })
         .catch((error) => {
-            
-            alert('An error happened while creating a line item')
+            toast({
+                title: "Notification",
+                description: "An error happened while creating a line item",
+                })
             console.log(error);
         })
     }, []);
     // console.log('outside use effect ' + invoice + '1');
-    console.log(clients);
-    console.log(lineItems);
-    console.log(total);
+    // console.log(clients);
+    // console.log(lineItems);
+    // console.log(total);
 
     useEffect(() => {
 
@@ -87,7 +95,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                 response.json())
             .then(data => {
                 setUserAddress(data.data);
-                console.log('user addy' + data.data);
+                // console.log('user addy' + data.data);
                 setLoadingUser(false);
             })
             .catch((error) => {
@@ -97,7 +105,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     // access the refresh and invoice id states
     }, []);
 
-    console.log(userAddress);
+    // console.log(userAddress);
 
     // clients
     useEffect(() => {
@@ -118,10 +126,16 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                 
                 // onClose();
             } else if (response.status === 400) {
-                alert('Failed creating invoice')
+                toast({
+                    title: "Notification",
+                    description: "Failed getting invoice",
+                    })
                 
             } else {
-                alert('Something went wrong')
+                toast({
+                    title: "Notification",
+                    description: "Failed getting invoice",
+                    })
             }
         })
         // setLoading(false)
