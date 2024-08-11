@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import Spinner from '../modules/Spinner'
-import { FilePenLine, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "../ui/toaster";
 
 export default function Clients({ refreshClients }) {
     const [clients, setClients] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const { toast } = useToast()
+
     useEffect(() => {
         setLoading(true);
         fetch('http://localhost:4000/clients', {
@@ -29,28 +34,38 @@ export default function Clients({ refreshClients }) {
             method: 'DELETE',
             credentials: 'include',
         })
-            .then((response) => {
-
-                setLoading(false);
-                if (response.status === 200 || response.status === 204) {
-                    console.log('Client deleted');
-                    setClients(clients.filter(client => client._id !== id));
-                    // return response.json();
-                } else if (response.status === 400) {
-                    alert('Failed deleting Client')
-                } else {
-                    alert('Something went wrong')
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-                setLoading(false);
-            });
+        .then((response) => {
+            setLoading(false);
+            if (response.status === 200 || response.status === 204) {
+                
+                setClients(clients.filter(client => client._id !== id));
+                toast({
+                    title: "Notification",
+                    description: "Client deleted",
+                    })
+                // return response.json();
+            } else if (response.status === 400) {
+                toast({
+                    title: "Notification",
+                    description: "Failed deleting Client",
+                    })
+            } else {
+                toast({
+                    title: "Notification",
+                    description: "Something went wrong",
+                    })
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            setLoading(false);
+        });
     };
 
 
     return(
         <>
+        <Toaster />
             {loading ? (
                 <Spinner />
             ) : (

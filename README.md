@@ -614,3 +614,9 @@ Feedback: "these notifications don't look professional or premium"
 
 
 ## User testing 2 & Feedback
+
+Placeholder data implimented:
+
+<img src="src/assets/assignment-images/placeholder1.png" alt="" width="400px">
+
+<img src="src/assets/assignment-images/placeholder2.png" alt="" width="400px">

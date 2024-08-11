@@ -5,6 +5,8 @@ import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from 'react-router-dom';
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "../ui/toaster";
 
 
 export default function CreateClientModal({ onClose, setRefreshClients }) {
@@ -16,6 +18,7 @@ export default function CreateClientModal({ onClose, setRefreshClients }) {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+    const { toast } = useToast()
 
     const handleSaveClient = () => {
         const data = {
@@ -37,25 +40,40 @@ export default function CreateClientModal({ onClose, setRefreshClients }) {
         .then((response) => {
             setLoading(false);
             if (response.status === 201) {
-                alert('Success creating a client')
+                toast({
+                    title: "Notification",
+                    description: "Success creating a client",
+                    })
                 setRefreshClients();
                 onClose();
                 navigate('/dashboard')
             } else if (response.status === 400) {
-                alert('Check the fields')
+                toast({
+                    title: "Notification",
+                    description: "Check the fields are complete",
+                    })
             } else {
-                alert('Something went wrong')
+                toast({
+                    title: "Notification",
+                    description: "Something went wrong",
+                    })
+                
             }
         })
         .catch((error) => {
             setLoading(false);
             alert('An error happened while creating a client')
+            toast({
+                title: "Notification",
+                description: "An error happened while creating a client",
+                })
             console.log(error);
         })
     };
     
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 " onClick={onClose}>
+            <Toaster />
             <Card className="h-[calc(100vh-4rem)] w-full p-4 flex flex-col gap-8 mx-8 sm:mx-0 max-w-[1279px]" onClick={(event) => event.stopPropagation()}>
                 <CardHeader>
                     <div className="flex justify-between flex-row">

@@ -5,6 +5,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "../ui/toaster";
 
 export default function Settings() {
     const [businessName, setBusinessName] = useState('');
@@ -13,6 +15,8 @@ export default function Settings() {
     const [businessEmail, setBusinessEmail] = useState('');
     const [businessPhoneNumber, setBusinessPhoneNumber] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const { toast } = useToast()
 
     const handleEditUser = () => {
         const data = {
@@ -34,11 +38,21 @@ export default function Settings() {
         .then((response) => {
             setLoading(false);
             if (response.status === 200) {
-                alert('Success updating user details')
+                
+                toast({
+                    title: "Notification",
+                    description: "Success updating user details",
+                    })
             } else if (response.status === 400) {
-                alert('Check the fields')
+                toast({
+                    title: "Notification",
+                    description: "Check the fields",
+                    })
             } else {
-                alert('Something went wrong')
+                toast({
+                    title: "Notification",
+                    description: "Something went wrong",
+                    })
             }
         })
         .catch((error) => {
@@ -51,6 +65,7 @@ export default function Settings() {
 
     return(
         <Card>
+            <Toaster />
             <CardHeader>
                 <CardTitle>Your details</CardTitle>
                 <CardDescription>Add your details below</CardDescription>

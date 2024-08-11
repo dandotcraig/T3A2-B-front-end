@@ -6,7 +6,8 @@ import { Button } from "../ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Spinner from '../modules/Spinner';
 import html2canvas from 'html2canvas';
-
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "../ui/toaster";
 
 export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId }) {
     // client dropdown menu/selector
@@ -18,7 +19,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     const [clients, setClients] = useState('');
     const [clientDetails, setClientsDetails] = useState('');
     const [lineItems, setlineItems] = useState([]);
-    const [total, setTotal] = useState('');
+    const [total, setTotal] = useState(0);
     const [invoice, setInvoice] = useState('')
     const [userAddress, setUserAddress] = useState([])
     const [dateChange, setDateChange] = useState('')
@@ -26,6 +27,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     const [invoiceNumber, setInvoiceNumber] = useState('')
 
     const capture = useRef(null)
+    const { toast } = useToast()
   
     // console.log(invoiceId);
     useEffect(() => {
@@ -178,10 +180,11 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
 
     const today = new Date();
 
-    let gst = total * 0.1;
+    let gst = parseFloat(total) * 0.1;
 
-    let gstTotal = total * 1.1;
-
+    let gstTotal = parseFloat(total) * 1.1;
+    
+    let totalTotal = parseFloat(total);
     
 
     const shotCard = (event) => {
@@ -315,7 +318,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                                 <TableBody>
                                                     <TableRow>
                                                         <TableCell className="font-medium">Subtotal</TableCell>
-                                                        <TableCell className="text-right">${total.toFixed(2)}</TableCell>
+                                                        <TableCell className="text-right">${totalTotal.toFixed(2)}</TableCell>
                                                     </TableRow>
                                                     <TableRow>
                                                         <TableCell className="font-medium">GST</TableCell>
@@ -335,7 +338,13 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                 <div className="flex-1">
                                     <div className="flex flex-col gap-4">
                                         <Button variant="secondary" className="w-full items-center" onClick={handleOnClose}>Close</Button>
-                                        <Button className="w-full items-center" onClick={shotCard}>Download</Button>
+                                        <Button className="w-full items-center" 
+                                            onClick={(event) => {
+                                                shotCard(event);
+                                                toast({
+                                                    title: "Notification",
+                                                    description: "Invoice downloaded",
+                                                  })}}>Download</Button>
                                     </div>
                                 </div>
                             </CardFooter>

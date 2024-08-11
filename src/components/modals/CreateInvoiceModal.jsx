@@ -6,9 +6,11 @@ import { Button } from "../ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FilePenLine, File, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate } from 'react-router-dom';
+import { useToast } from "@/components/ui/use-toast"
+import { Toaster } from "../ui/toaster";
 
 
 export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
@@ -26,6 +28,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     const [invoice, setInvoice] = useState('')
     const [userAddress, setUserAddress] = useState([])
     const [invoiceCount, setInvoiceCount] = useState(0)
+    const { toast } = useToast()
 
 
     // PHASE ONE: CREATE INVOICE ID. invoice - create invoice instance and with ID for the line items and clients to be put to it
@@ -42,24 +45,33 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
         .then((response) => {
             setLoading(false);
             if (response.status === 201) {
-                // alert('Success creating invoice')
-                console.log('great success');
+                toast({
+                    title: "Notification",
+                    description: "Invoice template created, now add your details",
+                })
                 return response.json();
                 // onClose();
             } else if (response.status === 400) {
-                alert('Failed creating invoice')
+                toast({
+                    title: "Notification",
+                    description: "Failed creating invoice",
+                })
             } else {
-                alert('Something went wrong')
+                toast({
+                    title: "Notification",
+                    description: "Something went wrong",
+                })
             }
         })
         .then(data => {
             setInvoice(data._id);
-            console.log(data);
         })
         .catch((error) => {
             setLoading(false);
-            alert('An error happened while creating a line item')
-            console.log(error);
+            toast({
+                title: "Notification",
+                description: "An error happened while creating a line item",
+            })
         })
     }, []);
 
@@ -78,21 +90,28 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                 // alert('Success getting invoices')
                 return response.json();
             } else if (response.status === 400) {
-                alert('Failed getting invoice')
+                toast({
+                    title: "Notification",
+                    description: "Failed getting invoice details",
+                })
             } else {
-                alert('Something went wrong')
+                toast({
+                    title: "Notification",
+                    description: "Something went wrong",
+                })
             }
         })
         .then(data => {
             if (data) {
                 setInvoiceCount(data.count)
-                console.log('number of invoices ' + invoiceCount);
             }
             setLoading(false);
         })
         .catch((error) => {
-            alert('An error happened while get a line item')
-            console.log(error);
+            toast({
+                title: "Notification",
+                description: "An error happened while get a line item",
+            })
         })
     }, []);
 
@@ -110,7 +129,6 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                 response.json())
             .then(data => {
                 setUserAddress(data.data);
-                console.log('user addy' + data.data);
                 setLoading(false);
             })
             .catch((error) => {
@@ -160,6 +178,10 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     // client changed handler
     const handleClientChange = (value) => {
         setSelectedClient(value);
+        toast({
+            title: "Notification",
+            description: "Client added to invoice",
+        })
     }
     
     // dates handler
@@ -219,7 +241,10 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
             setrefresh(true);
             if (response.status === 201) {
                 // alert('Success creating invoice')
-                console.log('great success' + data);
+                toast({
+                    title: "Notification",
+                    description: "Line item added",
+                })
                 
                 return response.json();
                 // onClose();
@@ -253,7 +278,10 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                 response.json())
             .then(data => {
                 setlineItems(data.data);
-                // console.log("client" + data.data);
+                toast({
+                    title: "Notification",
+                    description: "Line item added",
+                })
                 setLoading(false);
                 setrefresh(false);
             })
@@ -278,13 +306,23 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
             .then((response) => {
                 setLoading(false);
                 if (response.status === 200 || response.status === 204) {
-                    console.log('line item deleted');
+                    toast({
+                        title: "Notification",
+                        description: "Line item deleted",
+                        })
                     setlineItems(lineItems.filter(lineItem => lineItem._id !== id));
                     // return response.json();
                 } else if (response.status === 400) {
-                    alert('Failed deleting line item')
+                    toast({
+                        title: "Notification",
+                        description: "Failed deleting line item",
+                        })
                 } else {
-                    alert('Something went wrong')
+                    toast({
+                        title: "Notification",
+                        description: "Something went wrong",
+                        })
+                    
                 }
             })
             .catch((error) => {
@@ -303,12 +341,23 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                 setLoading(false);
                 if (response.status === 200 || response.status === 204) {
                     console.log('invoice deleted');
+                    toast({
+                        title: "Notification",
+                        description: "Invoice template is not completed, it hasn't been saved",
+                        })
                     setInvoices(invoices.filter(invoice => invoice._id !== id));
                     // return response.json();
                 } else if (response.status === 400) {
-                    alert('Failed deleting invoice')
+                    toast({
+                        title: "Notification",
+                        description: "Failed deleting invoice",
+                        })
                 } else {
-                    alert('Something went wrong')
+                    toast({
+                        title: "Notification",
+                        description: "Something went wrong",
+                        })
+                    
                 }
             })
             .catch((error) => {
@@ -360,13 +409,20 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                 // console.log('invoice saved');
                 // console.log('here are the line items' + lineItems)
                 // // setlineItems([])
+                toast({
+                    title: "Notification",
+                    description: "Invoice saved.",
+                })
                 setRefreshInvoice(true);
-                console.log('LFG');
+                
                 navigate('/dashboard');
                 onClose();
                 
             } else {
-                alert('failed to save')
+                toast({
+                    title: "Notification",
+                    description: "Invoice failed to save.",
+                    })
             }
         })
         .catch((error) => {
@@ -518,6 +574,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                 <div className="w-full">
                                                 
                                                     <p className="font-bold">To</p>
+                                                    
                                                     {selectedClient ? (
                                                         <>
                                                             <p>{selectClientData.businessName}</p>
@@ -566,7 +623,8 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                {lineItems.map((lineItem, index) => (
+                                            {lineItems.length > 0 ? (
+                                                lineItems.map((lineItem, index) => (
                                                     <TableRow key={lineItem._id} >
                                                         <TableCell className="font-medium">{lineItem.description}</TableCell>
                                                         <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">{lineItem.quantity}</TableCell>
@@ -580,7 +638,20 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                         </TableCell>
                                                         <TableCell className="text-right">{lineItem.total}</TableCell>
                                                     </TableRow>
-                                                ))}
+                                                ))
+                                            ) : (
+                                                <TableRow >
+                                                <TableCell className="font-medium">Placeholder</TableCell>
+                                                <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">0</TableCell>
+                                                <TableCell className="sm:hidden md:table-cell lg:hidden xl:table-cell text-center">0</TableCell>
+                                                <TableCell>
+                                                    <div className="flex justify-center flex-row gap-2">   
+                                                        <Trash2 className=" h-4 w-4"/>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="text-right">$00.00</TableCell>
+                                            </TableRow>
+                                            )}
                                             </TableBody>
                                         </Table>
                                     </Card>     
@@ -588,6 +659,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                         <div className="flex-1 sm:hidden md:flex lg:flex xl:flex"></div>  
                                         <Card className="flex-1 justify-items-end">
                                             <Table >
+
                                                 <TableBody>
                                                     <TableRow>
                                                         <TableCell className="font-medium">Subtotal</TableCell>
