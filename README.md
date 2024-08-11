@@ -847,6 +847,7 @@ Implemented feedback: Updated to have a friendly welcome message
 * LogRocket. Creating a reusable pop-up modal in React. Available at: https://blog.logrocket.com/creating-reusable-pop-up-modal-react/.
 * GeeksforGeeks. How to use Modal Component in ReactJS. Available at: https://www.geeksforgeeks.org/how-to-use-modal-component-in-reactjs/.
 * Render. No ‘Access-Control-Allow-Origin’ header. Available at: https://community.render.com/t/no-access-control-allow-origin-header/12947/3
+* Secure, HttpOnly, SameSite HTTP Cookies Attributes and Set-Cookie Explained. Available at: https://medium.com/swlh/secure-httponly-samesite-http-cookies-attributes-and-set-cookie-explained-fc3c753dfeb6
 
 
 
