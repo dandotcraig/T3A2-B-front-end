@@ -612,11 +612,28 @@ Feedback: "these notifications don't look professional or premium"
 
 <img src="src/assets/assignment-images/testing9.png" alt="" width="400px">
 
+Feedback: "Home page is not friendly, it feels very corporate"
+
+<img src="src/assets/assignment-images/notfriendly.png" alt="" width="400px">
 
 ## User testing 2 & Feedback
 
-Placeholder data implimented:
+Implemented feedback: Placeholder data implimented:
 
 <img src="src/assets/assignment-images/placeholder1.png" alt="" width="400px">
 
 <img src="src/assets/assignment-images/placeholder2.png" alt="" width="400px">
+
+Implemented feedback: Blurred background added to header:
+
+<img src="src/assets/assignment-images/blurred.png" alt="" width="400px">
+
+Implemented feedback: Alerts/notifcations/toast added: 
+
+<img src="src/assets/assignment-images/not2.png" alt="" width="400px">
+
+<img src="src/assets/assignment-images/not1.png" alt="" width="400px">
+
+Implemented feedback: Updated to have a friendly welcome message
+
+<img src="src/assets/assignment-images/message.png" alt="" width="400px">
