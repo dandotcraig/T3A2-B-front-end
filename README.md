@@ -8,6 +8,26 @@ We've tested this app with two users:
 
 The app is named 'Sup Invoice' as its a domain name that was short, cheap and a memorable word. People use the word sup to say hello, which is friendly and its short for super.
 
+
+[T3A2-B-server Repo](https://github.com/dandotcraig/T3A2-B-server)
+
+[T3A2-B-front-end Repo](https://github.com/dandotcraig/T3A2-B-front-end)
+
+[T3A2-A Repo](https://github.com/dandotcraig/T3A2-A)
+
+Deployed Sup Invoice can be found [HERE](https://supinvoice.com)
+
+Netlify subdomain [HERE](sup-invoice.netlify.app)
+
+API can be found [HERE](https://t3a2-b-server.onrender.com)
+
+Feel free to use this testing account:
+* User: manualtest
+* Password: manualtest
+
+[Testing spreadsheet](https://docs.google.com/spreadsheets/d/1_ZV2VED6lpS2cvqT7ImGNyekecFCfuunWcNHRNDakc0/edit?usp=sharing)
+
+
 ---
 
 # R1	
@@ -209,13 +229,13 @@ useState and useEffect were used throughout the project to complete almost every
 ---
 **Front-End**
 
-At the time of writing this my front-end has 72 commits, with 6 completed feature branches. This was important for setting up new fetch routes, adding providers/context, refactoring the code to make it dryer and adding in line-items to invoices, which was was an oversight in the original plan.
+At the time of writing this my front-end has 81 commits, with 6 completed feature branches. This was important for setting up new fetch routes, adding providers/context, refactoring the code to make it dryer and adding in line-items to invoices, which was was an oversight in the original plan.
 
 <img src="src/assets/assignment-images/serverfrontend.png" alt="front end git" width="400px">
 
 **Back-End**
 
-At the time of writing this my back-end has 69 commits, with 9 completed feature branches. The branches were extremely important for features like middleware, line items and fragmenting it into files. I had it working and on making these major updates I didn't want to be adding these experiments to main.
+At the time of writing this my back-end has 77 commits, with 9 completed feature branches. The branches were extremely important for features like middleware, line items and fragmenting it into files. I had it working and on making these major updates I didn't want to be adding these experiments to main.
 
 <img src="src/assets/assignment-images/servergit.png" alt="server git" width="400px">
 
@@ -235,6 +255,10 @@ Backend:
 We've used a Kanban framework to impliment agile development processes to complete this first working version of Sup Invoice.
 
 Trello was utilized to impliment deligate tasks, plan the project and follow it through.
+
+Anatomy of trello card:
+
+<img src="src/assets/assignment-images/anatomy.png" alt="" width="500px">
 
 **July 18**
 
@@ -364,6 +388,10 @@ Netlify subdomain [HERE](sup-invoice.netlify.app)
 
 API can be found [HERE](https://t3a2-b-server.onrender.com)
 
+Feel free to use this testing account:
+* User: manualtest
+* Password: manualtest
+
 # R7	
 
 #### Produce an application with an intuitive user interface
@@ -410,7 +438,7 @@ The registration flow consists of two screens, one the registration section, whi
 
 ---
 
-## User Story testing
+# User Story testing
 
 MANUAL USER STORY TESTS - sheet [HERE](https://docs.google.com/spreadsheets/d/1_ZV2VED6lpS2cvqT7ImGNyekecFCfuunWcNHRNDakc0/edit?usp=sharing)
 
@@ -526,8 +554,9 @@ Secondary - Video editor
     A simple yet simplistic way to add new line items to the invoice. They are added on the left and users can see them on the right side. They automatically sum up and they're easy to delete.
 
 
-## Overall manual testing ✅ 
+# Overall manual testing ✅ 
 
+## BACK-END
 
 MANUAL BRUNO TESTING - sheet [HERE](https://docs.google.com/spreadsheets/d/1_ZV2VED6lpS2cvqT7ImGNyekecFCfuunWcNHRNDakc0/edit?usp=sharing)
 
@@ -544,6 +573,8 @@ Manual testing was done with Bruno to insure it would work prefectly when implim
 <img src="src/assets/assignment-images/manualuser.png" alt="" width="500px">
 
 **Web interface end points:**
+
+## FRONT-END ✅
 
 MANUAL UX TESTING - sheet [HERE](https://docs.google.com/spreadsheets/d/1_ZV2VED6lpS2cvqT7ImGNyekecFCfuunWcNHRNDakc0/edit?usp=sharing)
 
@@ -643,6 +674,12 @@ Implemented feedback: Alerts/notifcations/toast added:
 Implemented feedback: Updated to have a friendly welcome message
 
 <img src="src/assets/assignment-images/message.png" alt="" width="400px">
+
+## User testing 3 & Feedback
+
+Feedback was implimented and users from user stories are happy with the updates and changes
+
+
 
 # Reference
 
@@ -848,6 +885,9 @@ Implemented feedback: Updated to have a friendly welcome message
 * GeeksforGeeks. How to use Modal Component in ReactJS. Available at: https://www.geeksforgeeks.org/how-to-use-modal-component-in-reactjs/.
 * Render. No ‘Access-Control-Allow-Origin’ header. Available at: https://community.render.com/t/no-access-control-allow-origin-header/12947/3
 * Secure, HttpOnly, SameSite HTTP Cookies Attributes and Set-Cookie Explained. Available at: https://medium.com/swlh/secure-httponly-samesite-http-cookies-attributes-and-set-cookie-explained-fc3c753dfeb6
+* Catch all redirect for create-react-app in netlify. Avaliable at: https://stackoverflow.com/questions/55990467/catch-all-redirect-for-create-react-app-in-netlify
+* Redirects and rewrites. Available at: https://docs.netlify.com/routing/redirects/#history-pushstate-and-single-page-apps
+* Deploying single page applications. Available at: https://answers.netlify.com/t/deploying-single-page-applications/14695
 
 
 
