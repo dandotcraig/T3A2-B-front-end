@@ -14,7 +14,7 @@ export default function Header() {
     const { toast } = useToast()
 
     useEffect(() => {
-        fetch('https://t3a2-b-server.onrender.comprofile', {
+        fetch('https://t3a2-b-server.onrender.com/profile', {
             credentials: 'include',
         }).then(response => {
             if (response.status == 200) {
