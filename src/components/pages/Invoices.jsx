@@ -18,7 +18,7 @@ export default function Invoices({ setTotal }) {
     
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:4000/invoices', {
+        fetch('https://t3a2-b-server.onrender.com/invoices', {
             method: 'GET',
             credentials: 'include',
         })
@@ -43,7 +43,7 @@ export default function Invoices({ setTotal }) {
 
     const deleteInvoiceById = (id) => {
         setLoading(true);
-        fetch(`http://localhost:4000/invoices/${id}`, {
+        fetch(`https://t3a2-b-server.onrender.com/invoices/${id}`, {
             method: 'DELETE',
             credentials: 'include',
         })

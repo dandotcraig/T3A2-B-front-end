@@ -8,7 +8,7 @@ export default function HighlightCards({ total }) {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:4000/invoices', {
+        fetch('https://t3a2-b-server.onrender.com/invoices', {
             method: 'GET',
             credentials: 'include',
         })

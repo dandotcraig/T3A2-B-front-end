@@ -344,6 +344,12 @@ More tidy up and deployment
 
 <img src="src/assets/assignment-images/aug10th.png" alt="" width="500px">
 
+**Aug 11**
+
+Final user feedback before launch
+
+<img src="src/assets/assignment-images/aug11.png" alt="" width="500px">
+
 
 # R5/ R6
 

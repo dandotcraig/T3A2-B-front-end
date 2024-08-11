@@ -27,7 +27,7 @@ export default function CreateUserModal({ onClose }) {
             businessPhoneNumber,
         };
         setLoading(true);
-        fetch('http://localhost:4000/create/user', {
+        fetch('https://t3a2-b-server.onrender.com/create/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -29,7 +29,7 @@ export default function CreateClientModal({ onClose, setRefreshClients }) {
             businessPhoneNumber,
         };
         setLoading(true);
-        fetch('http://localhost:4000/create/client', {
+        fetch('https://t3a2-b-server.onrender.com/create/client', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

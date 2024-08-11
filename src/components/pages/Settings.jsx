@@ -27,7 +27,7 @@ export default function Settings() {
             businessPhoneNumber,
         };
         setLoading(true);
-        fetch('http://localhost:4000/user/', {
+        fetch('https://t3a2-b-server.onrender.com/user/', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

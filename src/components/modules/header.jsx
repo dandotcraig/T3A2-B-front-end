@@ -14,7 +14,7 @@ export default function Header() {
     const { toast } = useToast()
 
     useEffect(() => {
-        fetch('http://localhost:4000/profile', {
+        fetch('https://t3a2-b-server.onrender.comprofile', {
             credentials: 'include',
         }).then(response => {
             if (response.status == 200) {
@@ -26,7 +26,7 @@ export default function Header() {
     }, [setUserInfo]);
 
     function logout() {
-        fetch('http://localhost:4000/logout', {
+        fetch('https://t3a2-b-server.onrender.com/logout', {
             credentials: 'include',
             method: 'POST'
         });

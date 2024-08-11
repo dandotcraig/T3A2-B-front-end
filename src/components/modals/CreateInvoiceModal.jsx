@@ -34,7 +34,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     // PHASE ONE: CREATE INVOICE ID. invoice - create invoice instance and with ID for the line items and clients to be put to it
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:4000/create/invoice', {
+        fetch('https://t3a2-b-server.onrender.com/create/invoice', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -77,7 +77,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
 
     // getting invoice count
     useEffect(() => {
-        fetch(`http://localhost:4000/invoices`, {
+        fetch(`https://t3a2-b-server.onrender.com/invoices`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -116,7 +116,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:4000/user`, {
+        fetch(`https://t3a2-b-server.onrender.com/user`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -145,7 +145,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
     // clients
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:4000/clients', {
+        fetch('https://t3a2-b-server.onrender.com/clients', {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -227,7 +227,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
             invoice,
         };
         setLoading(true);
-        fetch('http://localhost:4000/create/lineitem', {
+        fetch('https://t3a2-b-server.onrender.com/create/lineitem', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -273,7 +273,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
         // only refresh if its true
         if (!refresh) return;
         setLoading(true);
-        fetch(`http://localhost:4000/lineitems/invoice/${invoice}`, {
+        fetch(`https://t3a2-b-server.onrender.com/lineitems/invoice/${invoice}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -306,7 +306,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
 
     const deleteLineItemById = (id) => {
         setLoading(true);
-        fetch(`http://localhost:4000/lineitems/${id}`, {
+        fetch(`https://t3a2-b-server.onrender.com/lineitems/${id}`, {
             method: 'DELETE',
             credentials: 'include',
         })
@@ -340,7 +340,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
 
     const deleteInvoiceById = (id) => {
         setLoading(true);
-        fetch(`http://localhost:4000/invoices/${id}`, {
+        fetch(`https://t3a2-b-server.onrender.com/invoices/${id}`, {
             method: 'DELETE',
             credentials: 'include',
         })
@@ -405,7 +405,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
             invoiceCount: invoiceCount
         };
         
-        fetch(`http://localhost:4000/invoices/${invoice}`, {
+        fetch(`https://t3a2-b-server.onrender.com/invoices/${invoice}`, {
             method: 'PUT',
             credentials: 'include',
             headers: {

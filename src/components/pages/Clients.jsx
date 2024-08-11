@@ -13,7 +13,7 @@ export default function Clients({ refreshClients }) {
 
     useEffect(() => {
         setLoading(true);
-        fetch('http://localhost:4000/clients', {
+        fetch('https://t3a2-b-server.onrender.com/clients', {
             method: 'GET',
             credentials: 'include',
         })
@@ -30,7 +30,7 @@ export default function Clients({ refreshClients }) {
 
     const deleteClientById = (id) => {
         setLoading(true);
-        fetch(`http://localhost:4000/Clients/${id}`, {
+        fetch(`https://t3a2-b-server.onrender.com/Clients/${id}`, {
             method: 'DELETE',
             credentials: 'include',
         })

@@ -31,7 +31,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
   
     // console.log(invoiceId);
     useEffect(() => {
-        fetch(`http://localhost:4000/invoices/${invoiceId}`, {
+        fetch(`https://t3a2-b-server.onrender.com/invoices/${invoiceId}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -83,7 +83,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
 
     useEffect(() => {
 
-        fetch(`http://localhost:4000/user`, {
+        fetch(`https://t3a2-b-server.onrender.com/user`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -109,7 +109,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
 
     // clients
     useEffect(() => {
-        fetch(`http://localhost:4000/clients/${clients}`, {
+        fetch(`https://t3a2-b-server.onrender.com/clients/${clients}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -152,7 +152,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     useEffect(() => {
         // only refresh if its true
         // if (!refresh) return;
-        fetch(`http://localhost:4000/lineitems/invoice/${invoiceId}`, {
+        fetch(`https://t3a2-b-server.onrender.com/lineitems/invoice/${invoiceId}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
