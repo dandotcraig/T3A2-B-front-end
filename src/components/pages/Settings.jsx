@@ -108,7 +108,7 @@ export default function Settings() {
             </CardContent>
             <CardFooter className="flex flex-col justify-between gap-4">
                 
-                <Link to="/" className="w-full"><Button variant="destructive" className="w-full items-center">Delete your account</Button></Link>
+                {/* <Link to="/" className="w-full"><Button variant="destructive" className="w-full items-center">Delete your account</Button></Link> */}
                 <Button className="w-full items-center" onClick={handleEditUser} disabled={loading}>{loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Save'}</Button>
             </CardFooter>
         </Card>

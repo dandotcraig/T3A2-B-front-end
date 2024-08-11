@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { X } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Button } from "../ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Spinner from '../modules/Spinner';
+import html2canvas from 'html2canvas';
 
 
 export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId }) {
@@ -23,6 +24,8 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     const [dateChange, setDateChange] = useState('')
     const [dateCreated, setDateCreated] = useState('')
     const [invoiceNumber, setInvoiceNumber] = useState('')
+
+    const capture = useRef(null)
   
     // console.log(invoiceId);
     useEffect(() => {
@@ -178,12 +181,26 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
     let gst = total * 0.1;
 
     let gstTotal = total * 1.1;
+
+    
+
+    const shotCard = (event) => {
+        event.preventDefault();
+        html2canvas(capture.current).then(canvas => {
+            const a = document.createElement('a');
+            a.href = canvas.toDataURL('image/jpg');
+            a.download = `${formatDate(dateCreated)}_${invoiceNumber}_${clientDetails[0].businessName}`
+            a.click();
+        });
+    }
+
+        
     
     return (
         <div className="fixed backdrop-blur inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60" onClick={handleOnClose} >
             <ScrollArea className="h-[calc(100vh-4rem)] flex justify-center rounded-lg w-full mx-8 sm:mx-0 max-w-[1279px]" >
                 <div>
-                    <Card className="w-full h-auto p-2 flex sm:flex-col md:flex-col lg:flex-row 2lx:flex-row" onClick={(event) => event.stopPropagation()}>
+                    <Card ref={capture} className="w-full h-auto p-2 flex sm:flex-col md:flex-col lg:flex-row 2lx:flex-row" onClick={(event) => event.stopPropagation()}>
                     {loading ? (
                         <Spinner />
                     ) : (
@@ -318,7 +335,7 @@ export default function ViewInvoiceModal({ onClose, setRefreshInvoice, invoiceId
                                 <div className="flex-1">
                                     <div className="flex flex-col gap-4">
                                         <Button variant="secondary" className="w-full items-center" onClick={handleOnClose}>Close</Button>
-                                        
+                                        <Button className="w-full items-center" onClick={shotCard}>Download</Button>
                                     </div>
                                 </div>
                             </CardFooter>

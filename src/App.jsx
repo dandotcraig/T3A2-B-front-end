@@ -1,6 +1,6 @@
 import * as React from "react"
 import {Routes, Route} from "react-router-dom"
-import Layout from "./components/layout"
+import Layout from "./components/modules/layout"
 import IndexPage from "./components/pages/IndexPage"
 import Dashboard from "./components/pages/Dashboard"
 import CreateInvoiceModal from "./components/modals/CreateInvoiceModal"

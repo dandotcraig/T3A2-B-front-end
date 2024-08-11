@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { UserContext } from "@/context/UserContext"
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import CreateUserModal from "./modals/CreateUserModal"
+import CreateUserModal from "../modals/CreateUserModal"
 
 export default function LoginRegister() {
   
@@ -63,8 +63,8 @@ export default function LoginRegister() {
   
 
   return(
-      <div className="flex mt-24 justify-center h-screen">
-      <Tabs defaultValue="account" className="w-full max-w-[400px]">
+      <div className="flex mt-24 justify-center h-screen w-[400px] sm:w-[290px] md:w-[400px] lg:w-[400px] xl:w-[500px] 2xl:w-[500px]">
+      <Tabs defaultValue="account" className="w-full">
         <TabsList className="grid grid-cols-2">
           <TabsTrigger value="account">Login</TabsTrigger>
           <TabsTrigger value="password">Register</TabsTrigger>

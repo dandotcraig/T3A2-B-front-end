@@ -1,4 +1,4 @@
-import LoginRegister from "../login-register";
+import LoginRegister from "./login-register";
 
 export default function IndexPage() {
     return(

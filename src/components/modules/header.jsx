@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 // import logo from "../assets/logo.svg"
-import ModeToggle from "@/components/mode-toggle"
+import ModeToggle from "@/components/modules/mode-toggle"
 import { useContext, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { UserContext } from "@/context/UserContext"
-import SvgComponent from "./modules/svgLogo"
+import SvgComponent from "./svgLogo"
 
 export default function Header() {
     const {setUserInfo, userInfo} = useContext(UserContext)
@@ -31,8 +31,8 @@ export default function Header() {
     const username = userInfo?.username;
 
     return(
-        <header className="fixed inset-x-0 top-0 z-50 border shadow-sm">
-            <nav className="flex items-start justify-between p-2 lg:px-8 max-w-[1279px] mx-auto" aria-label="Global">
+        <header className="fixed inset-x-0 top-0 z-50 border shadow-sm backdrop-blur-md bg-white/10">
+            <nav className="flex items-start justify-between p-4 px-8 sm:px-1 md:px-8 lg:px-8 xl:px-8 2xl:px-8 max-w-[1279px] mx-auto" aria-label="Global">
                 <div className="flex lg:flex-1">
                     <a href="#" className="items-center z-50">
                         <span className="sr-only">Sup invoice</span>

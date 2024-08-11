@@ -574,7 +574,7 @@ export default function CreateInvoiceModal({ onClose, setRefreshInvoice }) {
                                                         <TableCell>
                                                             <div className="flex justify-center flex-row gap-2">   
                                                                 {/* <FilePenLine className="h-4 w-4" /> */}
-                                                                <File className="h-4 w-4" />
+                                                                {/* <File className="h-4 w-4" /> */}
                                                                 <Trash2 className=" h-4 w-4" onClick={() => deleteLineItemById(lineItem._id)} />
                                                             </div>
                                                         </TableCell>

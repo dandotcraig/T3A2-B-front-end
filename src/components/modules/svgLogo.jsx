@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useTheme } from "../theme-provider";
+import { useTheme } from "../../context/theme-provider";
 
 export default function SvgComponent({ ...props }) {
 
@@ -12,7 +12,7 @@ export default function SvgComponent({ ...props }) {
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100%"
-            height="3rem"
+            height="2.5rem"
             fill="none"
             {...props}
         >
